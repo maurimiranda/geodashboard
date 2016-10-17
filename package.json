@@ -1,0 +1,16 @@
+{
+  "name": "geodashboard",
+  "version": "0.1.1",
+  "description": "Web application to display data as maps and widgets using WMS, WFS and WPS services.",
+  "main": "index.js",
+  "repository": {
+    "url": "https://github.com/maurimiranda/geodashboard.git",
+    "type": "git"
+  },
+  "author": "Mauricio Miranda <maurimiranda@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-latest": "^6.16.0"
+  }
+}
