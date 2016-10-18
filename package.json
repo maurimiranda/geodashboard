@@ -10,7 +10,26 @@
   "author": "Mauricio Miranda <maurimiranda@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.16.0",
-    "babel-preset-latest": "^6.16.0"
-  }
+    "babel": "^6.5.2",
+    "babel-core": "^6.17.0",
+    "babel-eslint": "^7.0.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.16.0",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-loader": "^1.6.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1",
+    "node-sass": "^3.10.1",
+    "sass-loader": "^4.0.2",
+    "webpack": "^1.13.2"
+  },
+  "scripts": {
+    "build": "WEBPACK_ENV=build webpack",
+    "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
+    "server": "webpack-dev-server"
+  },
+  "dependencies": {}
 }
