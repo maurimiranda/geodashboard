@@ -1,20 +1,16 @@
-/* eslint-disable */
+var dashboard = new GeoDashboard({
+  title: 'Geodashboard Demo',
+  logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/WhiteDot.svg/600px-WhiteDot.svg.png',
+  geoserverUrl: 'http://geoserver.siasar.org/geoserver',
+  container: document.getElementById('dashboard'),
+  bingKey: 'AlMSfR3F4khtlIefjuE_NYpX403LdlGiod36WLn8HlawywtSud-NSgEklCemD5pR',
+  center: [-60, -10],
+  zoom: 4,
+  attribution: '© <a href="http://siasar.org">SIASAR</a>',
+  addDefaultBaseLayers: true,
+  keepLayerSwitcherOpen: true
+});
 
-var dashboard = new GeoDashboard();
-console.log(dashboard);
-
-// var dashboard = new GeoDashboard({
-//   title: 'SIASAR Dashboard',
-//   logoUrl: '/images/iso_siasar_blanco.png',
-//   geoserverUrl: appConfig.geoserverUrl,
-//   container: $('.dashboard'),
-//   center: [-60, -10],
-//   zoom: 4,
-//   attribution: '© <a href="http://siasar.org">SIASAR</a>',
-//   addDefaultBaseLayers: true,
-//   keepLayerSwitcherOpen: true
-// });
-//
 // var options = {
 //   'A': {
 //     color: '#54BA46'

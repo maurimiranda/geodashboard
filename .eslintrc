@@ -1,3 +1,19 @@
 {
-  "extends": "airbnb"
+  "extends": "airbnb/base",
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "Handlebars": true,
+    "describe": true,
+    "before": true,
+    "it": true,
+    "expect": true,
+    "ol": true
+  },
+  "rules": {
+    "no-underscore-dangle": 0
+  }
 }

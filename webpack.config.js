@@ -1,48 +1,60 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": true}] */
-const webpack = require('webpack');
+/* eslint-disable */
 
-const env = process.env.WEBPACK_ENV;
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-const plugins = [];
+const webpack = require('webpack');
+const yargs = require('yargs');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const env = yargs.argv.mode;
+const libraryName = 'GeoDashboard';
+const plugins = [
+  new ExtractTextPlugin('geo-dashboard.css')
+];
+
 let outputFile;
 
 if (env === 'build') {
-  plugins.push(new UglifyJsPlugin({ minimize: true }));
-  outputFile = 'geo-dashboard.min.js';
+  plugins.push(new webpack.optimize.UglifyJsPlugin({ minimize: true }));
+  outputFile = `${toDash(libraryName)}.min.js`;
 } else {
-  outputFile = 'geo-dashboard.js';
+  outputFile = `${toDash(libraryName)}.js`;
 }
 
 module.exports = {
-  entry: {
-    library: './src/index',
+  entry: path.join(__dirname, '/src/scripts/geo-dashboard.js'),
+  output: {
+    path: path.join(__dirname, '/dist'),
+    filename: outputFile,
+    library: libraryName,
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   devtool: 'source-map',
-  output: {
-    path: './dist',
-    filename: outputFile,
-    library: 'GeoDashboard',
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
-  },
   module: {
     loaders: [
       {
         test: /\.js$/,
         loader: 'babel',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.js$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/,
+        loader: "eslint-loader",
+        exclude: /node_modules/
       },
+      {
+        test: /\.hbs$/,
+        loader: "handlebars-loader"
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract(['css?sourceMap', 'sass?sourceMap'])
+      }
     ],
   },
-  plugins,
-  devServer: {
-    inline: true,
-    port: 9000,
-    contentBase: './dist',
-  },
+  plugins
 };
+
+function toDash(string) {
+  return string.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}

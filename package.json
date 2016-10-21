@@ -1,35 +1,36 @@
 {
-  "name": "geodashboard",
+  "name": "geo-dashboard",
   "version": "0.1.1",
-  "description": "Web application to display data as maps and widgets using WMS, WFS and WPS services.",
-  "main": "index.js",
+  "description": "Web library to display data as maps and widgets using WMS, WFS and WPS services.",
+  "main": "dist/geo-dashboard.js",
   "repository": {
-    "url": "https://github.com/maurimiranda/geodashboard.git",
+    "url": "https://github.com/maurimiranda/geo-dashboard.git",
     "type": "git"
   },
   "author": "Mauricio Miranda <maurimiranda@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel": "^6.5.2",
     "babel-core": "^6.17.0",
-    "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.5",
-    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015": "^6.16.0",
+    "chai": "^3.5.0",
+    "css-loader": "^0.25.0",
     "eslint": "^3.8.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-loader": "^1.6.0",
     "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "handlebars": "^4.0.5",
+    "handlebars-loader": "^1.4.0",
+    "mocha": "^3.1.2",
     "node-sass": "^3.10.1",
     "sass-loader": "^4.0.2",
     "webpack": "^1.13.2"
   },
   "scripts": {
-    "build": "WEBPACK_ENV=build webpack",
-    "dev": "WEBPACK_ENV=dev webpack --progress --colors --watch",
-    "server": "webpack-dev-server"
+    "build": "webpack --mode=build",
+    "dev": "webpack --progress --colors --watch --mode=dev",
+    "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js"
   },
   "dependencies": {}
 }

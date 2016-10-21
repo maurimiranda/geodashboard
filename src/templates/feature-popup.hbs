@@ -1,0 +1,13 @@
+<div class="info-box info-popup">
+  {{#if properties.pictureUrl}}
+    <img src="{{properties.picturesUrl}}" onerror="this.style.display='none'" />
+  {{/if}}
+  <dl>
+    {{#each properties}}
+      {{#if value}}
+        <dt>{{title}}</dt>
+        <dd>{{value}}</dd>
+      {{/if}}
+    {{/each}}
+  </dl>
+</div>
