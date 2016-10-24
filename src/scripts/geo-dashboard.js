@@ -3,6 +3,7 @@ import dashboardTemplate from '../templates/geo-dashboard.hbs';
 import popupTemplate from '../templates/feature-popup.hbs';
 
 import '../styles/geo-dashboard.scss';
+import '../styles/map.scss';
 
 class GeoDashboard {
   constructor(config) {
@@ -13,7 +14,7 @@ class GeoDashboard {
     this.widgetContainer = this.container.getElementsByClassName('panel');
 
     this.widgetManager = new WidgetManager();
-    this.geoserverUrl = this.config.geoserverUrl;
+    this.geoserverUrl = this.config.map.geoserverUrl;
 
       // if (config.hideHeader) {
       //   this.container.find('.geo-dashboard .header').hide();
@@ -29,8 +30,7 @@ class GeoDashboard {
     // }
 
     this.container.insertAdjacentHTML('beforeend', dashboardTemplate({
-      title: this.config.title,
-      logo: this.config.logoUrl,
+      config,
     }));
 
     this._createMap(config);
@@ -51,8 +51,8 @@ class GeoDashboard {
 
     // Create View and Map objects
     this.view = new ol.View({
-      center: ol.proj.fromLonLat(this.config.center),
-      zoom: this.config.zoom,
+      center: ol.proj.fromLonLat(this.config.map.center),
+      zoom: this.config.map.zoom,
     });
     this.map = new ol.Map({
       target: this.mapContainer[0],
@@ -61,7 +61,7 @@ class GeoDashboard {
       interactions: ol.interaction.defaults({ mouseWheelZoom: false }),
       layers: this.layers,
     });
-    this.attribution = this.config.attribution;
+    this.attribution = this.config.map.attribution;
     this.viewProjection = this.view.getProjection();
     this.viewResolution = this.view.getResolution();
 
@@ -74,7 +74,7 @@ class GeoDashboard {
       tipLabel: 'Layers',
     });
     this.map.addControl(this.layerSwitcher);
-    if (this.config.keepLayerSwitcherOpen) {
+    if (this.config.map.keepLayerSwitcherOpen) {
       this.layerSwitcher.panel.onmouseout = null;
       this.map.on('postrender', () => {
         this.layerSwitcher.showPanel();
@@ -85,10 +85,10 @@ class GeoDashboard {
     this.map.on('singleclick', this._featurePopup.bind(this));
 
     // Add base layers
-    if (this.config.addDefaultBaseLayers) {
+    if (this.config.map.addDefaultBaseLayers) {
       this.addBingLayer({
         title: 'Bing Aerial',
-        key: this.config.bingKey,
+        key: this.config.map.bingKey,
       });
       this.addOSMLayer({
         title: 'OpenStreetMap',

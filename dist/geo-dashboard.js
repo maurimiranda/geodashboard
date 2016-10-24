@@ -72,6 +72,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	__webpack_require__(23);
 	
+	__webpack_require__(26);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87,7 +89,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.widgetContainer = this.container.getElementsByClassName('panel');
 	
 	    this.widgetManager = new _widgetManager2.default();
-	    this.geoserverUrl = this.config.geoserverUrl;
+	    this.geoserverUrl = this.config.map.geoserverUrl;
 	
 	    // if (config.hideHeader) {
 	    //   this.container.find('.geo-dashboard .header').hide();
@@ -103,8 +105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // }
 	
 	    this.container.insertAdjacentHTML('beforeend', (0, _geoDashboard2.default)({
-	      title: this.config.title,
-	      logo: this.config.logoUrl
+	      config: config
 	    }));
 	
 	    this._createMap(config);
@@ -129,8 +130,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      // Create View and Map objects
 	      this.view = new ol.View({
-	        center: ol.proj.fromLonLat(this.config.center),
-	        zoom: this.config.zoom
+	        center: ol.proj.fromLonLat(this.config.map.center),
+	        zoom: this.config.map.zoom
 	      });
 	      this.map = new ol.Map({
 	        target: this.mapContainer[0],
@@ -139,7 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        interactions: ol.interaction.defaults({ mouseWheelZoom: false }),
 	        layers: this.layers
 	      });
-	      this.attribution = this.config.attribution;
+	      this.attribution = this.config.map.attribution;
 	      this.viewProjection = this.view.getProjection();
 	      this.viewResolution = this.view.getResolution();
 	
@@ -152,7 +153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        tipLabel: 'Layers'
 	      });
 	      this.map.addControl(this.layerSwitcher);
-	      if (this.config.keepLayerSwitcherOpen) {
+	      if (this.config.map.keepLayerSwitcherOpen) {
 	        this.layerSwitcher.panel.onmouseout = null;
 	        this.map.on('postrender', function () {
 	          _this.layerSwitcher.showPanel();
@@ -163,10 +164,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.map.on('singleclick', this._featurePopup.bind(this));
 	
 	      // Add base layers
-	      if (this.config.addDefaultBaseLayers) {
+	      if (this.config.map.addDefaultBaseLayers) {
 	        this.addBingLayer({
 	          title: 'Bing Aerial',
-	          key: this.config.bingKey
+	          key: this.config.map.bingKey
 	        });
 	        this.addOSMLayer({
 	          title: 'OpenStreetMap'
@@ -265,18 +266,34 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Handlebars = __webpack_require__(3);
 	function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
-	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
+	    var stack1, helper, alias1=depth0 != null ? depth0 : {};
+	
+	  return "    <div class=\"header\">\n"
+	    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.logo : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+	    + "      <span>"
+	    + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
+	    + "</span>\n    </div>\n";
+	},"2":function(container,depth0,helpers,partials,data) {
 	    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 	
-	  return "<div class=\"geo-dashboard\">\n  <div class=\"header\">\n    <img src=\""
+	  return "        <img src=\""
 	    + alias4(((helper = (helper = helpers.logo || (depth0 != null ? depth0.logo : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"logo","hash":{},"data":data}) : helper)))
 	    + "\" alt=\""
 	    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
 	    + "\" title=\""
 	    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-	    + "\" />\n    <span>"
-	    + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-	    + "</span>\n  </div>\n  <div class=\"content\">\n    <div class=\"map\">\n    </div>\n    <div class=\"panel\">\n    </div>\n  </div>\n  <div class=\"footer\"></div>\n</div>\n";
+	    + "\" />\n";
+	},"4":function(container,depth0,helpers,partials,data) {
+	    return "    <div class=\"footer\"></div>\n";
+	},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var stack1, alias1=depth0 != null ? depth0 : {};
+	
+	  return "<div class=\"geo-dashboard\">\n"
+	    + ((stack1 = helpers["with"].call(alias1,((stack1 = (depth0 != null ? depth0.config : depth0)) != null ? stack1.header : stack1),{"name":"with","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+	    + "  <div class=\"content\">\n    <div class=\"map\">\n    </div>\n    <div class=\"panel\">\n    </div>\n  </div>\n"
+	    + ((stack1 = helpers["with"].call(alias1,((stack1 = (depth0 != null ? depth0.config : depth0)) != null ? stack1.footer : stack1),{"name":"with","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+	    + "</div>\n";
 	},"useData":true});
 
 /***/ },
@@ -1490,6 +1507,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 23 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 24 */,
+/* 25 */,
+/* 26 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

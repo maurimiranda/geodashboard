@@ -1,290 +1,62 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import '_variables.scss';
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0; }
-
-.group:after {
-  content: "";
-  display: table;
-  clear: both; }
-
-body,
-html {
+.geo-dashboard {
   font-family: $font-family-base;
-  font-size: $font-size-base;
   background-color: $background-color;
   color: $primary-color;
   height: 100%;
-}
-
-.geo-dashboard {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   .header {
-    height: $header-size;
-    padding-left: $global-space;
-    padding-top: ceil($global-space * 1.5);
+    height: 2.5em;
+    padding-left: $default-spacing;
     background-color: $primary-color;
-    z-index: 1030;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-
+    display: flex;
+    align-items: center;
     color: $background-color;
+    font-size: 1.5em;
 
     img {
       height: 80%;
-      vertical-align: middle;
-      float: left;
-      margin-left: $global-space;
     }
 
     span {
-      font-size: $font-size-large;
-      float: left;
-      padding-left: $global-space * 2;
-      padding-top: ceil($global-space / 2);
+      padding-left: $default-spacing;
     }
   }
 
   .content {
-    position: absolute;
-    top: $header-size;
-    bottom: $footer-size;
-    width: 100%;
+    flex: 1;
+    display: flex;
 
     > .map {
-      width: 80%;
-      height: 100%;
-      float: left;
-
-      .ol-viewport {
-        border-radius: $border-radius;
-      }
+      flex: 1;
     }
 
     > .panel {
-      position: relative;
       width: 20%;
-      height: 100%;
-      float: left;
-      padding: $global-space * 2;
+      padding: $default-spacing * 2;
       background: lighten($primary-color, 15%);
     }
   }
 
   .footer {
-    height: $footer-size;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
-    padding: $global-space;
+    height: 1.5em;
+    padding-left: $default-spacing;
   }
 
 }
 
-.ol-control {
-  padding: 0px;
-  border-radius: $border-radius;
-  border: $border-base;
-  box-shadow: $box-shadow;
-
-  button {
-    background-color: $background-alpha;
-    border-radius: $border-radius;
-    color: $primary-color;
-    cursor: pointer;
-    width: $button-size;
-    height: $button-size;
-    margin: 0;
-
-    &:hover {
-      background-color: $primary-alpha;
+@media (max-width: 768px) {
+  .geo-dashboard {
+    .header {
+      font-size: 1em;
     }
-  }
-}
 
-.ol-zoom {
-  bottom: $global-space * 2;
-  left: $global-space * 2;
-  top: initial;
-  border-radius: $border-radius;
-}
-
-.ol-attribution {
-  font-family: $font-family-title;
-  box-shadow: $box-shadow;
-  bottom: $global-space * 2;
-  right: $global-space * 2;
-  background-color: $background-color;
-
-  &:not(.ol-collapsed) {
-    background-color: $background-color;
-
-    button {
-      &:before {
-        content: "\f054";
-      }
-    }
-  }
-
-  ul {
-    font-size: $font-size-small;
-    color: $info-color;
-
-    li {
-      &:first-child {
+    .content {
+      > .panel {
         display: none;
-      }
-    }
-
-    a {
-      color: $primary-color;
-      text-decoration: none;
-
-      &:hover {
-        color: darken($primary-color, 20%);
-      }
-    }
-  }
-
-  button {
-    background-image: none;
-    font-family: FontAwesome;
-    outline: none;
-
-    &:before {
-      content: "\f053";
-    }
-
-    &:focus {
-      background: none;
-    }
-
-    span {
-      display: none;
-    }
-  }
-}
-
-.layer-switcher {
-  position: absolute;
-  top: $global-space * 2;
-  left: $global-space * 2;
-  right: auto;
-
-  button {
-    background-image: none;
-    font-family: FontAwesome;
-
-    &:before {
-      content: "\f0c9";
-    }
-  }
-
-  .panel {
-    padding-right: 0px;
-    border: none;
-    border-radius: $border-radius;
-    background: none;
-
-    ul {
-      padding: 0;
-    }
-  }
-
-  li.group {
-    padding: 10px 0px 10px 0px;
-    box-shadow: $box-shadow;
-    background-color: $background-color;
-    border: $border-base;
-    margin-bottom: $global-space;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    > label {
-      display: none;
-    }
-  }
-
-  li.layer {
-    width: 100%;
-    margin: 5px 0px 5px 0px;
-
-    &:first-child {
-      margin-top: 0px;
-    }
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
-
-    label {
-      cursor: pointer;
-      font-size: 12px;
-      line-height: 30px;
-      padding: 0px 5px 0px 5px;
-      border-radius: $border-radius;
-      color: $primary-alpha;
-      min-width: 150px;
-      text-transform: uppercase;
-      text-align: center;
-    }
-
-    input {
-      display: none;
-
-      &:checked ~ label {
-        color: $primary-color;
-      }
-    }
-  }
-}
-
-.layer-switcher.shown {
-  border: none;
-  box-shadow: none;
-}
-
-.info-popup {
-  background-color: $background-color;
-  border-radius: $border-radius;
-  padding: $global-space * 2;
-  box-shadow: $box-shadow;
-  min-width: 200px;
-  max-width: 300px;
-
-  img {
-    width: 100%;
-    max-height: 200px;
-    margin-bottom: $global-space * 2;
-  }
-}
-
-.info-box {
-  dl {
-    dt {
-      font-size: $font-size-smaller;
-      text-transform: uppercase;
-      font-family: $font-family-title;
-      color: $info-color;
-    }
-
-    dd {
-      color: $primary-color;
-      margin-bottom: $global-space;
-
-      &.value:last-child {
-        margin-bottom: 0px;
       }
     }
   }

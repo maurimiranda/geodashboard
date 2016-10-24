@@ -1,30 +1,20 @@
-$primary-color:     #505050;
-$background-color:  #FFFFFF;
-$info-color:        #666666;
-$success-color:     #7A9D67;
-$warning-color:     #fdba12;
-$danger-color:      #d9534f;
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-$primary-alpha:     rgba($primary-color, 0.5);
-$background-alpha:  rgba($background-color, 0.9);
-$info-alpha:        rgba($info-color, 0.1);
-$box-shadow:        rgba(black, 0.3) 3px 4px 4px -3px;
+$primary-color:       #505050;
+$background-color:    #FFFFFF;
+$info-color:          #666666;
+$success-color:       #7A9D67;
+$warning-color:       #fdba12;
+$danger-color:        #d9534f;
 
-$font-family-base:  'Open Sans', sans-serif !default;
-$font-family-title: sans-serif !default;
+$primary-alpha:       rgba($primary-color, 0.5);
+$background-alpha:    rgba($background-color, 0.9);
+$info-alpha:          rgba($info-color, 0.1);
+$box-shadow:          rgba(black, 0.3) 3px 4px 4px -3px;
 
-$font-size-base:    16px;
-$font-size-large:   ceil(($font-size-base * 1.25));
-$font-size-small:   ceil(($font-size-base * 0.85));
-$font-size-smaller: ceil(($font-size-base * 0.65));
-$font-size-h1:      floor(($font-size-base * 2.6));
-$font-size-h2:      floor(($font-size-base * 2.3));
-$font-size-h3:      ceil(($font-size-base * 1.9));
-$font-size-h4:      ceil(($font-size-base * 1.6));
+$font-family-base:    'Open Sans', sans-serif !default;
+$font-family-title:   sans-serif !default;
 
-$border-radius:   2px;
-$global-space:    5px;
-$button-size:     30px;
-$header-size:     50px;
-$footer-size:     0px;
-$border-base:     1px solid $info-alpha;
+$border-radius:       2px;
+$default-spacing:     0.5em;
+$border-base:         1px solid $info-alpha;

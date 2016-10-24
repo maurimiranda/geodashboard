@@ -1,0 +1,201 @@
+@import '_variables.scss';
+
+.ol-control {
+  padding: 0px;
+  border-radius: $border-radius;
+  border: $border-base;
+  box-shadow: $box-shadow;
+
+  button {
+    background-color: $background-alpha;
+    border-radius: $border-radius;
+    color: $primary-color;
+    cursor: pointer;
+    width: 2em;
+    height: 2em;
+    margin: 0;
+
+    &:hover {
+      background-color: $primary-alpha;
+    }
+  }
+}
+
+.ol-zoom {
+  bottom: $default-spacing * 2;
+  left: $default-spacing * 2;
+  top: initial;
+  border-radius: $border-radius;
+}
+
+.ol-attribution {
+  font-family: $font-family-title;
+  box-shadow: $box-shadow;
+  bottom: $default-spacing * 2;
+  right: $default-spacing * 2;
+  background-color: $background-color;
+
+  &:not(.ol-collapsed) {
+    background-color: $background-color;
+
+    button {
+      &:before {
+        content: "\f054";
+      }
+    }
+  }
+
+  ul {
+    font-size: 0.5em;
+    color: $info-color;
+
+    li {
+      &:first-child {
+        display: none;
+      }
+    }
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        color: darken($primary-color, 20%);
+      }
+    }
+  }
+
+  button {
+    background-image: none;
+    font-family: FontAwesome;
+    outline: none;
+
+    &:before {
+      content: "\f053";
+    }
+
+    &:focus {
+      background: none;
+    }
+
+    span {
+      display: none;
+    }
+  }
+}
+
+.layer-switcher {
+  position: absolute;
+  top: $default-spacing * 2;
+  left: $default-spacing * 2;
+  right: auto;
+
+  button {
+    background-image: none;
+    font-family: FontAwesome;
+
+    &:before {
+      content: "\f0c9";
+    }
+  }
+
+  .panel {
+    padding-right: 0px;
+    border: none;
+    border-radius: $border-radius;
+    background: none;
+
+    ul {
+      padding: 0;
+    }
+  }
+
+  li.group {
+    padding: 10px 0px 10px 0px;
+    box-shadow: $box-shadow;
+    background-color: $background-color;
+    border: $border-base;
+    margin-bottom: $default-spacing;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    > label {
+      display: none;
+    }
+  }
+
+  li.layer {
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+
+    label {
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 30px;
+      padding: 0px 5px 0px 5px;
+      border-radius: $border-radius;
+      color: $primary-alpha;
+      min-width: 150px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    input {
+      display: none;
+
+      &:checked ~ label {
+        color: $primary-color;
+      }
+    }
+  }
+}
+
+.layer-switcher.shown {
+  border: none;
+  box-shadow: none;
+}
+
+.info-popup {
+  background-color: $background-color;
+  border-radius: $border-radius;
+  padding: $default-spacing * 2;
+  box-shadow: $box-shadow;
+  min-width: 200px;
+  max-width: 300px;
+
+  img {
+    width: 100%;
+    max-height: 200px;
+    margin-bottom: $default-spacing * 2;
+  }
+}
+
+.info-box {
+  dl {
+    dt {
+      font-size: 0.5em;
+      text-transform: uppercase;
+      font-family: $font-family-title;
+      color: $info-color;
+    }
+
+    dd {
+      color: $primary-color;
+      margin-bottom: $default-spacing;
+
+      &.value:last-child {
+        margin-bottom: 0px;
+      }
+    }
+  }
+}
