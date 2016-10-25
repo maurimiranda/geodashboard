@@ -52,7 +52,12 @@ module.exports = {
       }
     ],
   },
-  plugins
+  plugins,
+  devServer: {
+    inline: true,
+    hot: true,
+    port: 9000
+  }
 };
 
 function toDash(string) {
