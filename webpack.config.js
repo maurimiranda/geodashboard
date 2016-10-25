@@ -54,9 +54,11 @@ module.exports = {
   },
   plugins,
   devServer: {
+    colors: true,
     inline: true,
     hot: true,
-    port: 9000
+    port: 9000,
+    contentBase: './dist/examples'
   }
 };
 
