@@ -17,6 +17,7 @@ if (env === 'build') {
   plugins.push(new webpack.optimize.UglifyJsPlugin({ minimize: true }));
   outputFile = `${toDash(libraryName)}.min.js`;
 } else {
+  plugins.push(new webpack.HotModuleReplacementPlugin());
   outputFile = `${toDash(libraryName)}.js`;
 }
 
@@ -58,7 +59,7 @@ module.exports = {
     inline: true,
     hot: true,
     port: 9000,
-    contentBase: './dist/examples'
+    contentBase: './dist'
   }
 };
 
