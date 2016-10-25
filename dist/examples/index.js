@@ -1,11 +1,10 @@
 var dashboard = new GeoDashboard({
-  container: document.getElementById('dashboard'),
+  serverURL: 'http://geoserver.siasar.org/geoserver',
   header: {
     title: 'GeoDashboard Demo',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/WhiteDot.svg/600px-WhiteDot.svg.png',
   },
   map: {
-    geoserverUrl: 'http://geoserver.siasar.org/geoserver',
     bingKey: 'AlMSfR3F4khtlIefjuE_NYpX403LdlGiod36WLn8HlawywtSud-NSgEklCemD5pR',
     center: [-60, -10],
     zoom: 4,
@@ -15,30 +14,54 @@ var dashboard = new GeoDashboard({
   },
 });
 
-// var options = {
-//   'A': {
-//     color: '#54BA46'
-//   },
-//   'B': {
-//     color: '#FFFF39'
-//   },
-//   'C': {
-//     color: '#FF9326'
-//   },
-//   'D': {
-//     color: '#C92429'
-//   }
-// };
-//
-// var style = {
-//   label: {
-//     property: 'name'
-//   },
-//   color: {
-//     property: 'score',
-//     values: options
-//   }
-// };
+var options = {
+  'A': {
+    color: '#54BA46'
+  },
+  'B': {
+    color: '#FFFF39'
+  },
+  'C': {
+    color: '#FF9326'
+  },
+  'D': {
+    color: '#C92429'
+  }
+};
+
+var style = {
+  label: {
+    property: 'name'
+  },
+  color: {
+    property: 'score',
+    values: options
+  }
+};
+
+var communities = dashboard.addWFSLayer({
+  title: 'Communities',
+  layer: 'siasar:communities',
+  exclusive: true,
+  visible: true,
+  filters: [],
+  featurePopup: [{
+    title: 'Name',
+    property: 'name',
+  },{
+    title: 'Location',
+    property: 'adm_3',
+  },{
+    title: 'Population',
+    property: 'population',
+  },{
+    title: 'Housing',
+    property: 'housing',
+  }],
+  style: style
+});
+
+dashboard.render(document.getElementById('dashboard'));
 //
 // var providers = dashboard.addWFSLayer({
 //   title: 'Prestadores',
@@ -106,30 +129,6 @@ var dashboard = new GeoDashboard({
 //   visible: false
 // });
 //
-// var communities = dashboard.addWFSLayer({
-//   title: 'Comunidades',
-//   layer: 'siasar:communities',
-//   exclusive: true,
-//   visible: true,
-//   filters: [],
-//   featurePopup: [{
-//     property: 'name',
-//     title: 'Nombre'
-//   },{
-//     property: 'adm_3',
-//     title: 'Distrito'
-//   },{
-//     property: 'population',
-//     title: 'Habitantes'
-//   },{
-//     property: 'housing',
-//     title: 'Hogares'
-//   },{
-//     property: 'issa',
-//     title: 'ISSA'
-//   }],
-//   style: style
-// });
 //
 // dashboard.addWidget(new FilterWidget({
 //   layer: communities,

@@ -1,7 +1,7 @@
 @import '_variables.scss';
 
 .ol-control {
-  padding: 0px;
+  padding: 0;
   border-radius: $border-radius;
   border: $border-base;
   box-shadow: $box-shadow;
@@ -11,9 +11,8 @@
     border-radius: $border-radius;
     color: $primary-color;
     cursor: pointer;
-    width: 2em;
-    height: 2em;
     margin: 0;
+    font-size: 1.2em;
 
     &:hover {
       background-color: $primary-alpha;
@@ -29,7 +28,6 @@
 }
 
 .ol-attribution {
-  font-family: $font-family-title;
   box-shadow: $box-shadow;
   bottom: $default-spacing * 2;
   right: $default-spacing * 2;
@@ -46,7 +44,7 @@
   }
 
   ul {
-    font-size: 0.5em;
+    font-size: 1em;
     color: $info-color;
 
     li {
@@ -163,6 +161,7 @@
 .layer-switcher.shown {
   border: none;
   box-shadow: none;
+  bottom: auto;
 }
 
 .info-popup {
@@ -182,16 +181,19 @@
 
 .info-box {
   dl {
+    margin: 0;
     dt {
-      font-size: 0.5em;
+      font-size: 0.7em;
       text-transform: uppercase;
-      font-family: $font-family-title;
       color: $info-color;
     }
 
     dd {
+      font-size: 1.2em;
       color: $primary-color;
+      margin-left: 0;
       margin-bottom: $default-spacing;
+      font-weight: bold;
 
       &.value:last-child {
         margin-bottom: 0px;

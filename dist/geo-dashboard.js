@@ -58,6 +58,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _mapManager = __webpack_require__(27);
+	
+	var _mapManager2 = _interopRequireDefault(_mapManager);
+	
 	var _widgetManager = __webpack_require__(1);
 	
 	var _widgetManager2 = _interopRequireDefault(_widgetManager);
@@ -66,13 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _geoDashboard2 = _interopRequireDefault(_geoDashboard);
 	
-	var _featurePopup2 = __webpack_require__(22);
-	
-	var _featurePopup3 = _interopRequireDefault(_featurePopup2);
-	
 	__webpack_require__(23);
-	
-	__webpack_require__(26);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -80,162 +78,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var GeoDashboard = function () {
 	  function GeoDashboard(config) {
+	    var _this = this;
+	
 	    _classCallCheck(this, GeoDashboard);
 	
 	    this.config = config;
 	
-	    this.container = this.config.container;
-	    this.mapContainer = this.container.getElementsByClassName('map');
-	    this.widgetContainer = this.container.getElementsByClassName('panel');
+	    this.mapManager = new _mapManager2.default(Object.assign({
+	      serverURL: this.config.serverURL
+	    }, this.config.map));
 	
-	    this.widgetManager = new _widgetManager2.default();
-	    this.geoserverUrl = this.config.map.geoserverUrl;
+	    this.widgetManager = new _widgetManager2.default({
+	      map: this.map,
+	      wpsUrl: this.config.serverURL + '/wps/',
+	      container: this.widgetContainer
+	    });
 	
-	    // if (config.hideHeader) {
-	    //   this.container.find('.geo-dashboard .header').hide();
-	    //   this.container.find('.geo-dashboard .content').css('top', '0');
-	    // }
-	
-	    // if (config.hidePanel) {
-	    //   this.container.find('.geo-dashboard .content .panel').hide();
-	    //   this.container.find('.geo-dashboard .content .map').css('width', '100%');
-	    // }
-	
-	    // this.picturesUrl = config.picturesUrl;
-	    // }
-	
-	    this.container.insertAdjacentHTML('beforeend', (0, _geoDashboard2.default)({
-	      config: config
-	    }));
-	
-	    this._createMap(config);
-	    // this._createWidgetPanel(config);
+	    this.mapManager.on('mapchange', function () {
+	      return _this.refresh();
+	    });
 	  }
 	
 	  _createClass(GeoDashboard, [{
-	    key: '_createMap',
-	    value: function _createMap() {
-	      var _this = this;
+	    key: 'render',
+	    value: function render(container) {
+	      container.insertAdjacentHTML('beforeend', (0, _geoDashboard2.default)({
+	        config: this.config
+	      }));
 	
-	      // Create layer groups
-	      this.baseLayers = new ol.layer.Group({
-	        title: 'Base',
-	        layers: []
-	      });
-	      this.overlayLayers = new ol.layer.Group({
-	        title: 'Data',
-	        layers: []
-	      });
-	      this.layers = [this.overlayLayers, this.baseLayers];
-	
-	      // Create View and Map objects
-	      this.view = new ol.View({
-	        center: ol.proj.fromLonLat(this.config.map.center),
-	        zoom: this.config.map.zoom
-	      });
-	      this.map = new ol.Map({
-	        target: this.mapContainer[0],
-	        view: this.view,
-	        loadTilesWhileInteracting: true,
-	        interactions: ol.interaction.defaults({ mouseWheelZoom: false }),
-	        layers: this.layers
-	      });
-	      this.attribution = this.config.map.attribution;
-	      this.viewProjection = this.view.getProjection();
-	      this.viewResolution = this.view.getResolution();
-	
-	      // Add overlay to display info popups
-	      this.overlay = new ol.Overlay({});
-	      this.map.addOverlay(this.overlay);
-	
-	      // Add layer switcher control
-	      this.layerSwitcher = new ol.control.LayerSwitcher({
-	        tipLabel: 'Layers'
-	      });
-	      this.map.addControl(this.layerSwitcher);
-	      if (this.config.map.keepLayerSwitcherOpen) {
-	        this.layerSwitcher.panel.onmouseout = null;
-	        this.map.on('postrender', function () {
-	          _this.layerSwitcher.showPanel();
-	        });
-	      }
-	
-	      // Bind feature popup to map click event
-	      this.map.on('singleclick', this._featurePopup.bind(this));
-	
-	      // Add base layers
-	      if (this.config.map.addDefaultBaseLayers) {
-	        this.addBingLayer({
-	          title: 'Bing Aerial',
-	          key: this.config.map.bingKey
-	        });
-	        this.addOSMLayer({
-	          title: 'OpenStreetMap'
-	        });
-	      }
+	      this.mapManager.render(container.getElementsByClassName('map')[0]);
+	      this.widgetManager.render(container.getElementsByClassName('panel')[0]);
 	    }
 	  }, {
-	    key: '_featurePopup',
-	    value: function _featurePopup(event) {
-	      var pixel = this.map.getEventPixel(event.originalEvent);
-	      var result = this.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-	        return {
-	          feature: feature,
-	          layer: layer
-	        };
-	      });
-	      if (result && result.feature) {
-	        var properties = result.layer.featurePopup.map(function (property) {
-	          return {
-	            title: property.title,
-	            value: property.format ? property.format(result.feature.get(property.property)) : result.feature.get(property.property)
-	          };
-	        });
-	        var element = document.createElement((0, _featurePopup3.default)({
-	          properties: properties
-	        }));
-	        this.map.beforeRender(ol.animation.pan({
-	          duration: 1000,
-	          source: this.view.getCenter()
-	        }));
-	        pixel[0] += element.width() + 100;
-	        pixel[1] -= element.height() - 150;
-	        this.view.setCenter(this.map.getCoordinateFromPixel(pixel));
-	        this.overlay.setElement(element[0]);
-	        this.overlay.setPosition(event.coordinate);
-	      } else {
-	        this.overlay.setElement(null);
-	      }
+	    key: 'refresh',
+	    value: function refresh() {
+	      this.widgetManager.refresh();
 	    }
 	  }, {
-	    key: 'addBingLayer',
-	    value: function addBingLayer(config) {
-	      var layer = new ol.layer.Tile({
-	        title: config.title,
-	        preload: Infinity,
-	        source: new ol.source.BingMaps({
-	          key: config.key,
-	          imagerySet: 'Aerial'
-	        }),
-	        visible: false,
-	        type: 'base',
-	        zIndex: -1
-	      });
-	      this.baseLayers.getLayers().push(layer);
-	      return layer;
-	    }
-	  }, {
-	    key: 'addOSMLayer',
-	    value: function addOSMLayer(config) {
-	      var layer = new ol.layer.Tile({
-	        title: config.title,
-	        source: new ol.source.OSM(),
-	        type: 'base',
-	        visible: true,
-	        zIndex: -1
-	      });
-	      this.baseLayers.getLayers().push(layer);
-	      return layer;
+	    key: 'addWFSLayer',
+	    value: function addWFSLayer(config) {
+	      this.mapManager.addWFSLayer(config);
 	    }
 	  }]);
 	
@@ -250,13 +132,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var WidgetManager = function WidgetManager() {
-	  _classCallCheck(this, WidgetManager);
+	var WidgetManager = function () {
+	  function WidgetManager() {
+	    _classCallCheck(this, WidgetManager);
 	
-	  this.message = 'I am the manager!';
-	};
+	    this.message = 'I am the manager!';
+	  }
+	
+	  _createClass(WidgetManager, [{
+	    key: 'render',
+	    value: function render() {}
+	  }, {
+	    key: 'refresh',
+	    value: function refresh() {}
+	  }]);
+	
+	  return WidgetManager;
+	}();
 	
 	module.exports = WidgetManager;
 
@@ -1518,6 +1414,781 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _events = __webpack_require__(29);
+	
+	var _events2 = _interopRequireDefault(_events);
+	
+	var _wfsLayer = __webpack_require__(31);
+	
+	var _wfsLayer2 = _interopRequireDefault(_wfsLayer);
+	
+	var _featurePopup2 = __webpack_require__(22);
+	
+	var _featurePopup3 = _interopRequireDefault(_featurePopup2);
+	
+	__webpack_require__(26);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var MapManager = function (_EventEmitter) {
+	  _inherits(MapManager, _EventEmitter);
+	
+	  function MapManager(config) {
+	    _classCallCheck(this, MapManager);
+	
+	    var _this = _possibleConstructorReturn(this, (MapManager.__proto__ || Object.getPrototypeOf(MapManager)).call(this));
+	
+	    _this.config = config;
+	
+	    _this._createLayerGroups();
+	    _this._createMap();
+	    _this._createOverlay();
+	    _this._addLayerSwitcher();
+	    if (_this.config.addDefaultBaseLayers) {
+	      _this._addDefaultBaseLayers();
+	    }
+	    return _this;
+	  }
+	
+	  _createClass(MapManager, [{
+	    key: '_createLayerGroups',
+	    value: function _createLayerGroups() {
+	      this.baseLayers = new ol.layer.Group({
+	        title: 'Base',
+	        layers: []
+	      });
+	      this.overlayLayers = new ol.layer.Group({
+	        title: 'Data',
+	        layers: []
+	      });
+	      this.layers = [this.overlayLayers, this.baseLayers];
+	    }
+	  }, {
+	    key: '_createMap',
+	    value: function _createMap() {
+	      var _this2 = this;
+	
+	      this.view = new ol.View({
+	        center: ol.proj.fromLonLat(this.config.center),
+	        zoom: this.config.zoom
+	      });
+	
+	      this.map = new ol.Map({
+	        view: this.view,
+	        loadTilesWhileInteracting: true,
+	        interactions: ol.interaction.defaults({ mouseWheelZoom: false }),
+	        layers: this.layers
+	      });
+	
+	      this.attribution = this.config.attribution;
+	      this.viewProjection = this.view.getProjection();
+	      this.viewResolution = this.view.getResolution();
+	
+	      this.map.on('moveend', function (e) {
+	        return _this2.emit('mapchange', e);
+	      });
+	    }
+	  }, {
+	    key: '_createOverlay',
+	    value: function _createOverlay() {
+	      this.overlay = new ol.Overlay({});
+	      this.map.addOverlay(this.overlay);
+	      this.map.on('singleclick', this._featurePopup.bind(this));
+	    }
+	  }, {
+	    key: '_addLayerSwitcher',
+	    value: function _addLayerSwitcher() {
+	      var _this3 = this;
+	
+	      this.layerSwitcher = new ol.control.LayerSwitcher({
+	        tipLabel: 'Layers'
+	      });
+	      this.map.addControl(this.layerSwitcher);
+	      if (this.config.keepLayerSwitcherOpen) {
+	        this.layerSwitcher.panel.onmouseout = null;
+	        this.map.on('postrender', function () {
+	          _this3.layerSwitcher.showPanel();
+	        });
+	      }
+	    }
+	  }, {
+	    key: '_addDefaultBaseLayers',
+	    value: function _addDefaultBaseLayers() {
+	      this.addBingLayer({
+	        title: 'Bing Aerial',
+	        key: this.config.bingKey
+	      });
+	      this.addOSMLayer({
+	        title: 'OpenStreetMap'
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render(container) {
+	      this.map.setTarget(container);
+	    }
+	  }, {
+	    key: 'addBingLayer',
+	    value: function addBingLayer(config) {
+	      var layer = new ol.layer.Tile({
+	        title: config.title,
+	        preload: Infinity,
+	        source: new ol.source.BingMaps({
+	          key: config.key,
+	          imagerySet: 'Aerial'
+	        }),
+	        visible: false,
+	        type: 'base',
+	        zIndex: -1
+	      });
+	      this.baseLayers.getLayers().push(layer);
+	      return layer;
+	    }
+	  }, {
+	    key: 'addOSMLayer',
+	    value: function addOSMLayer(config) {
+	      var layer = new ol.layer.Tile({
+	        title: config.title,
+	        source: new ol.source.OSM(),
+	        type: 'base',
+	        visible: true,
+	        zIndex: -1
+	      });
+	      this.baseLayers.getLayers().push(layer);
+	      return layer;
+	    }
+	  }, {
+	    key: '_featurePopup',
+	    value: function _featurePopup(event) {
+	      var pixel = this.map.getEventPixel(event.originalEvent);
+	      var result = this.map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+	        return {
+	          feature: feature,
+	          layer: layer
+	        };
+	      });
+	      if (result && result.feature) {
+	        var properties = result.layer.featurePopup.map(function (property) {
+	          return {
+	            title: property.title,
+	            value: property.format ? property.format(result.feature.get(property.property)) : result.feature.get(property.property)
+	          };
+	        });
+	        var element = document.createElement('div');
+	        element.innerHTML = (0, _featurePopup3.default)({
+	          properties: properties
+	        });
+	        this.map.beforeRender(ol.animation.pan({
+	          duration: 1000,
+	          source: this.view.getCenter()
+	        }));
+	        pixel[0] += element.offsetWidth + 100;
+	        pixel[1] -= element.offsetHeight - 150;
+	        this.view.setCenter(this.map.getCoordinateFromPixel(pixel));
+	        this.overlay.setElement(element);
+	        this.overlay.setPosition(event.coordinate);
+	      } else {
+	        this.overlay.setElement(null);
+	      }
+	    }
+	  }, {
+	    key: 'addWFSLayer',
+	    value: function addWFSLayer(config) {
+	      var layer = new _wfsLayer2.default(Object.assign(config, {
+	        serverURL: this.config.serverURL,
+	        viewProjection: this.viewProjection
+	      }));
+	      this.overlayLayers.getLayers().push(layer.layer);
+	    }
+	  }]);
+	
+	  return MapManager;
+	}(_events2.default);
+	
+	module.exports = MapManager;
+
+/***/ },
+/* 28 */,
+/* 29 */
+/***/ function(module, exports) {
+
+	// Copyright Joyent, Inc. and other Node contributors.
+	//
+	// Permission is hereby granted, free of charge, to any person obtaining a
+	// copy of this software and associated documentation files (the
+	// "Software"), to deal in the Software without restriction, including
+	// without limitation the rights to use, copy, modify, merge, publish,
+	// distribute, sublicense, and/or sell copies of the Software, and to permit
+	// persons to whom the Software is furnished to do so, subject to the
+	// following conditions:
+	//
+	// The above copyright notice and this permission notice shall be included
+	// in all copies or substantial portions of the Software.
+	//
+	// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+	// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+	// USE OR OTHER DEALINGS IN THE SOFTWARE.
+	
+	function EventEmitter() {
+	  this._events = this._events || {};
+	  this._maxListeners = this._maxListeners || undefined;
+	}
+	module.exports = EventEmitter;
+	
+	// Backwards-compat with node 0.10.x
+	EventEmitter.EventEmitter = EventEmitter;
+	
+	EventEmitter.prototype._events = undefined;
+	EventEmitter.prototype._maxListeners = undefined;
+	
+	// By default EventEmitters will print a warning if more than 10 listeners are
+	// added to it. This is a useful default which helps finding memory leaks.
+	EventEmitter.defaultMaxListeners = 10;
+	
+	// Obviously not all Emitters should be limited to 10. This function allows
+	// that to be increased. Set to zero for unlimited.
+	EventEmitter.prototype.setMaxListeners = function(n) {
+	  if (!isNumber(n) || n < 0 || isNaN(n))
+	    throw TypeError('n must be a positive number');
+	  this._maxListeners = n;
+	  return this;
+	};
+	
+	EventEmitter.prototype.emit = function(type) {
+	  var er, handler, len, args, i, listeners;
+	
+	  if (!this._events)
+	    this._events = {};
+	
+	  // If there is no 'error' event listener then throw.
+	  if (type === 'error') {
+	    if (!this._events.error ||
+	        (isObject(this._events.error) && !this._events.error.length)) {
+	      er = arguments[1];
+	      if (er instanceof Error) {
+	        throw er; // Unhandled 'error' event
+	      } else {
+	        // At least give some kind of context to the user
+	        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+	        err.context = er;
+	        throw err;
+	      }
+	    }
+	  }
+	
+	  handler = this._events[type];
+	
+	  if (isUndefined(handler))
+	    return false;
+	
+	  if (isFunction(handler)) {
+	    switch (arguments.length) {
+	      // fast cases
+	      case 1:
+	        handler.call(this);
+	        break;
+	      case 2:
+	        handler.call(this, arguments[1]);
+	        break;
+	      case 3:
+	        handler.call(this, arguments[1], arguments[2]);
+	        break;
+	      // slower
+	      default:
+	        args = Array.prototype.slice.call(arguments, 1);
+	        handler.apply(this, args);
+	    }
+	  } else if (isObject(handler)) {
+	    args = Array.prototype.slice.call(arguments, 1);
+	    listeners = handler.slice();
+	    len = listeners.length;
+	    for (i = 0; i < len; i++)
+	      listeners[i].apply(this, args);
+	  }
+	
+	  return true;
+	};
+	
+	EventEmitter.prototype.addListener = function(type, listener) {
+	  var m;
+	
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  if (!this._events)
+	    this._events = {};
+	
+	  // To avoid recursion in the case that type === "newListener"! Before
+	  // adding it to the listeners, first emit "newListener".
+	  if (this._events.newListener)
+	    this.emit('newListener', type,
+	              isFunction(listener.listener) ?
+	              listener.listener : listener);
+	
+	  if (!this._events[type])
+	    // Optimize the case of one listener. Don't need the extra array object.
+	    this._events[type] = listener;
+	  else if (isObject(this._events[type]))
+	    // If we've already got an array, just append.
+	    this._events[type].push(listener);
+	  else
+	    // Adding the second element, need to change to array.
+	    this._events[type] = [this._events[type], listener];
+	
+	  // Check for listener leak
+	  if (isObject(this._events[type]) && !this._events[type].warned) {
+	    if (!isUndefined(this._maxListeners)) {
+	      m = this._maxListeners;
+	    } else {
+	      m = EventEmitter.defaultMaxListeners;
+	    }
+	
+	    if (m && m > 0 && this._events[type].length > m) {
+	      this._events[type].warned = true;
+	      console.error('(node) warning: possible EventEmitter memory ' +
+	                    'leak detected. %d listeners added. ' +
+	                    'Use emitter.setMaxListeners() to increase limit.',
+	                    this._events[type].length);
+	      if (typeof console.trace === 'function') {
+	        // not supported in IE 10
+	        console.trace();
+	      }
+	    }
+	  }
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+	
+	EventEmitter.prototype.once = function(type, listener) {
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  var fired = false;
+	
+	  function g() {
+	    this.removeListener(type, g);
+	
+	    if (!fired) {
+	      fired = true;
+	      listener.apply(this, arguments);
+	    }
+	  }
+	
+	  g.listener = listener;
+	  this.on(type, g);
+	
+	  return this;
+	};
+	
+	// emits a 'removeListener' event iff the listener was removed
+	EventEmitter.prototype.removeListener = function(type, listener) {
+	  var list, position, length, i;
+	
+	  if (!isFunction(listener))
+	    throw TypeError('listener must be a function');
+	
+	  if (!this._events || !this._events[type])
+	    return this;
+	
+	  list = this._events[type];
+	  length = list.length;
+	  position = -1;
+	
+	  if (list === listener ||
+	      (isFunction(list.listener) && list.listener === listener)) {
+	    delete this._events[type];
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	
+	  } else if (isObject(list)) {
+	    for (i = length; i-- > 0;) {
+	      if (list[i] === listener ||
+	          (list[i].listener && list[i].listener === listener)) {
+	        position = i;
+	        break;
+	      }
+	    }
+	
+	    if (position < 0)
+	      return this;
+	
+	    if (list.length === 1) {
+	      list.length = 0;
+	      delete this._events[type];
+	    } else {
+	      list.splice(position, 1);
+	    }
+	
+	    if (this._events.removeListener)
+	      this.emit('removeListener', type, listener);
+	  }
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.removeAllListeners = function(type) {
+	  var key, listeners;
+	
+	  if (!this._events)
+	    return this;
+	
+	  // not listening for removeListener, no need to emit
+	  if (!this._events.removeListener) {
+	    if (arguments.length === 0)
+	      this._events = {};
+	    else if (this._events[type])
+	      delete this._events[type];
+	    return this;
+	  }
+	
+	  // emit removeListener for all listeners on all events
+	  if (arguments.length === 0) {
+	    for (key in this._events) {
+	      if (key === 'removeListener') continue;
+	      this.removeAllListeners(key);
+	    }
+	    this.removeAllListeners('removeListener');
+	    this._events = {};
+	    return this;
+	  }
+	
+	  listeners = this._events[type];
+	
+	  if (isFunction(listeners)) {
+	    this.removeListener(type, listeners);
+	  } else if (listeners) {
+	    // LIFO order
+	    while (listeners.length)
+	      this.removeListener(type, listeners[listeners.length - 1]);
+	  }
+	  delete this._events[type];
+	
+	  return this;
+	};
+	
+	EventEmitter.prototype.listeners = function(type) {
+	  var ret;
+	  if (!this._events || !this._events[type])
+	    ret = [];
+	  else if (isFunction(this._events[type]))
+	    ret = [this._events[type]];
+	  else
+	    ret = this._events[type].slice();
+	  return ret;
+	};
+	
+	EventEmitter.prototype.listenerCount = function(type) {
+	  if (this._events) {
+	    var evlistener = this._events[type];
+	
+	    if (isFunction(evlistener))
+	      return 1;
+	    else if (evlistener)
+	      return evlistener.length;
+	  }
+	  return 0;
+	};
+	
+	EventEmitter.listenerCount = function(emitter, type) {
+	  return emitter.listenerCount(type);
+	};
+	
+	function isFunction(arg) {
+	  return typeof arg === 'function';
+	}
+	
+	function isNumber(arg) {
+	  return typeof arg === 'number';
+	}
+	
+	function isObject(arg) {
+	  return typeof arg === 'object' && arg !== null;
+	}
+	
+	function isUndefined(arg) {
+	  return arg === void 0;
+	}
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Utils = function () {
+	  function Utils() {
+	    _classCallCheck(this, Utils);
+	  }
+	
+	  _createClass(Utils, null, [{
+	    key: 'getOgcOperator',
+	    value: function getOgcOperator(operator) {
+	      switch (operator) {
+	        case '<>':
+	          return 'PropertyIsNotEqualTo';
+	        case '<':
+	          return 'PropertyIsLessThan';
+	        case '<=':
+	          return 'PropertyIsLessThanOrEqualTo';
+	        case '>':
+	          return 'PropertyIsGreaterThan';
+	        case '>=':
+	          return 'PropertyIsGreaterThanOrEqualTo';
+	        case 'like':
+	          return 'PropertyIsLike';
+	        default:
+	          return 'PropertyIsEqualTo';
+	      }
+	    }
+	  }]);
+	
+	  return Utils;
+	}();
+	
+	module.exports = Utils;
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _utils = __webpack_require__(30);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var WFSLayer = function () {
+	  function WFSLayer(config) {
+	    var _this = this;
+	
+	    _classCallCheck(this, WFSLayer);
+	
+	    this.config = config;
+	
+	    this.layer = new ol.layer.Vector({
+	      title: this.config.title,
+	      visible: this.config.visible,
+	      exclusive: this.config.exclusive
+	    });
+	
+	    this.layer.styleConfig = this.config.style;
+	    this.layer.styleCache = {};
+	    this.layer.setStyle(this._setStyle.bind(this));
+	    this.format = new ol.format.GeoJSON();
+	
+	    this.source = new ol.source.Vector({
+	      loader: function loader(extent) {
+	        return _this._loadFeatures(extent);
+	      },
+	      strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+	        maxZoom: 19
+	      })),
+	      attributions: [new ol.Attribution({
+	        html: this.config.attribution
+	      })]
+	    });
+	    this.layer.setSource(this.source);
+	
+	    // Add filters
+	    this.layer.filters = [];
+	    this.layer.filter = this._filter;
+	    if (this.config.filters) {
+	      this.config.filters.forEach(function (filter) {
+	        filter.ogcOperator = _utils2.default.getOgcOperator(filter.operator);
+	      });
+	      this.layer.filters = config.filters;
+	      this.layer.filter();
+	    }
+	
+	    // Set popup object
+	    this.layer.featurePopup = this.config.featurePopup;
+	
+	    // Remove popup when layer is changed
+	    this.layer.on('change:visible', function () {
+	      _this.overlay.setElement(null);
+	    });
+	  }
+	
+	  _createClass(WFSLayer, [{
+	    key: '_loadFeatures',
+	    value: function _loadFeatures(extent) {
+	      var _this2 = this;
+	
+	      var params = new URLSearchParams();
+	      params.append('service', 'WFS');
+	      params.append('version', '1.0.0');
+	      params.append('request', 'GetFeature');
+	      params.append('outputFormat', 'application/json');
+	      params.append('format_options', 'CHARSET:UTF-8');
+	      params.append('typename', this.config.layer);
+	      params.append('srsname', this.config.viewProjection.getCode());
+	      params.append('cql_filter', this._buildCQLFilter(extent));
+	      fetch(this.config.serverURL + '/wfs?' + params.toString(), {
+	        mode: 'cors'
+	      }).then(function (response) {
+	        return response.json();
+	      }).then(function (data) {
+	        _this2.source.addFeatures(_this2.format.readFeatures(data));
+	      });
+	    }
+	  }, {
+	    key: '_setStyle',
+	    value: function _setStyle(feature, resolution) {
+	      var value = feature.get(this.layer.styleConfig.color.property);
+	      if (!value || !this.layer.styleConfig.color.values[value]) {
+	        return this._getDefaultStyle();
+	      }
+	      if (!this.layer.styleCache[value]) {
+	        this.layer.styleCache[value] = {};
+	      }
+	      if (!this.layer.styleCache[value][resolution]) {
+	        var radius = Math.min(Math.max(3, Math.ceil(40 / Math.log(Math.ceil(resolution)))), 20);
+	        var text = void 0;
+	        if (resolution < 100) {
+	          text = new ol.style.Text({
+	            fill: new ol.style.Fill({
+	              color: '#005D93'
+	            }),
+	            stroke: new ol.style.Stroke({
+	              color: '#fff',
+	              width: 3
+	            }),
+	            text: value,
+	            font: radius + 'px'
+	          });
+	        }
+	        this.layer.styleCache[value][resolution] = new ol.style.Style({
+	          image: new ol.style.Circle({
+	            fill: new ol.style.Fill({
+	              color: ol.color.asArray(this.layer.styleConfig.color.values[value].color)
+	            }),
+	            radius: radius,
+	            stroke: this._getDefaultStroke()
+	          }),
+	          text: text
+	        });
+	      }
+	      return [this.layer.styleCache[value][resolution]];
+	    }
+	  }, {
+	    key: '_getDefaultStroke',
+	    value: function _getDefaultStroke() {
+	      if (!this._defaultStroke) {
+	        this._defaultStroke = new ol.style.Stroke({
+	          color: [0, 0, 0, 0.5],
+	          width: 1
+	        });
+	      }
+	      return this._defaultStroke;
+	    }
+	  }, {
+	    key: '_getDefaultFill',
+	    value: function _getDefaultFill() {
+	      if (!this._defaultFill) {
+	        this._defaultFill = new ol.style.Stroke({
+	          color: [255, 255, 255, 0.5],
+	          width: 1
+	        });
+	      }
+	      return this._defaultFill;
+	    }
+	  }, {
+	    key: '_getDefaultText',
+	    value: function _getDefaultText(radius) {
+	      if (!this._defaultText) {
+	        this._defaultText = new ol.style.Text({
+	          offsetY: radius * 1.5,
+	          fill: new ol.style.Fill({
+	            color: '#666'
+	          }),
+	          stroke: new ol.style.Stroke({
+	            color: '#fff',
+	            width: 2
+	          })
+	        });
+	      }
+	      return this._defaultText;
+	    }
+	  }, {
+	    key: '_getDefaultStyle',
+	    value: function _getDefaultStyle() {
+	      if (!this._defaultStyle) {
+	        this._defaultStyle = new ol.style.Style({
+	          fill: this._getDefaultFill(),
+	          stroke: this._getDefaultStroke(),
+	          image: new ol.style.Circle({
+	            fill: this._getDefaultFill(),
+	            radius: 10,
+	            stroke: this._getDefaultStroke()
+	          })
+	        });
+	      }
+	      return [this._defaultStyle];
+	    }
+	  }, {
+	    key: '_buildCQLFilter',
+	    value: function _buildCQLFilter(extent) {
+	      var cqlFilter = 'bbox(geom, ' + extent.join(',') + ', \'' + this.config.viewProjection.getCode() + '\')';
+	      if (this.layer.filterString) {
+	        cqlFilter = cqlFilter + ' AND ' + this.layer.filterString;
+	      }
+	      return cqlFilter;
+	    }
+	  }, {
+	    key: '_filter',
+	    value: function _filter() {
+	      var filters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	
+	      var newFilters = filters.concat(this.filters);
+	      if (!newFilters.length) {
+	        return;
+	      }
+	      var oldString = this.filterString;
+	      this.filterString = newFilters.map(function (filter) {
+	        return filter.property + ' ' + (filter.operator ? filter.operator : '=') + ' \'' + filter.value + '\'';
+	      }).join(' AND ');
+	      if (this.filterString !== oldString) {
+	        this.getSource().clear();
+	      }
+	    }
+	  }]);
+	
+	  return WFSLayer;
+	}();
+	
+	module.exports = WFSLayer;
 
 /***/ }
 /******/ ])
