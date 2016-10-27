@@ -25,8 +25,10 @@ export default class WMSLayer extends OverlayLayer {
   }
 
   refresh() {
-    const params = this.layer.getSource().getParams();
-    params.CQL_FILTER = this.manager.filterString;
-    this.source.updateParams(params);
+    if (this.manager.filters.length) {
+      const params = this.layer.getSource().getParams();
+      params.CQL_FILTER = this.manager.filterString;
+      this.source.updateParams(params);
+    }
   }
 }
