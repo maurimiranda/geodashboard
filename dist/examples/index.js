@@ -1,5 +1,5 @@
 // Create main dashboard object
-var server = 'http://localhost:8080/geoserver';
+var server = 'http://geoserver.siasar.org/geoserver';
 
 var dashboard = new GeoDashboard.Dashboard({
   container: document.getElementById('dashboard'),
