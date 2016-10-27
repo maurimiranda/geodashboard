@@ -46,6 +46,10 @@ export default class WFSLayer extends OverlayLayer {
     });
   }
 
+  refresh() {
+    this.source.clear();
+  }
+
   setStyle(feature, resolution) {
     const value = feature.get(this.style.color.property);
     if (!value || !this.style.color.values[value]) {
@@ -137,17 +141,9 @@ export default class WFSLayer extends OverlayLayer {
 
   buildCQLFilter(extent) {
     let cqlFilter = `bbox(geom, ${extent.join(',')}, '${this.manager.viewProjection.getCode()}')`;
-    if (this.filterString) {
-      cqlFilter = `${cqlFilter} AND ${this.filterString}`;
+    if (this.manager.filterString) {
+      cqlFilter = `${cqlFilter} AND ${this.manager.filterString}`;
     }
     return cqlFilter;
-  }
-
-  filter(filters = []) {
-    const oldString = this.filterString;
-    super.filter(filters);
-    if (this.filterString !== oldString) {
-      this.source.clear();
-    }
   }
 }

@@ -1,4 +1,3 @@
-// Create main dashboard object
 var server = 'http://geoserver.siasar.org/geoserver';
 
 var dashboard = new GeoDashboard.Dashboard({
@@ -41,7 +40,6 @@ var communities = new GeoDashboard.WFSLayer({
   layer: 'siasar:communities',
   exclusive: true,
   visible: true,
-  filters: [],
   popup: [{
     title: 'Name',
     property: 'name',

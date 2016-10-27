@@ -22,6 +22,14 @@ class WidgetManager {
     widget.manager = this;
     this.widgets.push(widget);
   }
+
+  get filterString() {
+    return this.dashboard.filterString;
+  }
+
+  get filters() {
+    return this.dashboard.filters;
+  }
 }
 
 export default WidgetManager;

@@ -80,6 +80,7 @@ export default class MapManager extends EventEmitter {
 
   addOverlayLayer(layer) {
     layer.manager = this;
+    layer.refresh();
     this.overlayLayers.getLayers().push(layer.layer);
   }
 
@@ -111,5 +112,13 @@ export default class MapManager extends EventEmitter {
     } else {
       this.overlay.setElement(null);
     }
+  }
+
+  get filterString() {
+    return this.dashboard.filterString;
+  }
+
+  get filters() {
+    return this.dashboard.filters;
   }
 }

@@ -11,14 +11,12 @@ const plugins = [
   new ExtractTextPlugin('geo-dashboard.css')
 ];
 
-let outputFile;
+const outputFile = `${toDash(libraryName)}.js`;
 
 if (env === 'build') {
   plugins.push(new webpack.optimize.UglifyJsPlugin({ minimize: true }));
-  outputFile = `${toDash(libraryName)}.min.js`;
 } else {
   plugins.push(new webpack.HotModuleReplacementPlugin());
-  outputFile = `${toDash(libraryName)}.js`;
 }
 
 module.exports = {

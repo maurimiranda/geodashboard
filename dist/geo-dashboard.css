@@ -9,7 +9,8 @@
     color: #3e5869;
     cursor: pointer;
     margin: 0;
-    font-size: 1.2em; }
+    font-size: 1.5em;
+    line-height: 1; }
     .ol-control button:hover {
       background-color: rgba(62, 88, 105, 0.5); }
 
@@ -68,30 +69,26 @@
       padding: 0;
       margin: 0; }
   .layer-switcher li.group {
-    padding: 10px 0px 10px 0px;
     box-shadow: rgba(0, 0, 0, 0.3) 3px 4px 4px -3px;
     background-color: #FFFFFF;
-    border: 1px solid rgba(102, 102, 102, 0.1);
-    margin-bottom: 0.5em; }
+    margin-bottom: 1em;
+    padding: 1em 0.5em 1em 0.5em; }
     .layer-switcher li.group:last-child {
       border-bottom: none; }
     .layer-switcher li.group > label {
       display: none; }
   .layer-switcher li.layer {
-    width: 100%;
-    margin: 5px 0px 5px 0px; }
+    width: 100%; }
     .layer-switcher li.layer:first-child {
       margin-top: 0px; }
     .layer-switcher li.layer:last-child {
       margin-bottom: 0px; }
     .layer-switcher li.layer label {
       cursor: pointer;
-      font-size: 12px;
-      line-height: 30px;
-      padding: 0px 5px 0px 5px;
+      line-height: 2em;
       border-radius: 2px;
       color: rgba(62, 88, 105, 0.5);
-      min-width: 150px;
+      min-width: 10em;
       text-transform: uppercase;
       text-align: center; }
     .layer-switcher li.layer input {
@@ -131,9 +128,9 @@
     .info-box dl dd.value:last-child {
       margin-bottom: 0; }
 .widget {
-  margin-bottom: 1em;
+  margin: 1em;
   border: 1px solid rgba(102, 102, 102, 0.1);
-  width: 100%;
+  min-width: 15em;
   background-color: #FFFFFF;
   border-radius: 2px;
   padding: 1em;
@@ -145,7 +142,7 @@
 
 .wps-widget .widget-value {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 2em;
   margin-bottom: 0px;
   color: #3e5869;
   overflow: hidden; }
@@ -179,15 +176,15 @@
   color: #3e5869;
   height: 100%;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  font-size: 1em; }
   .geo-dashboard .header {
     height: 2.5em;
     padding-left: 0.5em;
     background-color: #3e5869;
     display: flex;
     align-items: center;
-    color: #FFFFFF;
-    font-size: 1.5em; }
+    color: #FFFFFF; }
     .geo-dashboard .header img {
       height: 65%; }
     .geo-dashboard .header span {
@@ -196,19 +193,18 @@
     flex: 1;
     display: flex; }
     .geo-dashboard .content > .map {
-      flex: 1; }
+      flex: 1;
+      min-height: 0; }
     .geo-dashboard .content > .widget-panel {
-      width: 20%;
-      padding: 1em;
       background: #5a8099; }
   .geo-dashboard .footer {
     height: 1.5em;
     padding-left: 0.5em; }
 
 @media (max-width: 768px) {
-  .geo-dashboard .header {
-    font-size: 1em; }
-  .geo-dashboard .content > .widget-panel {
-    display: none; } }
+  .geo-dashboard {
+    font-size: 0.75em; }
+    .geo-dashboard .content > .widget-panel {
+      display: none; } }
 
 /*# sourceMappingURL=geo-dashboard.css.map*/

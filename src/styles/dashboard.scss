@@ -7,6 +7,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  font-size: $font-size-base;
 
   .header {
     height: 2.5em;
@@ -49,9 +50,7 @@
 
 @media (max-width: 768px) {
   .geo-dashboard {
-    .header {
-      font-size: 1em;
-    }
+    font-size: $font-size-base * 0.75;
 
     .content {
       > .widget-panel {

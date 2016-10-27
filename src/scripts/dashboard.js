@@ -12,11 +12,18 @@ export default class Dashboard {
     this.container = config.container;
 
     this.mapManager = new MapManager(config.map);
+    this.mapManager.dashboard = this;
     this.widgetManager = new WidgetManager();
+    this.widgetManager.dashboard = this;
 
     this.mapManager.on('mapchange', (event) => {
       this.extent = event.extent;
       this.refresh();
+    });
+
+    this.filters = config.filters || [];
+    this.filters.forEach((filter) => {
+      filter.ogcOperator = Dashboard.getOGCOperator(filter.operator);
     });
   }
 
@@ -46,5 +53,30 @@ export default class Dashboard {
 
   addWidget(widget) {
     this.widgetManager.addWidget(widget);
+  }
+
+  get filterString() {
+    return this.filters.map(filter =>
+      `${filter.property}${(filter.operator) ? filter.operator : '='}'${filter.value}'`
+    ).join(' AND ');
+  }
+
+  static getOGCOperator(operator) {
+    switch (operator) {
+      case '<>':
+        return 'PropertyIsNotEqualTo';
+      case '<':
+        return 'PropertyIsLessThan';
+      case '<=':
+        return 'PropertyIsLessThanOrEqualTo';
+      case '>':
+        return 'PropertyIsGreaterThan';
+      case '>=':
+        return 'PropertyIsGreaterThanOrEqualTo';
+      case 'like':
+        return 'PropertyIsLike';
+      default:
+        return 'PropertyIsEqualTo';
+    }
   }
 }
