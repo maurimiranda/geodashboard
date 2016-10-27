@@ -1,27 +1,23 @@
 import EventEmitter from 'events';
 
-import WFSLayer from './wfs-layer';
-
 import popupTemplate from '../templates/feature-popup.hbs';
 
-import '../styles/map.scss';
+import '../styles/map-manager.scss';
 
-class MapManager extends EventEmitter {
+export default class MapManager extends EventEmitter {
   constructor(config) {
     super();
 
-    this.config = config;
+    this.center = config.center || [0, 0];
+    this.zoom = config.zoom || 10;
 
-    this._createLayerGroups();
-    this._createMap();
-    this._createOverlay();
-    this._addLayerSwitcher();
-    if (this.config.addDefaultBaseLayers) {
-      this._addDefaultBaseLayers();
-    }
+    this.createLayerGroups();
+    this.createMap();
+    this.createOverlay();
+    this.addLayerSwitcher();
   }
 
-  _createLayerGroups() {
+  createLayerGroups() {
     this.baseLayers = new ol.layer.Group({
       title: 'Base',
       layers: [],
@@ -33,10 +29,10 @@ class MapManager extends EventEmitter {
     this.layers = [this.overlayLayers, this.baseLayers];
   }
 
-  _createMap() {
+  createMap() {
     this.view = new ol.View({
-      center: ol.proj.fromLonLat(this.config.center),
-      zoom: this.config.zoom,
+      center: ol.proj.fromLonLat(this.center),
+      zoom: this.zoom,
     });
 
     this.map = new ol.Map({
@@ -46,82 +42,55 @@ class MapManager extends EventEmitter {
       layers: this.layers,
     });
 
-    this.attribution = this.config.attribution;
     this.viewProjection = this.view.getProjection();
     this.viewResolution = this.view.getResolution();
 
-    this.map.on('moveend', e => this.emit('mapchange', e));
+    this.map.on('moveend', (event) => {
+      event.extent = this.map.getView().calculateExtent(this.map.getSize());
+      this.emit('mapchange', event);
+    });
   }
 
-  _createOverlay() {
+  createOverlay() {
     this.overlay = new ol.Overlay({});
     this.map.addOverlay(this.overlay);
-    this.map.on('singleclick', this._featurePopup.bind(this));
+    this.map.on('singleclick', this.featurePopup.bind(this));
   }
 
-  _addLayerSwitcher() {
+  addLayerSwitcher() {
     this.layerSwitcher = new ol.control.LayerSwitcher({
       tipLabel: 'Layers',
     });
     this.map.addControl(this.layerSwitcher);
-    if (this.config.keepLayerSwitcherOpen) {
-      this.layerSwitcher.panel.onmouseout = null;
-      this.map.on('postrender', () => {
-        this.layerSwitcher.showPanel();
-      });
-    }
-  }
-
-  _addDefaultBaseLayers() {
-    this.addBingLayer({
-      title: 'Bing Aerial',
-      key: this.config.bingKey,
-    });
-    this.addOSMLayer({
-      title: 'OpenStreetMap',
+    this.layerSwitcher.panel.onmouseout = null;
+    this.map.on('postrender', () => {
+      this.layerSwitcher.showPanel();
     });
   }
 
   render(container) {
     this.map.setTarget(container);
+    setTimeout(() => this.map.updateSize(), 100);
   }
 
-  addBingLayer(config) {
-    const layer = new ol.layer.Tile({
-      title: config.title,
-      preload: Infinity,
-      source: new ol.source.BingMaps({
-        key: config.key,
-        imagerySet: 'Aerial',
-      }),
-      visible: false,
-      type: 'base',
-      zIndex: -1,
-    });
-    this.baseLayers.getLayers().push(layer);
-    return layer;
+  addBaseLayer(layer) {
+    layer.manager = this;
+    this.baseLayers.getLayers().push(layer.layer);
   }
 
-  addOSMLayer(config) {
-    const layer = new ol.layer.Tile({
-      title: config.title,
-      source: new ol.source.OSM(),
-      type: 'base',
-      visible: true,
-      zIndex: -1,
-    });
-    this.baseLayers.getLayers().push(layer);
-    return layer;
+  addOverlayLayer(layer) {
+    layer.manager = this;
+    this.overlayLayers.getLayers().push(layer.layer);
   }
 
-  _featurePopup(event) {
+  featurePopup(event) {
     const pixel = this.map.getEventPixel(event.originalEvent);
     const result = this.map.forEachFeatureAtPixel(pixel, (feature, layer) => ({
       feature,
       layer,
     }));
     if (result && result.feature) {
-      const properties = result.layer.featurePopup.map(property => ({
+      const properties = result.layer.popup.map(property => ({
         title: property.title,
         value: property.format ? property.format(result.feature.get(property.property)) :
         result.feature.get(property.property),
@@ -143,14 +112,4 @@ class MapManager extends EventEmitter {
       this.overlay.setElement(null);
     }
   }
-
-  addWFSLayer(config) {
-    const layer = new WFSLayer(Object.assign(config, {
-      serverURL: this.config.serverURL,
-      viewProjection: this.viewProjection,
-    }));
-    this.overlayLayers.getLayers().push(layer.layer);
-  }
 }
-
-module.exports = MapManager;

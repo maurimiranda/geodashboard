@@ -1,14 +1,27 @@
+import '../styles/widget-manager.scss';
+
 class WidgetManager {
   constructor() {
-    this.message = 'I am the manager!';
+    this.widgets = [];
   }
 
   render() {
-
+    this.widgets.forEach((widget) => {
+      widget.render();
+    });
   }
 
-  refresh() {
+  refresh(extent) {
+    this.extent = extent;
+    this.widgets.forEach((widget) => {
+      widget.refresh();
+    });
+  }
+
+  addWidget(widget) {
+    widget.manager = this;
+    this.widgets.push(widget);
   }
 }
 
-module.exports = WidgetManager;
+export default WidgetManager;

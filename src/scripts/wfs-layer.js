@@ -1,77 +1,60 @@
-import Utils from './utils';
+import OverlayLayer from './overlay-layer';
 
-class WFSLayer {
-  constructor(config) {
-    this.config = config;
+export default class WFSLayer extends OverlayLayer {
+  constructor(config = {}) {
+    super(config);
+
+    this.server = `${config.server}/wfs/`;
+    this.format = new ol.format.GeoJSON();
+    this.style = config.style;
+    this.styleCache = {};
 
     this.layer = new ol.layer.Vector({
-      title: this.config.title,
-      visible: this.config.visible,
-      exclusive: this.config.exclusive,
+      title: this.title,
+      visible: this.visible,
+      exclusive: this.exclusive,
     });
-
-    this.layer.styleConfig = this.config.style;
-    this.layer.styleCache = {};
-    this.layer.setStyle(this._setStyle.bind(this));
-    this.format = new ol.format.GeoJSON();
+    this.layer.setStyle(this.setStyle.bind(this));
 
     this.source = new ol.source.Vector({
-      loader: extent => this._loadFeatures(extent),
+      loader: this.loadFeatures.bind(this),
       strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
         maxZoom: 19,
       })),
       attributions: [new ol.Attribution({
-        html: this.config.attribution,
+        html: this.attribution,
       })],
     });
-    this.layer.setSource(this.source);
 
-    // Add filters
-    this.layer.filters = [];
-    this.layer.filter = this._filter;
-    if (this.config.filters) {
-      this.config.filters.forEach((filter) => {
-        filter.ogcOperator = Utils.getOgcOperator(filter.operator);
-      });
-      this.layer.filters = config.filters;
-      this.layer.filter();
-    }
-
-    // Set popup object
-    this.layer.featurePopup = this.config.featurePopup;
-
-    // Remove popup when layer is changed
-    this.layer.on('change:visible', () => {
-      this.overlay.setElement(null);
-    });
+    this.layer.popup = config.popup;
   }
 
-  _loadFeatures(extent) {
+  loadFeatures(extent) {
     const params = new URLSearchParams();
     params.append('service', 'WFS');
     params.append('version', '1.0.0');
     params.append('request', 'GetFeature');
     params.append('outputFormat', 'application/json');
     params.append('format_options', 'CHARSET:UTF-8');
-    params.append('typename', this.config.layer);
-    params.append('srsname', this.config.viewProjection.getCode());
-    params.append('cql_filter', this._buildCQLFilter(extent));
-    fetch(`${this.config.serverURL}/wfs?${params.toString()}`, {
+    params.append('typename', this.layerName);
+    params.append('srsname', this.manager.viewProjection.getCode());
+    params.append('cql_filter', this.buildCQLFilter(extent));
+    fetch(`${this.server}?${params.toString()}`, {
       mode: 'cors',
     }).then(response => response.json()).then((data) => {
       this.source.addFeatures(this.format.readFeatures(data));
     });
   }
 
-  _setStyle(feature, resolution) {
-    const value = feature.get(this.layer.styleConfig.color.property);
-    if (!value || !this.layer.styleConfig.color.values[value]) {
-      return this._getDefaultStyle();
+  setStyle(feature, resolution) {
+    const value = feature.get(this.style.color.property);
+    if (!value || !this.style.color.values[value]) {
+      return this.getDefaultStyle();
     }
-    if (!this.layer.styleCache[value]) {
-      this.layer.styleCache[value] = {};
+    if (!this.styleCache[value]) {
+      this.styleCache[value] = {};
     }
-    if (!this.layer.styleCache[value][resolution]) {
+    if (!this.styleCache[value][resolution]) {
       const radius = Math.min(Math.max(3, Math.ceil(40 / Math.log(Math.ceil(resolution)))), 20);
       let text;
       if (resolution < 100) {
@@ -87,43 +70,43 @@ class WFSLayer {
           font: `${radius}px`,
         });
       }
-      this.layer.styleCache[value][resolution] = new ol.style.Style({
+      this.styleCache[value][resolution] = new ol.style.Style({
         image: new ol.style.Circle({
           fill: new ol.style.Fill({
-            color: ol.color.asArray(this.layer.styleConfig.color.values[value].color),
+            color: ol.color.asArray(this.style.color.values[value].color),
           }),
           radius,
-          stroke: this._getDefaultStroke(),
+          stroke: this.getDefaultStroke(),
         }),
         text,
       });
     }
-    return [this.layer.styleCache[value][resolution]];
+    return [this.styleCache[value][resolution]];
   }
 
-  _getDefaultStroke() {
-    if (!this._defaultStroke) {
-      this._defaultStroke = new ol.style.Stroke({
+  getDefaultStroke() {
+    if (!this.defaultStroke) {
+      this.defaultStroke = new ol.style.Stroke({
         color: [0, 0, 0, 0.5],
         width: 1,
       });
     }
-    return this._defaultStroke;
+    return this.defaultStroke;
   }
 
-  _getDefaultFill() {
-    if (!this._defaultFill) {
-      this._defaultFill = new ol.style.Stroke({
+  getDefaultFill() {
+    if (!this.defaultFill) {
+      this.defaultFill = new ol.style.Stroke({
         color: [255, 255, 255, 0.5],
         width: 1,
       });
     }
-    return this._defaultFill;
+    return this.defaultFill;
   }
 
-  _getDefaultText(radius) {
-    if (!this._defaultText) {
-      this._defaultText = new ol.style.Text({
+  getDefaultText(radius) {
+    if (!this.defaultText) {
+      this.defaultText = new ol.style.Text({
         offsetY: radius * 1.5,
         fill: new ol.style.Fill({
           color: '#666',
@@ -134,44 +117,37 @@ class WFSLayer {
         }),
       });
     }
-    return this._defaultText;
+    return this.defaultText;
   }
 
-  _getDefaultStyle() {
-    if (!this._defaultStyle) {
-      this._defaultStyle = new ol.style.Style({
-        fill: this._getDefaultFill(),
-        stroke: this._getDefaultStroke(),
+  getDefaultStyle() {
+    if (!this.defaultStyle) {
+      this.defaultStyle = new ol.style.Style({
+        fill: this.getDefaultFill(),
+        stroke: this.getDefaultStroke(),
         image: new ol.style.Circle({
-          fill: this._getDefaultFill(),
+          fill: this.getDefaultFill(),
           radius: 10,
-          stroke: this._getDefaultStroke(),
+          stroke: this.getDefaultStroke(),
         }),
       });
     }
-    return [this._defaultStyle];
+    return [this.defaultStyle];
   }
 
-  _buildCQLFilter(extent) {
-    let cqlFilter = `bbox(geom, ${extent.join(',')}, '${this.config.viewProjection.getCode()}')`;
-    if (this.layer.filterString) {
-      cqlFilter = `${cqlFilter} AND ${this.layer.filterString}`;
+  buildCQLFilter(extent) {
+    let cqlFilter = `bbox(geom, ${extent.join(',')}, '${this.manager.viewProjection.getCode()}')`;
+    if (this.filterString) {
+      cqlFilter = `${cqlFilter} AND ${this.filterString}`;
     }
     return cqlFilter;
   }
 
-  _filter(filters = []) {
-    const newFilters = filters.concat(this.filters);
-    if (!newFilters.length) {
-      return;
-    }
+  filter(filters = []) {
     const oldString = this.filterString;
-    this.filterString = newFilters.map(filter => `${filter.property} ${(filter.operator) ? filter.operator : '='} '${filter.value}'`).join(' AND ');
+    super.filter(filters);
     if (this.filterString !== oldString) {
-      this.getSource().clear();
+      this.source.clear();
     }
   }
-
 }
-
-module.exports = WFSLayer;

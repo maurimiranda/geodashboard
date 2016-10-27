@@ -18,7 +18,7 @@
     font-size: 1.5em;
 
     img {
-      height: 80%;
+      height: 65%;
     }
 
     span {
@@ -32,11 +32,10 @@
 
     > .map {
       flex: 1;
+      min-height: 0;
     }
 
-    > .panel {
-      width: 20%;
-      padding: $default-spacing * 2;
+    > .widget-panel {
       background: lighten($primary-color, 15%);
     }
   }
@@ -55,7 +54,7 @@
     }
 
     .content {
-      > .panel {
+      > .widget-panel {
         display: none;
       }
     }

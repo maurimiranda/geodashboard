@@ -1,0 +1,28 @@
+<wps:Input>
+  <ows:Identifier>features</ows:Identifier>
+  <wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wfs" method="POST">
+    <wps:Body>
+      <wfs:GetFeature service="WFS" version="1.0.0" outputFormat="GML2" xmlns:siasar="http://siasar.org">
+        <wfs:Query typeName="{{layer}}">
+          <ogc:Filter>
+            <ogc:And>
+              <ogc:BBOX>
+                <ogc:PropertyName>geom</ogc:PropertyName>
+                <gml:Envelope srsName="http://www.opengis.net/gml/srs/epsg.xml#3857">
+                  <gml:upperCorner>{{extent.[0]}} {{extent.[1]}}</gml:upperCorner>
+                  <gml:lowerCorner>{{extent.[2]}} {{extent.[3]}}</gml:lowerCorner>
+                </gml:Envelope>
+              </ogc:BBOX>
+              {{#each filters}}
+                <ogc:{{ogcOperator}} wildCard="%">
+                  <ogc:PropertyName>{{property}}</ogc:PropertyName>
+                  <ogc:Literal>{{value}}</ogc:Literal>
+                </ogc:{{ogcOperator}}>
+              {{/each}}
+            </ogc:And>
+          </ogc:Filter>
+        </wfs:Query>
+      </wfs:GetFeature>
+    </wps:Body>
+  </wps:Reference>
+</wps:Input>

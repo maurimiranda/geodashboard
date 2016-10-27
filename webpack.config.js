@@ -22,7 +22,7 @@ if (env === 'build') {
 }
 
 module.exports = {
-  entry: path.join(__dirname, '/src/scripts/geo-dashboard.js'),
+  entry: path.join(__dirname, '/src/scripts/main.js'),
   output: {
     path: path.join(__dirname, '/dist'),
     filename: outputFile,
@@ -54,6 +54,11 @@ module.exports = {
     ],
   },
   plugins,
+  node: {
+    fs: 'empty',
+    dns: 'empty',
+    net: 'empty',
+  },
   devServer: {
     colors: true,
     inline: true,
