@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-$primary-color:       #3e5869;
-$background-color:    #FFFFFF;
-$info-color:          #666666;
-$success-color:       #7A9D67;
-$warning-color:       #fdba12;
-$danger-color:        #d9534f;
+$primary-color:       #3e5869 !default;
+$background-color:    #FFFFFF !default;
+$info-color:          #666666 !default;
+$success-color:       #7A9D67 !default;
+$warning-color:       #fdba12 !default;
+$danger-color:        #d9534f !default;
 
-$primary-alpha:       rgba($primary-color, 0.5);
-$background-alpha:    rgba($background-color, 0.9);
-$info-alpha:          rgba($info-color, 0.1);
-$box-shadow:          rgba(black, 0.3) 3px 4px 4px -3px;
+$primary-alpha:       rgba($primary-color, 0.5) !default;
+$background-alpha:    rgba($background-color, 0.9) !default;
+$info-alpha:          rgba($info-color, 0.1) !default;
+$box-shadow:          rgba(black, 0.3) 3px 4px 4px -3px !default;
 
 $font-family-base:    'Open Sans', sans-serif !default;
-$font-size-base:      1em;
+$font-size-base:      1em !default;
 
-$border-radius:       2px;
-$default-spacing:     0.5em;
-$border-base:         1px solid $info-alpha;
+$border-radius:       2px !default;
+$default-spacing:     0.5em !default;
+$border-base:         1px solid $info-alpha !default;

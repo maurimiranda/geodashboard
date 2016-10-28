@@ -1,9 +1,9 @@
 import EventEmitter from 'events';
 import ol from 'openlayers';
 
-import popupTemplate from '../templates/feature-popup.hbs';
+import LayerSwitcher from './layer-switcher';
 
-import '../styles/map-manager.scss';
+import popupTemplate from '../templates/feature-popup.hbs';
 
 export default class MapManager extends EventEmitter {
   constructor(config) {
@@ -59,7 +59,7 @@ export default class MapManager extends EventEmitter {
   }
 
   addLayerSwitcher() {
-    this.layerSwitcher = new ol.control.LayerSwitcher({
+    this.layerSwitcher = new LayerSwitcher({
       tipLabel: 'Layers',
     });
     this.map.addControl(this.layerSwitcher);

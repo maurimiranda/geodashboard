@@ -1,0 +1,117 @@
+@import '_variables.scss';
+
+.layer-switcher {
+  position: absolute;
+  top: $default-spacing * 2;
+  left: $default-spacing * 2;
+  right: auto;
+
+  button {
+    background-image: none;
+    font-family: FontAwesome;
+
+    &:before {
+      content: "\f0c9";
+    }
+
+    &:focus, &:hover {
+      background-color: $background-color;
+    }
+  }
+
+  &.shown {
+    border: none;
+    box-shadow: none;
+    bottom: auto;
+
+    &.ol-control {
+      background-color: transparent;
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    .panel {
+      display: block;
+    }
+
+    button {
+      display: none;
+    }
+  }
+
+  .panel {
+    padding: 0;
+    margin: 0;
+    display: none;
+    max-height: 100%;
+    overflow-y: auto;
+    border: none;
+    border-radius: $border-radius;
+    background: none;
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  ul {
+    padding-left: 1em;
+    list-style: none;
+  }
+
+  li {
+    &.group {
+      box-shadow: $box-shadow;
+      background-color: $background-color;
+      margin-bottom: $default-spacing * 2;
+      padding: 1em 0.5em 1em 0.5em;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      > label {
+        display: none;
+      }
+    }
+
+    &.layer {
+      display: table;
+      width: 100%;
+
+      &:first-child {
+        margin-top: 0px;
+      }
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+
+      label {
+        display: table-cell;
+        vertical-align: sub;
+        cursor: pointer;
+        line-height: 2em;
+        border-radius: $border-radius;
+        color: $primary-alpha;
+        min-width: 10em;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      input {
+        display: none;
+
+        &:checked ~ label {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  input {
+    margin: 4px;
+  }
+}

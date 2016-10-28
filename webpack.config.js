@@ -7,16 +7,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const env = yargs.argv.mode;
 const libraryName = 'GeoDashboard';
+const outputFile = 'geo-dashboard.js';
 const plugins = [
   new ExtractTextPlugin('geo-dashboard.css')
 ];
 
-const outputFile = `${toDash(libraryName)}.js`;
-
 if (env === 'build') {
   plugins.push(new webpack.optimize.UglifyJsPlugin({ minimize: true }));
-} else {
-  plugins.push(new webpack.HotModuleReplacementPlugin());
 }
 
 module.exports = {
@@ -57,15 +54,4 @@ module.exports = {
     dns: 'empty',
     net: 'empty',
   },
-  devServer: {
-    colors: true,
-    inline: true,
-    hot: true,
-    port: 9000,
-    contentBase: './dist'
-  }
 };
-
-function toDash(string) {
-  return string.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-}

@@ -1,6 +1,4 @@
-import '../styles/widget-manager.scss';
-
-class WidgetManager {
+export default class WidgetManager {
   constructor() {
     this.widgets = [];
   }
@@ -31,5 +29,3 @@ class WidgetManager {
     return this.dashboard.filters;
   }
 }
-
-export default WidgetManager;
