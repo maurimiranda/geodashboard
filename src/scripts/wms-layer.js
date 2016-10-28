@@ -1,3 +1,5 @@
+import ol from 'openlayers';
+
 import OverlayLayer from './overlay-layer';
 
 export default class WMSLayer extends OverlayLayer {

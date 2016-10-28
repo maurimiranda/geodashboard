@@ -1,3 +1,5 @@
+import ol from 'openlayers';
+
 import BaseLayer from './base-layer';
 
 export default class OSMLayer extends BaseLayer {

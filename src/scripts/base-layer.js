@@ -1,3 +1,5 @@
+import ol from 'openlayers';
+
 import Layer from './layer';
 
 export default class BaseLayer extends Layer {

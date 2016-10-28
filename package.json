@@ -35,5 +35,7 @@
     "serve": "webpack-dev-server",
     "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "openlayers": "^3.19.0"
+  }
 }
