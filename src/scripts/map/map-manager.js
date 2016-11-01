@@ -3,7 +3,7 @@ import ol from 'openlayers';
 
 import LayerSwitcher from './layer-switcher';
 
-import popupTemplate from '../templates/feature-popup.hbs';
+import popupTemplate from '../../templates/map/feature-popup.hbs';
 
 export default class MapManager extends EventEmitter {
   constructor(config) {

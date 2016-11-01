@@ -1,4 +1,4 @@
-import template from '../templates/widget.hbs';
+import template from '../../templates/widget/widget.hbs';
 
 export default class Widget {
   constructor(config) {

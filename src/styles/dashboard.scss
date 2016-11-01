@@ -1,7 +1,7 @@
 @import '_variables.scss';
 @import "~font-awesome/scss/font-awesome";
-@import 'map-manager.scss';
-@import 'widget-manager.scss';
+@import 'map/map-manager.scss';
+@import 'widget/widget-manager.scss';
 
 .geo-dashboard {
   font-family: $font-family-base;

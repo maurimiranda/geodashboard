@@ -1,6 +1,6 @@
 import WPSWidget from './wps-widget';
 
-import requestTemplate from '../templates/wps/count.hbs';
+import requestTemplate from '../../templates/widget/wps/count.hbs';
 
 class CountWidget extends WPSWidget {
   constructor(config) {

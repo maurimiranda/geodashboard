@@ -1,6 +1,6 @@
 import Widget from './widget';
 
-import template from '../templates/wps-widget.hbs';
+import template from '../../templates/widget/wps-widget.hbs';
 
 export default class WPSWidget extends Widget {
   constructor(config) {

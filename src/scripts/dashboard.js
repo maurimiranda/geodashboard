@@ -1,5 +1,5 @@
-import MapManager from './map-manager';
-import WidgetManager from './widget-manager';
+import MapManager from './map/map-manager';
+import WidgetManager from './widget/widget-manager';
 
 import template from '../templates/dashboard.hbs';
 

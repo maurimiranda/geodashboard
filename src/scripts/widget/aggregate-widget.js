@@ -1,6 +1,6 @@
 import WPSWidget from './wps-widget';
 
-import requestTemplate from '../templates/wps/aggregate.hbs';
+import requestTemplate from '../../templates/widget/wps/aggregate.hbs';
 
 class AggregateWidget extends WPSWidget {
   constructor(config) {
