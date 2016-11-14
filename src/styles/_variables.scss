@@ -1,21 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-$primary-color:       #3e5869 !default;
+$primary-color:       #3E5869 !default;
 $background-color:    #FFFFFF !default;
 $info-color:          #666666 !default;
 $success-color:       #7A9D67 !default;
-$warning-color:       #fdba12 !default;
-$danger-color:        #d9534f !default;
+$warning-color:       #FDBA12 !default;
+$danger-color:        #D9534f !default;
 
 $primary-alpha:       rgba($primary-color, 0.5) !default;
 $background-alpha:    rgba($background-color, 0.9) !default;
 $info-alpha:          rgba($info-color, 0.1) !default;
 $box-shadow:          rgba(black, 0.3) 3px 4px 4px -3px !default;
 
-$fa-font-path:        "~font-awesome/fonts";
 $font-family-base:    'Open Sans', sans-serif !default;
 $font-size-base:      1em !default;
 
 $border-radius:       2px !default;
 $default-spacing:     0.5em !default;
 $border-base:         1px solid $info-alpha !default;
+
+@mixin icon($icon) {
+  @include fa-icon;
+  @extend .fa;
+  @extend .fa-#{$icon};
+}

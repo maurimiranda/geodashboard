@@ -8,10 +8,9 @@
 
   button {
     background-image: none;
-    font-family: FontAwesome;
 
     &:before {
-      content: "\f0c9";
+      content: '⩸';
     }
 
     &:focus, &:hover {

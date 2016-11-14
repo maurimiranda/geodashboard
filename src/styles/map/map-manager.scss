@@ -41,7 +41,7 @@
 
     button {
       &:before {
-        content: "\f054";
+        content: '▶︎'
       }
     }
   }
@@ -67,16 +67,8 @@
   }
 
   button {
-    background-image: none;
-    font-family: FontAwesome;
-    outline: none;
-
     &:before {
-      content: "\f053";
-    }
-
-    &:focus {
-      background: none;
+      content: '◀︎'
     }
 
     span {
