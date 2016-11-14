@@ -1,7 +1,6 @@
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 module.exports = {
   entry: {
@@ -34,15 +33,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract(['css?sourceMap', 'sass?sourceMap']),
-      },
-      {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=[name].[ext]',
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader?name=[name].[ext]',
+        loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
       },
     ],
   },
@@ -57,7 +48,6 @@ module.exports = {
       script: 'index.js',
       filename: 'index.html',
     }),
-    new ExtractTextPlugin('geo-dashboard.css'),
   ],
   node: {
     fs: 'empty',
