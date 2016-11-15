@@ -12,6 +12,9 @@ export default class WPSWidget extends Widget {
   }
 
   format() {
+    if (this.customFormat) {
+      return this.customFormat(this.value);
+    }
     return parseInt(this.value, 10);
   }
 

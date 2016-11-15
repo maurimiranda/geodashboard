@@ -20,9 +20,25 @@
   .widget-value {
     font-weight: bold;
     font-size: 2em;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     color: $primary-color;
     overflow: hidden;
+  }
+}
+
+.group-widget {
+  ul {
+    list-style: none;
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0.3em 0 0 0;
+
+    li {
+
+      span {
+
+      }
+    }
   }
 }
 

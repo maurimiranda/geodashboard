@@ -18,9 +18,3 @@ $font-size-base:      1em !default;
 $border-radius:       2px !default;
 $default-spacing:     0.5em !default;
 $border-base:         1px solid $info-alpha !default;
-
-@mixin icon($icon) {
-  @include fa-icon;
-  @extend .fa;
-  @extend .fa-#{$icon};
-}

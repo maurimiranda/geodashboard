@@ -3,6 +3,16 @@ import template from '../../templates/widget/widget.hbs';
 export default class Widget {
   constructor(config) {
     this.title = config.title;
+    if (config.format) {
+      this.customFormat = config.format;
+    }
+  }
+
+  format() {
+    if (this.customFormat) {
+      return this.customFormat(this.value);
+    }
+    return this.value;
   }
 
   render() {

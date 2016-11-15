@@ -2,15 +2,13 @@ import WPSWidget from './wps-widget';
 
 import requestTemplate from '../../templates/widget/wps/count.hbs';
 
-class CountWidget extends WPSWidget {
+export default class CountWidget extends WPSWidget {
   constructor(config) {
     super(config);
     this.requestTemplate = requestTemplate;
   }
 
   parseResponse(value) {
-    this.value = value;
+    this.value = parseInt(value, 10);
   }
 }
-
-export default CountWidget;

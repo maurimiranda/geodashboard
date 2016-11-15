@@ -83,6 +83,18 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   layer: 'siasar:communities',
   property: 'population',
   function: 'Average',
+  format: function(value) {
+    return parseFloat(value).toFixed(2);
+  },
 }));
+
+dashboard.addWidget(new GeoDashboard.GroupWidget({
+  title: 'Communities by Category',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  group: 'score',
+}));
+
 
 dashboard.render();

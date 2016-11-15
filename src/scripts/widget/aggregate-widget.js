@@ -2,11 +2,12 @@ import WPSWidget from './wps-widget';
 
 import requestTemplate from '../../templates/widget/wps/aggregate.hbs';
 
-class AggregateWidget extends WPSWidget {
+export default class AggregateWidget extends WPSWidget {
   constructor(config) {
     super(config);
     this.property = config.property;
     this.function = config.function;
+    this.group = config.group;
     this.requestTemplate = requestTemplate;
   }
 
@@ -14,5 +15,3 @@ class AggregateWidget extends WPSWidget {
     this.value = value.AggregationResults[0];
   }
 }
-
-export default AggregateWidget;
