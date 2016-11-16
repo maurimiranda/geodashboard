@@ -1,6 +1,6 @@
 {
   "name": "geo-dashboard",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Web library to display data as maps and widgets using WMS, WFS and WPS services.",
   "main": "dist/geo-dashboard.js",
   "repository": {
@@ -41,7 +41,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "openlayers": "3.15.1",
-    "chart.js": "^2.4.0"
+    "chart.js": "^2.4.0",
+    "openlayers": "3.15.1"
   }
 }
