@@ -7,7 +7,6 @@ export default class AggregateWidget extends WPSWidget {
     super(config);
     this.property = config.property;
     this.function = config.function;
-    this.group = config.group;
     this.requestTemplate = requestTemplate;
   }
 

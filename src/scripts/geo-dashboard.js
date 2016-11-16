@@ -6,6 +6,7 @@ import WMSLayer from './map/wms-layer';
 import CountWidget from './widget/count-widget';
 import AggregateWidget from './widget/aggregate-widget';
 import GroupWidget from './widget/group-widget';
+import ChartWidget from './widget/chart-widget';
 
 export {
   Dashboard,
@@ -16,4 +17,5 @@ export {
   CountWidget,
   AggregateWidget,
   GroupWidget,
+  ChartWidget,
 };

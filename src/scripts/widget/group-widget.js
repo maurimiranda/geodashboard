@@ -5,15 +5,12 @@ import template from '../../templates/widget/group-widget.hbs';
 export default class GroupWidget extends AggregateWidget {
   constructor(config) {
     super(config);
-    this.group = config.group;
+    this.categories = config.categories;
     this.function = 'Count';
     this.template = template;
   }
 
   format() {
-    if (this.customFormat) {
-      return this.customFormat(this.value);
-    }
     return this.value;
   }
 

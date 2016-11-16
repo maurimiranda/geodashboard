@@ -12,9 +12,6 @@ export default class WPSWidget extends Widget {
   }
 
   format() {
-    if (this.customFormat) {
-      return this.customFormat(this.value);
-    }
     return parseInt(this.value, 10);
   }
 
@@ -23,22 +20,26 @@ export default class WPSWidget extends Widget {
       return;
     }
 
+    this.getData((data) => {
+      this.parseResponse(data);
+      super.refresh();
+    });
+  }
+
+  getData(callback) {
     fetch(this.server, {
       method: 'POST',
       body: this.requestTemplate({
         layer: this.layerName,
         property: this.property,
         function: this.function,
-        group: this.group,
+        category: this.categories ? this.categories.property : null,
         extent: this.manager.extent,
         filters: this.manager.filters,
       }),
       headers: new Headers({
         'Content-Type': 'text/xml',
       }),
-    }).then(response => response.json()).then((data) => {
-      this.parseResponse(data);
-      super.refresh();
-    });
+    }).then(response => response.json()).then(callback);
   }
 }
