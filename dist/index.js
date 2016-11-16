@@ -1,17 +1,18 @@
 var server = 'https://geoserver.siasar.org/geoserver';
+var categories = {
+  property: 'score',
+  values: {
+    'A': { color: '#54BA46' },
+    'B': { color: '#FFFF39' },
+    'C': { color: '#FF9326' },
+    'D': { color: '#C92429' },
+  },
+};
 var style = {
   label: {
     property: 'name'
   },
-  color: {
-    property: 'score',
-    values: {
-      'A': { color: '#54BA46' },
-      'B': { color: '#FFFF39' },
-      'C': { color: '#FF9326' },
-      'D': { color: '#C92429' },
-    },
-  },
+  color: categories,
 };
 
 var dashboard = new GeoDashboard.Dashboard({
@@ -83,6 +84,25 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   layer: 'siasar:communities',
   property: 'population',
   function: 'Average',
+  format: function(value) {
+    return parseFloat(value).toFixed(2);
+  },
+}));
+
+dashboard.addWidget(new GeoDashboard.GroupWidget({
+  title: 'Communities by Category',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
+}));
+
+dashboard.addWidget(new GeoDashboard.ChartWidget({
+  title: 'Communities Chart',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
 }));
 
 dashboard.render();
