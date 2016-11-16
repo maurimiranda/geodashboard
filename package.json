@@ -38,7 +38,7 @@
     "build": "NODE_ENV=production webpack --progress --colors --config webpack.prod.babel.js",
     "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "serve": "webpack-dev-server --config webpack.dev.babel.js --hot --inline",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "openlayers": "3.15.1",

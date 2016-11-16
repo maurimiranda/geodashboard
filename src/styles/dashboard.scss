@@ -40,6 +40,7 @@
 
     > .widget-panel {
       background: lighten($primary-color, 15%);
+      overflow-y: scroll;
     }
   }
 
