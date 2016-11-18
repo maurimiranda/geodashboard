@@ -1,48 +1,17 @@
 @import '../_variables.scss';
 
-.layer-switcher {
+.layer-switcher.ol-control {
   position: absolute;
   top: $default-spacing * 2;
   left: $default-spacing * 2;
-  right: auto;
 
-  button {
-    background-image: none;
-
-    &:before {
-      content: '⩸';
-    }
-
-    &:focus, &:hover {
-      background-color: $background-color;
-    }
-  }
-
-  &.shown {
-    border: none;
-    box-shadow: none;
-    bottom: auto;
-
-    &.ol-control {
-      background-color: transparent;
-      &:hover {
-        background-color: transparent;
-      }
-    }
-
-    .panel {
-      display: block;
-    }
-
-    button {
-      display: none;
-    }
-  }
+  border: none;
+  box-shadow: none;
+  background: none;
 
   .panel {
     padding: 0;
     margin: 0;
-    display: none;
     max-height: 100%;
     overflow-y: auto;
     border: none;

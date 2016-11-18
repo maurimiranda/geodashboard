@@ -1,0 +1,28 @@
+<div class="panel">
+  <ul>
+    <li class="group base-group">
+      <ul>
+        {{#each baseLayers}}
+          <li class="layer base-layer">
+            <input type="radio" name="base" id="{{id}}" {{#if visible}}checked="checked"{{/if}}>
+            <label for="{{id}}">{{title}}</label>
+          </li>
+        {{/each}}
+      </ul>
+    </li>
+    <li class="group overlay-group">
+      <ul>
+        {{#each overlayLayers}}
+          <li class="layer overlay-layer">
+            {{#if exclusive}}
+              <input type="radio" name="exclusive" id="{{id}}" {{#if visible}}checked="checked"{{/if}}>
+            {{else}}
+              <input type="checkbox" id="{{id}}" {{#if visible}}checked="checked"{{/if}}>
+            {{/if}}
+            <label for="{{id}}">{{title}}</label>
+          </li>
+        {{/each}}
+      </ul>
+    </li>
+  </ul>
+</div>
