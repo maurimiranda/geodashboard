@@ -1,4 +1,5 @@
 import Dashboard from './dashboard';
+import Filter from './filter';
 import OSMLayer from './map/osm-layer';
 import BingLayer from './map/bing-layer';
 import WFSLayer from './map/wfs-layer';
@@ -10,6 +11,7 @@ import ChartWidget from './widget/chart-widget';
 
 export {
   Dashboard,
+  Filter,
   OSMLayer,
   BingLayer,
   WFSLayer,

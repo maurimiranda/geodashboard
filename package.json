@@ -16,6 +16,7 @@
     "chai": "^3.5.0",
     "copy-webpack-plugin": "^4.0.0",
     "css-loader": "^0.25.0",
+    "docdash": "^0.4.0",
     "eslint": "^3.8.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-loader": "^1.6.0",
@@ -38,6 +39,7 @@
     "build": "NODE_ENV=production webpack --progress --colors --config webpack.prod.babel.js",
     "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "serve": "webpack-dev-server --config webpack.dev.babel.js --hot --inline",
+    "docs": "jsdoc -c .jsdoc.json",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

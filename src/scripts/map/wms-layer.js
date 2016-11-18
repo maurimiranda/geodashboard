@@ -6,6 +6,7 @@ export default class WMSLayer extends OverlayLayer {
   constructor(config = {}) {
     super(config);
     this.server = `${config.server}/wms/`;
+    this.style = config.style;
 
     this.layer = new ol.layer.Image({
       title: this.title,

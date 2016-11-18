@@ -2,14 +2,35 @@ import ol from 'openlayers';
 
 import OverlayLayer from './overlay-layer';
 
-export default class WFSLayer extends OverlayLayer {
+/**
+ * WFS Layer
+ */
+class WFSLayer extends OverlayLayer {
+  /**
+  * @param {Object} config - Configuration object
+  * @param {String} [config.title='OverlayLayer'] - Layer title
+  * @param {Boolean} [config.visible=false] - Layer initial status
+  * @param {String} config.server - URL of map server
+  * @param {String} config.layerName - Name of layer to display
+  * @param {String} [config.attribution=''] - Layer data attribution
+  * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
+  *   all other overlay layers are hidden
+  * @param {Object} config.style - Style configuration
+  * @param {Object} config.style.property - Property that defines the style to use
+  * @param {Object} config.style.values - Object with possible values
+  *   and their correspoding style
+  * @param {Object[]} [config.popup] - Data to show when user clicks
+  *   on a feature in the map
+  * @param {String} config.property - Name of the field to show
+  * @param {String} [config.title] - Text to show as field title
+  */
   constructor(config = {}) {
     super(config);
 
     this.server = `${config.server}/wfs/`;
     this.format = new ol.format.GeoJSON();
-    this.style = config.style;
     this.styleCache = {};
+    this.style = config.style;
 
     this.layer = new ol.layer.Vector({
       title: this.title,
@@ -31,6 +52,18 @@ export default class WFSLayer extends OverlayLayer {
     this.layer.popup = config.popup;
   }
 
+  /**
+   * Refreshes layer
+   */
+  refresh() {
+    this.source.clear();
+  }
+
+  /**
+   * Loads features from server via WFS service
+   * @param {Number[]} extent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
+   * @private
+   */
   loadFeatures(extent) {
     const params = new URLSearchParams();
     params.append('service', 'WFS');
@@ -48,13 +81,15 @@ export default class WFSLayer extends OverlayLayer {
     });
   }
 
-  refresh() {
-    this.source.clear();
-  }
-
+  /**
+   * Sets feature style
+   * @param {Object} feature - Openlayers' [feature](https://openlayers.org/en/latest/apidoc/ol.Feature.html) object
+   * @param {Number} resolution - Current map resolution
+   * @private
+   */
   setStyle(feature, resolution) {
-    const value = feature.get(this.style.color.property);
-    if (!value || !this.style.color.values[value]) {
+    const value = feature.get(this.style.property);
+    if (!value || !this.style.values[value]) {
       return this.getDefaultStyle();
     }
     if (!this.styleCache[value]) {
@@ -79,7 +114,7 @@ export default class WFSLayer extends OverlayLayer {
       this.styleCache[value][resolution] = new ol.style.Style({
         image: new ol.style.Circle({
           fill: new ol.style.Fill({
-            color: ol.color.asArray(this.style.color.values[value].color),
+            color: ol.color.asArray(this.style.values[value].color),
           }),
           radius,
           stroke: this.getDefaultStroke(),
@@ -90,6 +125,10 @@ export default class WFSLayer extends OverlayLayer {
     return [this.styleCache[value][resolution]];
   }
 
+  /**
+   * Builds default stroke style
+   * @returns {Object} Openlayers' [Stroke](https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html) object
+   */
   getDefaultStroke() {
     if (!this.defaultStroke) {
       this.defaultStroke = new ol.style.Stroke({
@@ -100,16 +139,24 @@ export default class WFSLayer extends OverlayLayer {
     return this.defaultStroke;
   }
 
+  /**
+   * Builds default fill style
+   * @returns {Object} Openlayers' [Fill](https://openlayers.org/en/latest/apidoc/ol.style.Fill.html) object
+   */
   getDefaultFill() {
     if (!this.defaultFill) {
-      this.defaultFill = new ol.style.Stroke({
+      this.defaultFill = new ol.style.Fill({
         color: [255, 255, 255, 0.5],
-        width: 1,
       });
     }
     return this.defaultFill;
   }
 
+  /**
+   * Builds default text style
+   * @param {Number} radius
+   * @returns {Object} Openlayers' [Text](https://openlayers.org/en/latest/apidoc/ol.style.Text.html) object
+   */
   getDefaultText(radius) {
     if (!this.defaultText) {
       this.defaultText = new ol.style.Text({
@@ -118,7 +165,7 @@ export default class WFSLayer extends OverlayLayer {
           color: '#666',
         }),
         stroke: new ol.style.Stroke({
-          color: '#fff',
+          color: '#FFFFFF',
           width: 2,
         }),
       });
@@ -126,6 +173,10 @@ export default class WFSLayer extends OverlayLayer {
     return this.defaultText;
   }
 
+  /**
+   * Builds default style
+   * @returns {Object} Openlayers' [Style](https://openlayers.org/en/latest/apidoc/ol.style.Style.html) object
+   */
   getDefaultStyle() {
     if (!this.defaultStyle) {
       this.defaultStyle = new ol.style.Style({
@@ -141,6 +192,11 @@ export default class WFSLayer extends OverlayLayer {
     return [this.defaultStyle];
   }
 
+  /**
+   * Builds CQLFilter string based on current extent and dashboard filters
+   * @param {Number[]} extent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
+   * @returns {String}
+   */
   buildCQLFilter(extent) {
     let cqlFilter = `bbox(geom, ${extent.join(',')}, '${this.manager.viewProjection.getCode()}')`;
     if (this.manager.filterString) {
@@ -149,3 +205,5 @@ export default class WFSLayer extends OverlayLayer {
     return cqlFilter;
   }
 }
+
+export default WFSLayer;

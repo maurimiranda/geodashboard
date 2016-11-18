@@ -11,23 +11,12 @@ export default class MapManager extends EventEmitter {
 
     this.center = config.center || [0, 0];
     this.zoom = config.zoom || 10;
+    this.baseLayers = [];
+    this.overlayLayers = [];
 
-    this.createLayerGroups();
     this.createMap();
     this.createOverlay();
     this.addLayerSwitcher();
-  }
-
-  createLayerGroups() {
-    this.baseLayers = new ol.layer.Group({
-      title: 'Base',
-      layers: [],
-    });
-    this.overlayLayers = new ol.layer.Group({
-      title: 'Data',
-      layers: [],
-    });
-    this.layers = [this.overlayLayers, this.baseLayers];
   }
 
   createMap() {
@@ -59,14 +48,9 @@ export default class MapManager extends EventEmitter {
   }
 
   addLayerSwitcher() {
-    this.layerSwitcher = new LayerSwitcher({
-      tipLabel: 'Layers',
-    });
+    this.layerSwitcher = new LayerSwitcher();
+    this.layerSwitcher.manager = this;
     this.map.addControl(this.layerSwitcher);
-    this.layerSwitcher.panel.onmouseout = null;
-    this.map.on('postrender', () => {
-      this.layerSwitcher.showPanel();
-    });
   }
 
   render(container) {
@@ -76,13 +60,15 @@ export default class MapManager extends EventEmitter {
 
   addBaseLayer(layer) {
     layer.manager = this;
-    this.baseLayers.getLayers().push(layer.layer);
+    this.baseLayers.push(layer);
+    this.map.addLayer(layer.layer);
   }
 
   addOverlayLayer(layer) {
     layer.manager = this;
+    this.overlayLayers.push(layer);
+    this.map.addLayer(layer.layer);
     layer.refresh();
-    this.overlayLayers.getLayers().push(layer.layer);
   }
 
   featurePopup(event) {
@@ -113,6 +99,18 @@ export default class MapManager extends EventEmitter {
     } else {
       this.overlay.setElement(null);
     }
+  }
+
+  /**
+   * @param {String} id - The layer ID to find
+   * @returns {Layer}
+   */
+  getLayerById(id) {
+    let layer = this.baseLayers.find(l => l.id === id);
+    if (!layer) {
+      layer = this.overlayLayers.find(l => l.id === id);
+    }
+    return layer;
   }
 
   get filterString() {

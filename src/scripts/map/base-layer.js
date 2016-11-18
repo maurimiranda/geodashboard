@@ -2,11 +2,21 @@ import ol from 'openlayers';
 
 import Layer from './layer';
 
-export default class BaseLayer extends Layer {
+/**
+ * Tile layer used as base for map
+ * @extends Layer
+ */
+class BaseLayer extends Layer {
+  /**
+  * @param {Object} [config] - Configuration object
+  * @param {String} [config.title='BaseLayer'] - Layer title
+  * @param {Boolean} [config.visible=false] - Layer initial status
+  */
   constructor(config = {}) {
     config.title = config.title || 'BaseLayer';
-    config.visible = config.visible || true;
     super(config);
+
+    this.base = true;
 
     this.layer = new ol.layer.Tile({
       title: this.title,
@@ -17,3 +27,5 @@ export default class BaseLayer extends Layer {
     });
   }
 }
+
+export default BaseLayer;

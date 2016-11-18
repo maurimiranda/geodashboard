@@ -2,7 +2,16 @@ import ol from 'openlayers';
 
 import BaseLayer from './base-layer';
 
-export default class BingLayer extends BaseLayer {
+/**
+ * Bing Aerial base layer
+ * @extends BaseLayer
+ */
+class BingLayer extends BaseLayer {
+  /**
+  * @param {Object} [config] - Configuration object
+  * @param {String} [config.title='Bing Aerial'] - Layer title
+  * @param {Boolean} [config.visible=true] - Layer initial status
+  */
   constructor(config = {}) {
     config.title = config.title || 'Bing Aerial';
     super(config);
@@ -13,3 +22,5 @@ export default class BingLayer extends BaseLayer {
     });
   }
 }
+
+export default BingLayer;
