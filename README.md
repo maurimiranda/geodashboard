@@ -122,8 +122,12 @@ dashboard.render();
 ### Demo
 
 * Using files:
-[Source](https://github.com/maurimiranda/geo-dashboard/blob/master/src/examples/index.js),
-[Live](https://maurimiranda.github.io/geo-dashboard/)
-* Using node package and webpack:
+[Source](https://github.com/maurimiranda/geo-dashboard-demo/),
+[Live](https://maurimiranda.github.io/geo-dashboard-demo/)
+* Using node package and [webpack](https://webpack.github.io/):
 [Source](https://gitlab.com/Admin_Siasar/SIASAR-Dashboard/tree/master),
 [Live](http://dashboard.siasar.org/)
+
+### Docs
+
+For further details on objects, see the documentation at https://maurimiranda.github.io/geo-dashboard/

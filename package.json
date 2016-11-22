@@ -23,7 +23,6 @@
     "eslint-plugin-import": "^1.16.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
-    "gh-pages": "^0.11.0",
     "handlebars": "^4.0.5",
     "handlebars-loader": "^1.4.0",
     "html-webpack-plugin": "^2.24.1",
@@ -39,8 +38,7 @@
     "build": "NODE_ENV=production webpack --progress --colors --config webpack.prod.babel.js",
     "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "serve": "webpack-dev-server --config webpack.dev.babel.js --hot --inline",
-    "docs": "jsdoc -c .jsdoc.json",
-    "deploy": "gh-pages -d dist"
+    "docs": "jsdoc -c .jsdoc.json"
   },
   "dependencies": {
     "chart.js": "^2.4.0",
