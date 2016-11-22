@@ -112,10 +112,12 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 }));
 ```
 
-* Call the render function and... **that's it!**
+* Call the render function
 ```javascript
 dashboard.render();
 ```
+
+* And... **that's it!** Go and navigate your new **GeoDashboard**.
 
 ### Demo
 
