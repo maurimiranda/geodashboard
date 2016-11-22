@@ -1,5 +1,5 @@
-var server = 'https://geoserver.siasar.org/geoserver';
-var categories = {
+server = 'https://geoserver.siasar.org/geoserver';
+const categories = {
   property: 'score',
   values: {
     'A': { color: '#54BA46' },
@@ -9,7 +9,7 @@ var categories = {
   },
 };
 
-var dashboard = new GeoDashboard.Dashboard({
+const dashboard = new GeoDashboard.Dashboard({
   container: document.getElementsByClassName('dashboard')[0],
   header: {
     title: 'GeoDashboard Demo',

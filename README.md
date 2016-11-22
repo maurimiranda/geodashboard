@@ -42,7 +42,7 @@ const GeoDashboard = require('geo-dashboard');
 ```
 or
 ```javascript
-import GeoDashboard from 'geo-dashboard';
+import * as GeoDashboard from 'geo-dashboard';
 ```
 
 ### Next steps
