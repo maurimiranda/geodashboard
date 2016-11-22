@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>dashboard.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BaseLayer.html">BaseLayer</a></li><li><a href="BingLayer.html">BingLayer</a></li><li><a href="ChartWidget.html">ChartWidget</a><ul class='methods'><li data-type='method'><a href="ChartWidget.html#format">format</a></li><li data-type='method'><a href="ChartWidget.html#parseResponse">parseResponse</a></li></ul></li><li><a href="CountWidget.html">CountWidget</a><ul class='methods'><li data-type='method'><a href="CountWidget.html#format">format</a></li><li data-type='method'><a href="CountWidget.html#parseResponse">parseResponse</a></li><li data-type='method'><a href="CountWidget.html#refresh">refresh</a></li></ul></li><li><a href="Dashboard.html">Dashboard</a><ul class='methods'><li data-type='method'><a href="Dashboard.html#.uuid">uuid</a></li><li data-type='method'><a href="Dashboard.html#addBaseLayer">addBaseLayer</a></li><li data-type='method'><a href="Dashboard.html#addOverlayLayer">addOverlayLayer</a></li><li data-type='method'><a href="Dashboard.html#addWidget">addWidget</a></li><li data-type='method'><a href="Dashboard.html#refresh">refresh</a></li><li data-type='method'><a href="Dashboard.html#render">render</a></li></ul></li><li><a href="Filter.html">Filter</a><ul class='methods'><li data-type='method'><a href="Filter.html#toString">toString</a></li></ul></li><li><a href="GroupWidget.html">GroupWidget</a><ul class='methods'><li data-type='method'><a href="GroupWidget.html#format">format</a></li><li data-type='method'><a href="GroupWidget.html#parseResponse">parseResponse</a></li></ul></li><li><a href="Layer.html">Layer</a></li><li><a href="LayerSwitcher.html">LayerSwitcher</a><ul class='methods'><li data-type='method'><a href="LayerSwitcher.html#renderPanel">renderPanel</a></li><li data-type='method'><a href="LayerSwitcher.html#setMap">setMap</a></li><li data-type='method'><a href="LayerSwitcher.html#setVisible">setVisible</a></li></ul></li><li><a href="MapManager.html">MapManager</a><ul class='methods'><li data-type='method'><a href="MapManager.html#addBaseLayer">addBaseLayer</a></li><li data-type='method'><a href="MapManager.html#addOverlayLayer">addOverlayLayer</a></li><li data-type='method'><a href="MapManager.html#featurePopup">featurePopup</a></li><li data-type='method'><a href="MapManager.html#getLayerById">getLayerById</a></li><li data-type='method'><a href="MapManager.html#render">render</a></li></ul></li><li><a href="module.exports.html">exports</a><ul class='methods'><li data-type='method'><a href="module.exports.html#format">format</a></li><li data-type='method'><a href="module.exports.html#refresh">refresh</a></li></ul></li><li><a href="OSMLayer.html">OSMLayer</a></li><li><a href="OverlayLayer.html">OverlayLayer</a></li><li><a href="WFSLayer.html">WFSLayer</a><ul class='methods'><li data-type='method'><a href="WFSLayer.html#refresh">refresh</a></li></ul></li><li><a href="Widget.html">Widget</a><ul class='methods'><li data-type='method'><a href="Widget.html#format">format</a></li><li data-type='method'><a href="Widget.html#refresh">refresh</a></li><li data-type='method'><a href="Widget.html#render">render</a></li></ul></li><li><a href="WidgetManager.html">WidgetManager</a><ul class='methods'><li data-type='method'><a href="WidgetManager.html#addWidget">addWidget</a></li><li data-type='method'><a href="WidgetManager.html#refresh">refresh</a></li><li data-type='method'><a href="WidgetManager.html#render">render</a></li></ul></li><li><a href="WMSLayer.html">WMSLayer</a><ul class='methods'><li data-type='method'><a href="WMSLayer.html#refresh">refresh</a></li></ul></li><li><a href="WPSWidget.html">WPSWidget</a><ul class='methods'><li data-type='method'><a href="WPSWidget.html#format">format</a></li><li data-type='method'><a href="WPSWidget.html#refresh">refresh</a></li><li data-type='method'><a href="WPSWidget.html#render">render</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#parseResponse">parseResponse</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">dashboard.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint no-bitwise: ["error", { "allow": [">>", "^"] }] */
+
+import MapManager from './map/map-manager';
+import WidgetManager from './widget/widget-manager';
+
+import template from '../templates/dashboard.hbs';
+
+import '../styles/dashboard.scss';
+
+/**
+ * The main class of GeoDashboard.
+ */
+class Dashboard {
+  /**
+   * @param {Object} config - Configuration object
+   * @param {HTMLElement} config.container - Element where the dashboard will be placed
+   * @param {Object} config.map - Map configuration
+   * @param {Number[]} config.map.center - The initial center for the map
+   * @param {Number} config.map.zoom - The initial zoom level
+   * @param {Object} [config.header] - Header configuration
+   * @param {String} config.header.title - Text to show in header
+   * @param {String} config.header.logo - URL of image to show in header
+   * @param {Object} [config.footer] - Footer configuration
+   * @param {String} config.footer.text - Text to show in footer
+   * @param {Filter[]} [config.filters] - Set of filters to apply to layers and widgets
+   */
+  constructor(config) {
+    this.container = config.container;
+    this.header = config.header;
+    this.footer = config.footer;
+    this.filters = config.filters || [];
+
+    /**
+     * Dashboard MapManager
+     * @member {MapManager}
+     */
+    this.mapManager = new MapManager(config.map);
+    this.mapManager.dashboard = this;
+
+    this.mapManager.on('mapchange', (event) => {
+      this.extent = event.extent;
+      this.refresh();
+    });
+
+    /**
+     * Dashboard WidgetManager
+     * @member {WidgetManager}
+     */
+    this.widgetManager = new WidgetManager();
+    this.widgetManager.dashboard = this;
+  }
+
+  /**
+  * All filter strings joined by 'AND'
+  * @member {String}
+  * @readonly
+  */
+  get filterString() {
+    return this.filters.map(filter => filter.toString()).join(' AND ');
+  }
+
+  /**
+   * Creates the dashboard content and render map and widgets.
+   */
+  render() {
+    this.container.insertAdjacentHTML('beforeend', template({
+      header: this.header,
+      footer: this.footer,
+    }));
+
+    this.mapManager.render(this.container.getElementsByClassName('map')[0]);
+
+    this.widgetManager.container = this.container.getElementsByClassName('widget-panel')[0];
+    this.widgetManager.render();
+  }
+
+  /**
+   * Refresh all layers and widgets
+   */
+  refresh() {
+    this.widgetManager.refresh(this.extent);
+  }
+
+  /**
+   * Adds base layer to the map
+   * @param {BaseLayer} layer - The base layer to be added
+   */
+  addBaseLayer(layer) {
+    this.mapManager.addBaseLayer(layer);
+  }
+
+  /**
+   * Adds overlay layer to the map
+   * @param {OverlayLayer} layer - The overlay layer to be added
+   */
+  addOverlayLayer(layer) {
+    this.mapManager.addOverlayLayer(layer);
+  }
+
+  /**
+   * Adds widget to the panel
+   * @param {Widget} widget - The widget to be added
+   */
+  addWidget(widget) {
+    this.widgetManager.addWidget(widget);
+  }
+
+  /**
+   * Generate random UUID to use as unique element ID
+   */
+  static uuid() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, a => (
+      (a ^ Math.random() * 16) >> a / 4
+    ).toString(16));
+  }
+}
+
+export default Dashboard;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Tue Nov 22 2016 11:20:35 GMT-0300 (ART) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

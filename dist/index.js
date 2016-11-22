@@ -8,12 +8,6 @@ var categories = {
     'D': { color: '#C92429' },
   },
 };
-var style = {
-  label: {
-    property: 'name'
-  },
-  color: categories,
-};
 
 var dashboard = new GeoDashboard.Dashboard({
   container: document.getElementsByClassName('dashboard')[0],
@@ -25,24 +19,17 @@ var dashboard = new GeoDashboard.Dashboard({
     center: [-75.01, -9.53],
     zoom: 7,
   },
-  filters: [{
+  filters: [new GeoDashboard.Filter({
     property: 'adm_0',
     value: 'PERÚ'
-  }],
+  })],
 });
 
-dashboard.addBaseLayer(new GeoDashboard.BingLayer({
-key: 'AlMSfR3F4khtlIefjuE_NYpX403LdlGiod36WLn8HlawywtSud-NSgEklCemD5pR',
+dashboard.addBaseLayer(new GeoDashboard.OSMLayer({
+  visible: true,
 }));
-dashboard.addBaseLayer(new GeoDashboard.OSMLayer());
-
-dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
-  title: 'Heatmap',
-  server: server,
-  layer: 'siasar:communities',
-  style: 'siasar:heatmap',
-  exclusive: true,
-  visible: false
+dashboard.addBaseLayer(new GeoDashboard.BingLayer({
+  key: 'AlMSfR3F4khtlIefjuE_NYpX403LdlGiod36WLn8HlawywtSud-NSgEklCemD5pR',
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
@@ -61,7 +48,15 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
     title: 'Population',
     property: 'population',
   }],
-  style: style
+  style: categories
+}));
+
+dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
+  title: 'Heatmap',
+  server: server,
+  layer: 'siasar:communities',
+  style: 'siasar:heatmap',
+  exclusive: true,
 }));
 
 dashboard.addWidget(new GeoDashboard.CountWidget({
@@ -98,7 +93,7 @@ dashboard.addWidget(new GeoDashboard.GroupWidget({
 }));
 
 dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Communities Chart',
+  title: 'Categories Chart',
   server: server,
   layer: 'siasar:communities',
   property: 'id',
