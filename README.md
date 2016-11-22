@@ -6,7 +6,7 @@ Web library to display data as maps and widgets using **WMS**, **WFS** and **WPS
 
 The idea behind this project is that anybody who already has an OGC compliant server up and running can create a simple and nice dashboard with just a few lines of JavaScript.
 
-**GeoDashboard** born as an inside project of [SIASAR](http://siasar.org).
+**GeoDashboard** has born as an inside project of [SIASAR](http://siasar.org).
 
 ## How to use it
 
