@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>WMSLayer - Documentation</title>
+    <title>AggregateWidget - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">WMSLayer</h1>
+    <h1 class="page-title">AggregateWidget</h1>
     
 
     
@@ -40,10 +40,10 @@
 <header>
     
         <h2>
-        WMSLayer
+        AggregateWidget
         </h2>
         
-            <div class="class-description"><p>Web Map Service Layer</p></div>
+            <div class="class-description"><p>Widget that shows a WPS Aggregate function result</p></div>
         
     
 </header>
@@ -57,7 +57,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="WMSLayer"><span class="type-signature"></span>new WMSLayer<span class="signature">(config)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="AggregateWidget"><span class="type-signature"></span>new AggregateWidget<span class="signature">(config)</span><span class="type-signature"></span></h4>
 
     
 
@@ -69,7 +69,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="map_wms-layer.js.html">map/wms-layer.js</a>, <a href="map_wms-layer.js.html#line9">line 9</a>
+        <a href="widget_aggregate-widget.js.html">widget/aggregate-widget.js</a>, <a href="widget_aggregate-widget.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -177,8 +177,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -204,8 +202,6 @@
             
                 <td class="attributes">
                 
-                    &lt;optional><br>
-                
 
                 
 
@@ -214,53 +210,8 @@
             
 
             
-                <td class="default">
-                
-                    <code>'OverlayLayer'</code>
-                
-                </td>
-            
 
-            <td class="description last"><p>Layer title</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>visible</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>false</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>Layer initial status</p></td>
+            <td class="description last"><p>Widget title</p></td>
         </tr>
 
     
@@ -289,10 +240,6 @@
                 </td>
             
 
-            
-                <td class="default">
-                
-                </td>
             
 
             <td class="description last"><p>URL of map server</p></td>
@@ -325,98 +272,15 @@
             
 
             
-                <td class="default">
-                
-                </td>
-            
 
-            <td class="description last"><p>Name of layer to display</p></td>
+            <td class="description last"><p>Name of the layer to query</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>attribution</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>''</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>Layer data attribution</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>exclusive</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>false</code>
-                
-                </td>
-            
-
-            <td class="description last"><p>If true, when the layer is shown,
-  all other overlay layers are hidden</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>style</code></td>
+                <td class="name"><code>function</code></td>
             
 
             <td class="type">
@@ -439,12 +303,75 @@
             
 
             
-                <td class="default">
+
+            <td class="description last"><p>Aggregate function to execute.
+  Options: 'Count', 'Average', 'Max', 'Median', 'Min', 'StdDev', or 'Sum'</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>property</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
                 
                 </td>
             
 
-            <td class="description last"><p>The style or styles to be used with the layer</p></td>
+            
+
+            <td class="description last"><p>Field to use in aggregate function</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Function to parse and transform data fetched from server.
+  This function should return a human friendly value as it will be shown as
+  the widget current value.</p></td>
         </tr>
 
     
@@ -483,7 +410,7 @@
 
 
     <ul>
-        <li><a href="OverlayLayer.html">OverlayLayer</a></li>
+        <li><a href="WPSWidget.html">WPSWidget</a></li>
     </ul>
 
 
@@ -507,7 +434,7 @@
 
     
 
-    <h4 class="name" id="refresh"><span class="type-signature"></span>refresh<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="format"><span class="type-signature">(protected) </span>format<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
 
     
 
@@ -519,7 +446,120 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="map_wms-layer.js.html">map/wms-layer.js</a>, <a href="map_wms-layer.js.html#line48">line 48</a>
+        <a href="widget_wps-widget.js.html">widget/wps-widget.js</a>, <a href="widget_wps-widget.js.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="WPSWidget.html#format">WPSWidget#format</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Processes the widget value and returns a human friendly version.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <ul>
+<li>Current widget value prepared to be shown</li>
+</ul>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="parseResponse"><span class="type-signature">(protected) </span>parseResponse<span class="signature">(value)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="widget_aggregate-widget.js.html">widget/aggregate-widget.js</a>, <a href="widget_aggregate-widget.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -559,7 +599,145 @@
 
 
 <div class="description">
-    <p>Reloads layer data using current filters</p>
+    <p>Parses data fetched from server and sets widget value to an easly readable format</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>JSON data fetched from server</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="refresh"><span class="type-signature"></span>refresh<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="widget_wps-widget.js.html">widget/wps-widget.js</a>, <a href="widget_wps-widget.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="WPSWidget.html#refresh">WPSWidget#refresh</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    <p>Reloads the widget value using the formatted value.</p>
 </div>
 
 
