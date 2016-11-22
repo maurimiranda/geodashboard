@@ -130,4 +130,4 @@ dashboard.render();
 
 ### Docs
 
-For further details on objects, see [the documentation](https://maurimiranda.github.io/geo-dashboard/)
+For further details on objects, see [the documentation](https://maurimiranda.github.io/geo-dashboard/).
