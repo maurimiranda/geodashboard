@@ -5,7 +5,6 @@
   "source": {
     "include": [
       "src/scripts",
-      "package.json",
       "README.md"
     ],
     "includePattern": ".js$"
