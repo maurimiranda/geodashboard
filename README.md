@@ -16,18 +16,18 @@ There are basically two options to use GeoDashboard:
 
 ### Using the files
 
-1. Include GeoDashboard CSS file
+* Include GeoDashboard CSS file
 ```
 <link rel="stylesheet" href="https://unpkg.com/geo-dashboard/dist/geo-dashboard.css" />
 ```
-1. Include GeoDashboard JS file
+* Include GeoDashboard JS file
 ```
 <script src="https://unpkg.com/geo-dashboard/dist/geo-dashboard.js"></script>
 ```
 
 ### Using node package
 
-1. Install the package  
+* Install the package  
 ```shell
 npm install --save geo-dashboard
 ```
@@ -36,7 +36,7 @@ or
 yarn add geo-dashboard
 ```
 
-1. Require or import the module
+* Require or import the module
 ```javascript
 const GeoDashboard = require('geo-dashboard');
 ```
@@ -47,12 +47,12 @@ import GeoDashboard from 'geo-dashboard';
 
 ### Next steps
 
-1. Add a *div* where you wanna display the dashboard
+* Add a *div* where you wanna display the dashboard
 ```html
 <div id="dashboard"></div>
 ```
 
-1. Create the dashboard
+* Create the dashboard
 ```javascript
 const dashboard = new GeoDashboard.Dashboard({
      container: document.getElementsById('dashboard'),
@@ -66,7 +66,7 @@ const dashboard = new GeoDashboard.Dashboard({
 });
 ```
 
-1. Add some layers
+* Add some layers
 ```javascript
 dashboard.addBaseLayer(new GeoDashboard.OSMLayer({
      visible: true,
@@ -94,7 +94,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
 }));
 ```
 
-1. Add some widgets
+* Add some widgets
 ```javascript
 dashboard.addWidget(new GeoDashboard.CountWidget({
      title: 'Total Communities',
@@ -112,7 +112,7 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 }));
 ```
 
-1. Call the render function and... **that's it!**
+* Call the render function and... **that's it!**
 ```javascript
 dashboard.render();
 ```
