@@ -6,7 +6,7 @@ import requestTemplate from '../../templates/widget/wps/aggregate.hbs';
  * Widget that shows a WPS Aggregate function result
  * @extends WPSWidget
  */
-export default class AggregateWidget extends WPSWidget {
+class AggregateWidget extends WPSWidget {
   /**
    * @param {Object} config - Configuration object
    * @param {String} config.title - Widget title
@@ -35,3 +35,5 @@ export default class AggregateWidget extends WPSWidget {
     this.value = value.AggregationResults[0];
   }
 }
+
+export default AggregateWidget;
