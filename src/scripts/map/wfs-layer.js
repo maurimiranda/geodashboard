@@ -3,27 +3,28 @@ import ol from 'openlayers';
 import OverlayLayer from './overlay-layer';
 
 /**
- * WFS Layer
+ * Web Feature Service Layer
+ * @extends OverlayLayer
  */
 class WFSLayer extends OverlayLayer {
   /**
-  * @param {Object} config - Configuration object
-  * @param {String} [config.title='OverlayLayer'] - Layer title
-  * @param {Boolean} [config.visible=false] - Layer initial status
-  * @param {String} config.server - URL of map server
-  * @param {String} config.layerName - Name of layer to display
-  * @param {String} [config.attribution=''] - Layer data attribution
-  * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
-  *   all other overlay layers are hidden
-  * @param {Object} config.style - Style configuration
-  * @param {Object} config.style.property - Property that defines the style to use
-  * @param {Object} config.style.values - Object with possible values
-  *   and their correspoding style
-  * @param {Object[]} [config.popup] - Data to show when user clicks
-  *   on a feature in the map
-  * @param {String} config.property - Name of the field to show
-  * @param {String} [config.title] - Text to show as field title
-  */
+   * @param {Object} config - Configuration object
+   * @param {String} [config.title='OverlayLayer'] - Layer title
+   * @param {Boolean} [config.visible=false] - Layer initial status
+   * @param {String} config.server - URL of map server
+   * @param {String} config.layerName - Name of layer to display
+   * @param {String} [config.attribution=''] - Layer data attribution
+   * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
+   *   all other overlay layers are hidden
+   * @param {Object} config.style - Style configuration
+   * @param {String} config.style.property - Property that defines the style to use
+   * @param {Object} config.style.values - Object with possible values
+   *   and their corresponding style
+   * @param {Object[]} [config.popup] - Data to show when user clicks
+   *   on a feature in the map
+   * @param {String} config.popup[].property - Name of the field to show
+   * @param {String} [config.popup[].title] - Text to show as field title
+   */
   constructor(config = {}) {
     super(config);
 
@@ -53,7 +54,7 @@ class WFSLayer extends OverlayLayer {
   }
 
   /**
-   * Refreshes layer
+   * Reloads layer data using current filters
    */
   refresh() {
     this.source.clear();
@@ -128,6 +129,7 @@ class WFSLayer extends OverlayLayer {
   /**
    * Builds default stroke style
    * @returns {Object} Openlayers' [Stroke](https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html) object
+   * @private
    */
   getDefaultStroke() {
     if (!this.defaultStroke) {
@@ -142,6 +144,7 @@ class WFSLayer extends OverlayLayer {
   /**
    * Builds default fill style
    * @returns {Object} Openlayers' [Fill](https://openlayers.org/en/latest/apidoc/ol.style.Fill.html) object
+   * @private
    */
   getDefaultFill() {
     if (!this.defaultFill) {
@@ -156,6 +159,7 @@ class WFSLayer extends OverlayLayer {
    * Builds default text style
    * @param {Number} radius
    * @returns {Object} Openlayers' [Text](https://openlayers.org/en/latest/apidoc/ol.style.Text.html) object
+   * @private
    */
   getDefaultText(radius) {
     if (!this.defaultText) {
@@ -176,6 +180,7 @@ class WFSLayer extends OverlayLayer {
   /**
    * Builds default style
    * @returns {Object} Openlayers' [Style](https://openlayers.org/en/latest/apidoc/ol.style.Style.html) object
+   * @private
    */
   getDefaultStyle() {
     if (!this.defaultStyle) {
@@ -196,6 +201,7 @@ class WFSLayer extends OverlayLayer {
    * Builds CQLFilter string based on current extent and dashboard filters
    * @param {Number[]} extent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
    * @returns {String}
+   * @private
    */
   buildCQLFilter(extent) {
     let cqlFilter = `bbox(geom, ${extent.join(',')}, '${this.manager.viewProjection.getCode()}')`;

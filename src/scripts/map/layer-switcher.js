@@ -3,18 +3,19 @@ import ol from 'openlayers';
 import template from '../../templates/map/layer-switcher.hbs';
 
 /**
- * Custom implementation of LayerSwitcher based on [Matt Walker's OL3 control](https://github.com/walkermatt/ol3-layerswitcher)
+ * Custom implementation of LayerSwitcher based on [Matt Walker's OL3 control](https://github.com/walkermatt/ol3-layerswitcher).
  */
 class LayerSwitcher extends ol.control.Control {
   constructor() {
     const element = document.createElement('div');
     element.className = 'layer-switcher ol-control';
-
     super({ element });
-
     this.element = element;
   }
 
+  /**
+   * Generates the panel with all available layers.
+   */
   renderPanel() {
     this.element.innerHTML = template({
       baseLayers: this.manager.baseLayers,
@@ -28,6 +29,9 @@ class LayerSwitcher extends ol.control.Control {
     }
   }
 
+  /**
+   * Defines the map where the control will be shown.
+   */
   setMap(map) {
     super.setMap(map);
     this.map = map;
@@ -36,6 +40,11 @@ class LayerSwitcher extends ol.control.Control {
     });
   }
 
+  /**
+   * Shows or hides the given layer
+   * @param {Layer} layer - The layer to show or hide
+   * @param {Boolean} visible - If true, the given layer is shown. If false, it's hidden.
+   */
   setVisible(layer, visible) {
     layer.visible = visible;
     layer.layer.setVisible(visible);

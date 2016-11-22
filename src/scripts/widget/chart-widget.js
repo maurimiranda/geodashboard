@@ -4,7 +4,11 @@ import GroupWidget from './group-widget';
 
 import template from '../../templates/widget/chart-widget.hbs';
 
-export default class ChartWidget extends GroupWidget {
+/**
+ * Widget that shows a bar chart with grouped data fetched using WPS Aggregate
+ * @extends GroupWidget
+ */
+class ChartWidget extends GroupWidget {
   constructor(config) {
     super(config);
     this.template = template;
@@ -65,3 +69,5 @@ export default class ChartWidget extends GroupWidget {
     });
   }
 }
+
+export default ChartWidget;

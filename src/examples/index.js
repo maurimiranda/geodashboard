@@ -93,7 +93,7 @@ dashboard.addWidget(new GeoDashboard.GroupWidget({
 }));
 
 dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Communities Chart',
+  title: 'Categories Chart',
   server: server,
   layer: 'siasar:communities',
   property: 'id',
