@@ -98,14 +98,14 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
 ```javascript
 dashboard.addWidget(new GeoDashboard.CountWidget({
      title: 'Total Communities',
-     server: server,
+     server: 'https://geoserver.siasar.org/geoserver',
      layer: 'siasar:communities',
 }));
 ```
 ```javascript
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
      title: 'Total Population',
-     server: server,
+     server: 'https://geoserver.siasar.org/geoserver',
      layer: 'siasar:communities',
      property: 'population',
      function: 'Sum',
