@@ -84,7 +84,7 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   },
 }));
 
-dashboard.addWidget(new GeoDashboard.GroupWidget({
+dashboard.addWidget(new GeoDashboard.CategoryWidget({
   title: 'Communities by Category',
   server: server,
   layer: 'siasar:communities',
@@ -98,6 +98,9 @@ dashboard.addWidget(new GeoDashboard.ChartWidget({
   layer: 'siasar:communities',
   property: 'id',
   categories: categories,
+  chart: {
+    type: 'bar',
+  },
 }));
 
 dashboard.render();

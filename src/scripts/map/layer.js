@@ -15,7 +15,7 @@ class Layer {
 
     this.title = config.title;
     this.visible = config.visible;
-    this.id = Dashboard.uuid();
+    this.id = Dashboard.uid();
   }
 
   /**

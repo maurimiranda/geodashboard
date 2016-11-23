@@ -27,7 +27,7 @@ class AggregateWidget extends WPSWidget {
   }
 
   /**
-   * Parses data fetched from server and sets widget value to an easly readable format
+   * Parses data fetched from server and sets widget value to an easily readable format
    * @param {Object} value - JSON data fetched from server
    * @protected
    */

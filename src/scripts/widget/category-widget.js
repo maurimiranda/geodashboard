@@ -6,7 +6,7 @@ import template from '../../templates/widget/group-widget.hbs';
  * Widget that shows grouped data fetched using WPS Aggregate
  * @extends AggregateWidget
  */
-class GroupWidget extends AggregateWidget {
+class CategoryWidget extends AggregateWidget {
   /**
    * @param {Object} config - Configuration object
    * @param {String} config.title - Widget title
@@ -38,7 +38,7 @@ class GroupWidget extends AggregateWidget {
   }
 
   /**
-   * Parses data fetched from server and sets widget value to an easly readable format
+   * Parses data fetched from server and sets widget value to an easily readable format
    * @param {Object} value - JSON data fetched from server
    * @protected
    */
@@ -50,4 +50,4 @@ class GroupWidget extends AggregateWidget {
   }
 }
 
-export default GroupWidget;
+export default CategoryWidget;

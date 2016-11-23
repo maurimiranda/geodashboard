@@ -14,7 +14,7 @@ class Widget {
    */
   constructor(config) {
     this.title = config.title;
-    this.id = Dashboard.uuid();
+    this.id = Dashboard.uid();
     this.customFormat = config.format || this.format;
   }
 
