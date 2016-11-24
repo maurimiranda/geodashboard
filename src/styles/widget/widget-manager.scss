@@ -41,9 +41,42 @@ $widget-width: 18em;
 .category-widget {
   ul {
     list-style: none;
-    font-size: 1.5em;
     padding: 0;
     margin: 0.3em 0 0 0;
+
+    li {
+      font-size: 0.8em;
+      margin-top: $default-spacing;
+
+      span.value {
+        float: right;
+      }
+
+      &.category {
+        .meter {
+          height: 1em;
+          position: relative;
+          background: repeating-linear-gradient(
+            to right,
+            $light-color,
+            $light-color 1px,
+            $background-color 1px,
+            $background-color 5px
+          );
+
+          span {
+            display: block;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+          }
+        }
+      }
+
+      &.total {
+        font-size: 1.5em;
+      }
+    }
   }
 }
 

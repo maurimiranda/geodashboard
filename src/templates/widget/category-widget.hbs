@@ -1,5 +1,15 @@
 <ul>
-  {{#each value}}
-    <li><span class="category">{{category}}:</span> <strong>{{value}}</strong></li>
+  <li class="total">
+    Total
+    <span class="value">{{value.total}}</span>
+  </li>
+  {{#each value.values}}
+    <li class="category">
+      <span class="label">{{category}}</span>
+      <span class="value">{{value}}</span>
+      <div class="meter">
+        <span style="background-color: {{color}}; width: {{percentage}}%;"></span>
+      </div>
+    </li>
   {{/each}}
 </ul>

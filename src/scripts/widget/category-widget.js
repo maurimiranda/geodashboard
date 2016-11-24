@@ -24,6 +24,8 @@ class CategoryWidget extends AggregateWidget {
   constructor(config) {
     super(config);
     this.categories = config.categories;
+    this.labels = Object.getOwnPropertyNames(this.categories.values || {});
+    this.colors = this.labels.map((label => this.categories.values[label].color));
     this.function = 'Count';
     this.template = template;
     this.className = 'category-widget';
@@ -44,10 +46,25 @@ class CategoryWidget extends AggregateWidget {
    * @protected
    */
   parseResponse(value) {
-    this.value = value.AggregationResults.map(category => ({
-      category: category[0],
-      value: parseInt(category[1], 10),
-    }));
+    this.value = {};
+
+    this.value.total = value.AggregationResults.reduce((accumulator, current) => (
+      accumulator + current[1]
+    ), 0);
+
+    let categoryValue;
+    this.value.values = this.labels.map((category, index) => {
+      const categoryResult = value.AggregationResults.filter(result =>
+        result[0] === category
+      );
+      categoryValue = categoryResult.length ? categoryResult[0][1] : 0;
+      return {
+        category,
+        value: categoryValue,
+        percentage: Math.round((categoryValue / this.value.total) * 100),
+        color: this.colors[index],
+      };
+    });
   }
 }
 

@@ -6,6 +6,7 @@ $info-color:          #666666 !default;
 $success-color:       #7A9D67 !default;
 $warning-color:       #FDBA12 !default;
 $danger-color:        #D9534f !default;
+$light-color:         lighten($primary-color, 60%);
 
 $primary-alpha:       rgba($primary-color, 0.5) !default;
 $background-alpha:    rgba($background-color, 0.9) !default;

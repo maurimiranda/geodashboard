@@ -21,6 +21,7 @@ class ChartWidget extends CategoryWidget {
    *   and their correspoding style
    * @param {Object} config.chart - Object with chart configuration
    * @param {String} config.chart.type - Chart type. Options: 'bar', 'pie' or 'doughnut'.
+   * @param {Object} [config.chart.unit='value'] - Value to show. Options: 'value' or 'percentage'.
    * @param {Object} [config.chart.options] - Object with chart options based on [ChartJS](http://www.chartjs.org/docs/#chart-configuration).
    *   By default, the widget uses a bar chart without legend, Y axis nor gridlines.
    * @param {Function} [config.format] - Function to parse and transform data fetched from server.
@@ -30,11 +31,10 @@ class ChartWidget extends CategoryWidget {
   constructor(config) {
     super(config);
     this.template = template;
-    this.labels = Object.getOwnPropertyNames(this.categories.values);
-    this.colors = this.labels.map((label => this.categories.values[label].color));
     this.chartType = config.chart.type;
     this.chartOptions = config.chart.options || this.getChartOptions();
     this.className = 'chart-widget';
+    this.unit = config.chart.unit || 'value';
   }
 
   /**
@@ -74,6 +74,7 @@ class ChartWidget extends CategoryWidget {
     super.render();
     this.content.innerHTML = this.template();
     if (this.chartType === 'doughnut') {
+      this.unit = 'percentage';
       this.container.classList.add('doughnut-widget');
     }
     this.chart = new Chart(this.content.getElementsByTagName('canvas')[0], {
@@ -99,22 +100,8 @@ class ChartWidget extends CategoryWidget {
 
     this.getData((data) => {
       this.parseResponse(data);
-      this.chart.data.datasets[0].data = this.value;
+      this.chart.data.datasets[0].data = this.value.values.map(value => value[this.unit]);
       this.chart.update();
-    });
-  }
-
-  /**
-   * Parses data fetched from server and sets widget value to an easily readable format
-   * @param {Object} value - JSON data fetched from server
-   * @protected
-   */
-  parseResponse(value) {
-    this.value = this.labels.map((category) => {
-      const categoryResult = value.AggregationResults.filter(result =>
-        result[0] === category
-      );
-      return categoryResult.length ? categoryResult[0][1] : 0;
     });
   }
 }
