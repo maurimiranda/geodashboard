@@ -1,4 +1,5 @@
 server = 'https://geoserver.siasar.org/geoserver';
+
 const categories = {
   property: 'score',
   values: {
@@ -8,6 +9,15 @@ const categories = {
     'D': { color: '#C92429' },
   },
 };
+
+const types = {
+  property: 'supply_type',
+  values: {
+    'Acueducto por Bombeo':   { color: '#789074' },
+    'Acueducto por Gravedad': { color: '#c7c6aa' },
+    'Pozo con Bomba Manual':  { color: '#e3c1ff' },
+  },
+}
 
 const dashboard = new GeoDashboard.Dashboard({
   container: document.getElementsByClassName('dashboard')[0],
@@ -60,41 +70,24 @@ dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
   exclusive: true,
 }));
 
-dashboard.addWidget(new GeoDashboard.CountWidget({
-  title: 'Total Communities',
+dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
+  title: 'Systems',
   server: server,
-  layer: 'siasar:communities',
-}));
-
-dashboard.addWidget(new GeoDashboard.CategoryWidget({
-  title: 'Communities by Category',
-  server: server,
-  layer: 'siasar:communities',
-  property: 'id',
-  categories: categories,
-}));
-
-
-dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Communities by Category',
-  server: server,
-  layer: 'siasar:communities',
-  property: 'id',
-  categories: categories,
-  chart: {
-    type: 'doughnut',
-  },
-}));
-
-dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Communities by Category',
-  server: server,
-  layer: 'siasar:communities',
-  property: 'id',
-  categories: categories,
-  chart: {
-    type: 'bar',
-  },
+  layer: 'siasar:systems',
+  exclusive: true,
+  visible: false,
+  popup: [{
+    title: 'Name',
+    property: 'name',
+  },{
+    title: 'Location',
+    property: 'adm_3',
+  },{
+    title: 'Supply Type',
+    property: 'supply_type',
+  }],
+  style: types,
+  attribution: '© <a href="http://siasar.org">SIASAR</a>',
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
@@ -113,6 +106,44 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   function: 'Average',
   format: function(value) {
     return parseFloat(value).toFixed(2);
+  },
+}));
+
+dashboard.addWidget(new GeoDashboard.CategoryWidget({
+  title: 'Communities by Category',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
+}));
+
+dashboard.addWidget(new GeoDashboard.ChartWidget({
+  title: 'Communities by Category (%)',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
+  chart: {
+    type: 'doughnut',
+  },
+}));
+
+dashboard.addWidget(new GeoDashboard.CategoryWidget({
+  title: 'Systems by Type',
+  server: server,
+  layer: 'siasar:systems',
+  property: 'id',
+  categories: types,
+}));
+
+dashboard.addWidget(new GeoDashboard.ChartWidget({
+  title: 'Systems by Type',
+  server: server,
+  layer: 'siasar:systems',
+  property: 'id',
+  categories: types,
+  chart: {
+    type: 'bar',
   },
 }));
 
