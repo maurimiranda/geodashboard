@@ -22,6 +22,7 @@ class WPSWidget extends Widget {
     this.layerName = config.layer;
     this.server = `${config.server}/wps/`;
     this.template = template;
+    this.className = 'wps-widget';
   }
 
   /**

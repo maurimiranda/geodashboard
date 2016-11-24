@@ -66,25 +66,6 @@ dashboard.addWidget(new GeoDashboard.CountWidget({
   layer: 'siasar:communities',
 }));
 
-dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Total Population',
-  server: server,
-  layer: 'siasar:communities',
-  property: 'population',
-  function: 'Sum',
-}));
-
-dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Average Population',
-  server: server,
-  layer: 'siasar:communities',
-  property: 'population',
-  function: 'Average',
-  format: function(value) {
-    return parseFloat(value).toFixed(2);
-  },
-}));
-
 dashboard.addWidget(new GeoDashboard.CategoryWidget({
   title: 'Communities by Category',
   server: server,
@@ -113,6 +94,25 @@ dashboard.addWidget(new GeoDashboard.ChartWidget({
   categories: categories,
   chart: {
     type: 'bar',
+  },
+}));
+
+dashboard.addWidget(new GeoDashboard.AggregateWidget({
+  title: 'Total Population',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'population',
+  function: 'Sum',
+}));
+
+dashboard.addWidget(new GeoDashboard.AggregateWidget({
+  title: 'Average Population',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'population',
+  function: 'Average',
+  format: function(value) {
+    return parseFloat(value).toFixed(2);
   },
 }));
 

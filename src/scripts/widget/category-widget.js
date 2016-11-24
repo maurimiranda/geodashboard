@@ -26,6 +26,7 @@ class CategoryWidget extends AggregateWidget {
     this.categories = config.categories;
     this.function = 'Count';
     this.template = template;
+    this.className = 'category-widget';
   }
 
   /**

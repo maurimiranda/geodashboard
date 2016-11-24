@@ -39,7 +39,6 @@ $widget-width: 18em;
 }
 
 .category-widget {
-  width: $widget-width * 2;
   ul {
     list-style: none;
     font-size: 1.5em;
@@ -49,16 +48,14 @@ $widget-width: 18em;
 }
 
 .chart-widget {
-  font-family: $font-family-base;
-  font-weight: normal;
   canvas {
     margin-top: 1em;
-    font-family: $font-family-base;
-    font-weight: normal;
   }
+}
 
-  &.doughnut-widget {
-    margin-top: -4em;
+.doughnut-widget {
+  canvas {
+    margin-top: -3.5em;
     margin-bottom: -4em;
   }
 }

@@ -33,9 +33,12 @@ class Widget {
   render() {
     const element = document.createElement('div');
     element.innerHTML = template({
+      id: this.id,
       title: this.title,
+      className: this.className,
     });
     this.container = element.firstChild;
+    this.content = this.container.getElementsByClassName('widget-content')[0];
     this.manager.container.appendChild(this.container);
   }
 
@@ -43,7 +46,7 @@ class Widget {
    * Reloads the widget value using the formatted value.
    */
   refresh() {
-    this.container.getElementsByClassName('widget-content')[0].innerHTML = this.template({
+    this.content.innerHTML = this.template({
       id: this.id,
       value: this.customFormat(this.value),
     });

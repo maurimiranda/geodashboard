@@ -34,6 +34,7 @@ class ChartWidget extends CategoryWidget {
     this.colors = this.labels.map((label => this.categories.values[label].color));
     this.chartType = config.chart.type;
     this.chartOptions = config.chart.options || this.getChartOptions();
+    this.className = 'chart-widget';
   }
 
   /**
@@ -71,14 +72,11 @@ class ChartWidget extends CategoryWidget {
    */
   render() {
     super.render();
-    this.container.getElementsByClassName('widget-content')[0].innerHTML = this.template({
-      id: this.id,
-      value: this.customFormat(this.value),
-    });
+    this.content.innerHTML = this.template();
     if (this.chartType === 'doughnut') {
-      this.container.getElementsByClassName('chart-widget')[0].classList.add('doughnut-widget');
+      this.container.classList.add('doughnut-widget');
     }
-    this.chart = new Chart(document.getElementById(this.id), {
+    this.chart = new Chart(this.content.getElementsByTagName('canvas')[0], {
       type: this.chartType,
       data: {
         labels: this.labels,
