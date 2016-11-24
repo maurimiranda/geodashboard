@@ -2,6 +2,17 @@
 @import '~openlayers/dist/ol';
 @import 'layer-switcher.scss';
 
+.map {
+  flex: 1;
+  min-height: 0;
+  padding: $default-spacing;
+
+  > div {
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
+}
+
 .ol-control {
   padding: 0;
   border-radius: $border-radius;
@@ -14,7 +25,7 @@
     color: $primary-color;
     cursor: pointer;
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1em;
     line-height: 1;
 
     &:hover {
@@ -24,16 +35,20 @@
 }
 
 .ol-zoom {
-  bottom: $default-spacing * 2;
-  left: $default-spacing * 2;
+  bottom: $default-spacing;
+  left: $default-spacing;
   top: initial;
   border-radius: $border-radius;
+
+  button {
+    font-size: 1.5em;
+  }
 }
 
 .ol-attribution {
   box-shadow: $box-shadow;
-  bottom: $default-spacing * 2;
-  right: $default-spacing * 2;
+  bottom: $default-spacing;
+  right: $default-spacing;
   background-color: $background-color;
 
   &:not(.ol-collapsed) {
@@ -47,7 +62,7 @@
   }
 
   ul {
-    font-size: 1em;
+    font-size: 0.8em;
     color: $info-color;
 
     li {
@@ -80,7 +95,7 @@
 .info-popup {
   background-color: $background-color;
   border-radius: $border-radius;
-  padding: $default-spacing * 2;
+  padding: $default-spacing;
   box-shadow: $box-shadow;
   min-width: 200px;
   max-width: 300px;
@@ -88,7 +103,7 @@
   img {
     width: 100%;
     max-height: 200px;
-    margin-bottom: $default-spacing * 2;
+    margin-bottom: $default-spacing;
   }
 }
 

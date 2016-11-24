@@ -4,7 +4,7 @@
 
 .geo-dashboard {
   font-family: $font-family-base;
-  background-color: $background-color;
+  background: lighten($primary-color, 25%);
   color: $primary-color;
   height: 100%;
   display: flex;
@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     color: $background-color;
-    font-size: 1.5em;
+    font-size: 1.2em;
 
     img {
       height: 65%;
@@ -32,33 +32,16 @@
   .content {
     flex: 1;
     display: flex;
-
-    > .map {
-      flex: 1;
-      min-height: 0;
-    }
-
-    > .widget-panel {
-      background: lighten($primary-color, 15%);
-      overflow-y: scroll;
-    }
   }
 
   .footer {
     height: 1.5em;
     padding-left: $default-spacing;
   }
-
 }
 
-@media (max-width: 768px) {
+@include mobile {
   .geo-dashboard {
     font-size: $font-size-base * 0.75;
-
-    .content {
-      > .widget-panel {
-        display: none;
-      }
-    }
   }
 }

@@ -1,6 +1,6 @@
 import AggregateWidget from './aggregate-widget';
 
-import template from '../../templates/widget/group-widget.hbs';
+import template from '../../templates/widget/category-widget.hbs';
 
 /**
  * Widget that shows grouped data fetched using WPS Aggregate
@@ -13,7 +13,7 @@ class CategoryWidget extends AggregateWidget {
    * @param {String} config.server - URL of map server
    * @param {String} config.layerName - Name of the layer to query
    * @param {String} config.property - Field to use in aggregate function
-   * @param {Object} config.categories - Group categories configuration
+   * @param {Object} config.categories - Categories configuration
    * @param {String} config.categories.property - Property that defines the style to use
    * @param {Object} config.style.values - Object with possible values
    *   and their correspoding style

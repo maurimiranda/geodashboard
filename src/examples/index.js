@@ -48,7 +48,8 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
     title: 'Population',
     property: 'population',
   }],
-  style: categories
+  style: categories,
+  attribution: '© <a href="http://siasar.org">SIASAR</a>',
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
@@ -92,8 +93,20 @@ dashboard.addWidget(new GeoDashboard.CategoryWidget({
   categories: categories,
 }));
 
+
 dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Categories Chart',
+  title: 'Communities by Category',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
+  chart: {
+    type: 'doughnut',
+  },
+}));
+
+dashboard.addWidget(new GeoDashboard.ChartWidget({
+  title: 'Communities by Category',
   server: server,
   layer: 'siasar:communities',
   property: 'id',

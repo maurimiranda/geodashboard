@@ -10,7 +10,7 @@ $danger-color:        #D9534f !default;
 $primary-alpha:       rgba($primary-color, 0.5) !default;
 $background-alpha:    rgba($background-color, 0.9) !default;
 $info-alpha:          rgba($info-color, 0.1) !default;
-$box-shadow:          rgba(black, 0.3) 3px 4px 4px -3px !default;
+$box-shadow:          rgba(black, 0.5) 3px 4px 4px -3px !default;
 
 $font-family-base:    'Open Sans', sans-serif !default;
 $font-size-base:      1em !default;
@@ -18,3 +18,32 @@ $font-size-base:      1em !default;
 $border-radius:       2px !default;
 $default-spacing:     0.5em !default;
 $border-base:         1px solid $info-alpha !default;
+
+$mobile-width: 640px;
+$tablet-width: 1024px;
+$desktop-width: 1200px;
+$large-desktop-width: 1600px;
+
+@mixin mobile {
+  @media (max-width: #{$mobile-width}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media (min-width: #{$large-desktop-width}) {
+    @content;
+  }
+}

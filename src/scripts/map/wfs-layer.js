@@ -98,20 +98,6 @@ class WFSLayer extends OverlayLayer {
     }
     if (!this.styleCache[value][resolution]) {
       const radius = Math.min(Math.max(3, Math.ceil(40 / Math.log(Math.ceil(resolution)))), 20);
-      let text;
-      if (resolution < 100) {
-        text = new ol.style.Text({
-          fill: new ol.style.Fill({
-            color: '#005D93',
-          }),
-          stroke: new ol.style.Stroke({
-            color: '#fff',
-            width: 3,
-          }),
-          text: value,
-          font: `${radius}px`,
-        });
-      }
       this.styleCache[value][resolution] = new ol.style.Style({
         image: new ol.style.Circle({
           fill: new ol.style.Fill({
@@ -120,7 +106,6 @@ class WFSLayer extends OverlayLayer {
           radius,
           stroke: this.getDefaultStroke(),
         }),
-        text,
       });
     }
     return [this.styleCache[value][resolution]];
