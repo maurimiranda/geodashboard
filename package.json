@@ -35,10 +35,10 @@
     "webpack-dev-server": "^1.16.2"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --progress --colors --config webpack.prod.babel.js",
+    "build": "rm -rf ./dist && NODE_ENV=production webpack --progress --colors --config webpack.prod.babel.js && npm run docs",
     "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
     "serve": "webpack-dev-server --config webpack.dev.babel.js --hot --inline",
-    "docs": "jsdoc -c .jsdoc.json"
+    "docs": "rm -rf ./docs && jsdoc -c .jsdoc.json"
   },
   "dependencies": {
     "chart.js": "^2.4.0",

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>filter.js - Documentation</title>
+    <title>widget/category-widget.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">filter.js</h1>
+    <h1 class="page-title">widget/category-widget.js</h1>
     
 
     
@@ -37,56 +37,60 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Filter configuration
+            <pre class="prettyprint source linenums"><code>import AggregateWidget from './aggregate-widget';
+
+import template from '../../templates/widget/category-widget.hbs';
+
+/**
+ * Widget that shows grouped data fetched using WPS Aggregate
+ * @extends AggregateWidget
  */
-class Filter {
+class CategoryWidget extends AggregateWidget {
   /**
    * @param {Object} config - Configuration object
-   * @param {String} config.property - Property used to filter data
-   * @param {String} config.value - The value to filter by
-   * @param {String} [config.operator='='] - The operator to use in filter.
-   *   Options: '=', '&lt;>', '&lt;', '&lt;=', '>', '>=', 'like'.
+   * @param {String} config.title - Widget title
+   * @param {String} config.server - URL of map server
+   * @param {String} config.layerName - Name of the layer to query
+   * @param {String} config.property - Field to use in aggregate function
+   * @param {Object} config.categories - Categories configuration
+   * @param {String} config.categories.property - Property that defines the style to use
+   * @param {Object} config.style.values - Object with possible values
+   *   and their correspoding style
+   * @param {Function} [config.format] - Function to parse and transform data fetched from server.
+   *   This function should return a human friendly value as it will be shown as
+   *   the widget current value.
    */
   constructor(config) {
-    this.property = config.property;
-    this.value = config.value;
-    this.operator = config.operator || '=';
+    super(config);
+    this.categories = config.categories;
+    this.function = 'Count';
+    this.template = template;
+    this.className = 'category-widget';
   }
 
   /**
-   * OGC string version of the filter operator
-   * @member {String}
-   * @readonly
+   * Processes the widget value and returns a human friendly version.
+   * @returns {Object} - Current widget value prepared to be shown
+   * @protected
    */
-  get ogcOperator() {
-    switch (this.operator) {
-      case '&lt;>':
-        return 'PropertyIsNotEqualTo';
-      case '&lt;':
-        return 'PropertyIsLessThan';
-      case '&lt;=':
-        return 'PropertyIsLessThanOrEqualTo';
-      case '>':
-        return 'PropertyIsGreaterThan';
-      case '>=':
-        return 'PropertyIsGreaterThanOrEqualTo';
-      case 'like':
-        return 'PropertyIsLike';
-      default:
-        return 'PropertyIsEqualTo';
-    }
+  format() {
+    return this.value;
   }
 
   /**
-   * @returns {String}
+   * Parses data fetched from server and sets widget value to an easily readable format
+   * @param {Object} value - JSON data fetched from server
+   * @protected
    */
-  toString() {
-    return `${this.property}${(this.operator)}'${this.value}'`;
+  parseResponse(value) {
+    this.value = value.AggregationResults.map(category => ({
+      category: category[0],
+      value: parseInt(category[1], 10),
+    }));
   }
 }
 
-export default Filter;
+export default CategoryWidget;
 </code></pre>
         </article>
     </section>

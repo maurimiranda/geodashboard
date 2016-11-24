@@ -48,7 +48,8 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
     title: 'Population',
     property: 'population',
   }],
-  style: categories
+  style: categories,
+  attribution: '© <a href="http://siasar.org">SIASAR</a>',
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
@@ -63,6 +64,37 @@ dashboard.addWidget(new GeoDashboard.CountWidget({
   title: 'Total Communities',
   server: server,
   layer: 'siasar:communities',
+}));
+
+dashboard.addWidget(new GeoDashboard.CategoryWidget({
+  title: 'Communities by Category',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
+}));
+
+
+dashboard.addWidget(new GeoDashboard.ChartWidget({
+  title: 'Communities by Category',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
+  chart: {
+    type: 'doughnut',
+  },
+}));
+
+dashboard.addWidget(new GeoDashboard.ChartWidget({
+  title: 'Communities by Category',
+  server: server,
+  layer: 'siasar:communities',
+  property: 'id',
+  categories: categories,
+  chart: {
+    type: 'bar',
+  },
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
@@ -82,22 +114,6 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   format: function(value) {
     return parseFloat(value).toFixed(2);
   },
-}));
-
-dashboard.addWidget(new GeoDashboard.GroupWidget({
-  title: 'Communities by Category',
-  server: server,
-  layer: 'siasar:communities',
-  property: 'id',
-  categories: categories,
-}));
-
-dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Categories Chart',
-  server: server,
-  layer: 'siasar:communities',
-  property: 'id',
-  categories: categories,
 }));
 
 dashboard.render();

@@ -63,10 +63,4 @@ module.exports = {
     dns: 'empty',
     net: 'empty',
   },
-  devServer: {
-    port: 9000,
-    stats: {
-      colors: true,
-    },
-  },
 };
