@@ -31,7 +31,7 @@ const dashboard = new GeoDashboard.Dashboard({
   },
   filters: [new GeoDashboard.Filter({
     property: 'adm_0',
-    value: 'PERÚ'
+    value: 'Perú'
   })],
 });
 

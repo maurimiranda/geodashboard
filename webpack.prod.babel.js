@@ -17,7 +17,7 @@ module.exports = {
   },
   devtool: 'source-map',
   module: {
-    noParse: [path.join(__dirname, 'node_modules/openlayers/dist/ol.js')],
+    noParse: /openlayers/,
     loaders: [
       {
         test: /\.js$/,
