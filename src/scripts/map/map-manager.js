@@ -88,6 +88,9 @@ class MapManager extends EventEmitter {
   addLayerSwitcher() {
     this.layerSwitcher = new LayerSwitcher();
     this.layerSwitcher.manager = this;
+    this.layerSwitcher.on('layerChanged', () => {
+      this.overlay.setElement(null);
+    });
     this.map.addControl(this.layerSwitcher);
   }
 

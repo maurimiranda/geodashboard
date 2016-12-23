@@ -24,6 +24,7 @@ class LayerSwitcher extends ol.control.Control {
     const inputs = this.element.getElementsByTagName('input');
     for (let i = 0; i < inputs.length; i += 1) {
       inputs[i].addEventListener('change', (event) => {
+        this.dispatchEvent('layerChanged');
         this.setVisible(this.manager.getLayerById(event.target.id), event.target.checked);
       }, false);
     }
