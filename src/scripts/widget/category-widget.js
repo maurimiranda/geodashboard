@@ -13,6 +13,7 @@ class CategoryWidget extends AggregateWidget {
    * @param {String} config.server - URL of map server
    * @param {String} config.layerName - Name of the layer to query
    * @param {String} config.property - Field to use in aggregate function
+   * @param {String} [config.totalLabel='Total'] - Label to be shown within total count
    * @param {Object} config.categories - Categories configuration
    * @param {String} config.categories.property - Property that defines the style to use
    * @param {Object} config.style.values - Object with possible values
@@ -29,6 +30,7 @@ class CategoryWidget extends AggregateWidget {
     this.function = 'Count';
     this.template = template;
     this.className = 'category-widget';
+    this.totalLabel = config.totalLabel || 'Total';
   }
 
   /**
@@ -46,7 +48,9 @@ class CategoryWidget extends AggregateWidget {
    * @protected
    */
   parseResponse(value) {
-    this.value = {};
+    this.value = {
+      totalLabel: this.totalLabel,
+    };
 
     this.value.total = value.AggregationResults.reduce((accumulator, current) => (
       accumulator + current[1]
