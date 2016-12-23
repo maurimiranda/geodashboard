@@ -1,6 +1,6 @@
 {
   "name": "geo-dashboard",
-  "version": "0.10.0",
+  "version": "0.12.1",
   "description": "Web library to display data as maps and widgets using WMS, WFS and WPS services.",
   "main": "dist/geo-dashboard.js",
   "repository": {
@@ -37,9 +37,11 @@
   "scripts": {
     "build": "rm -rf ./dist && NODE_ENV=production webpack --progress --colors --config webpack.prod.babel.js",
     "docs": "rm -rf ./docs && jsdoc -c .jsdoc.json",
-    "pack": "npm run build && npm run docs && git add dist docs && git commit -m 'Regenerate build and docs'",
+    "pack": "yarn run build && yarn run docs && git add dist docs && git commit -m 'Regenerate build and docs'",
     "test": "mocha --compilers js:babel-core/register --colors ./test/*.spec.js",
-    "serve": "webpack-dev-server --config webpack.dev.babel.js --hot --inline"
+    "serve": "webpack-dev-server --config webpack.dev.babel.js --hot --inline",
+    "lint": "eslint src",
+    "travis": "yarn run lint && yarn run build"
   },
   "dependencies": {
     "chart.js": "^2.4.0",

@@ -1,5 +1,4 @@
-# GeoDashboard
-
+# GeoDashboard [![Build Status](https://travis-ci.org/maurimiranda/geo-dashboard.svg?branch=master)](https://travis-ci.org/maurimiranda/geo-dashboard)
 Web library to display data as maps and widgets using **WMS**, **WFS** and **WPS** services.
 
 **GeoDashboard** is a pure client application. That means it doesn't include a backend side. All it needs to work is a map server with WMS, WFS and WPS enabled. At the moment, **GeoDashboard** has been tested only with [GeoServer](http://geoserver.org/).
