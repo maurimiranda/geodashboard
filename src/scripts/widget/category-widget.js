@@ -58,9 +58,7 @@ class CategoryWidget extends AggregateWidget {
 
     let categoryValue;
     this.value.values = this.labels.map((category, index) => {
-      const categoryResult = value.AggregationResults.filter(result =>
-        result[0] === category,
-      );
+      const categoryResult = value.AggregationResults.filter(result => result[0] === category);
       categoryValue = categoryResult.length ? categoryResult[0][1] : 0;
       return {
         category,

@@ -26,6 +26,7 @@
     "handlebars": "^4.0.5",
     "handlebars-loader": "^1.4.0",
     "html-webpack-plugin": "^2.24.1",
+    "jsdoc": "^3.4.3",
     "mocha": "^3.1.2",
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.3",
