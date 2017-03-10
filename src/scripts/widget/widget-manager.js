@@ -50,6 +50,7 @@ class WidgetManager {
    */
   addWidget(widget) {
     widget.manager = this;
+    widget.dashboard = this.dashboard;
     this.widgets.push(widget);
   }
 }

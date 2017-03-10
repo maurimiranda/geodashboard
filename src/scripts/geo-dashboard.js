@@ -4,6 +4,7 @@ import OSMLayer from './map/osm-layer';
 import BingLayer from './map/bing-layer';
 import WFSLayer from './map/wfs-layer';
 import WMSLayer from './map/wms-layer';
+import Widget from './widget/widget';
 import CountWidget from './widget/count-widget';
 import AggregateWidget from './widget/aggregate-widget';
 import CategoryWidget from './widget/category-widget';
@@ -16,6 +17,7 @@ export {
   BingLayer,
   WFSLayer,
   WMSLayer,
+  Widget,
   CountWidget,
   AggregateWidget,
   CategoryWidget,

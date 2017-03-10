@@ -20,20 +20,22 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /(node_modules|examples)/,
+        exclude: /(node_modules|examples|dist)/,
       },
       {
         test: /\.js$/,
         loader: 'eslint-loader',
-        exclude: /(node_modules|examples)/,
+        exclude: /(node_modules|examples|dist)/,
       },
       {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
+        exclude: /(node_modules|dist)/,
       },
       {
         test: /\.scss$/,
-        loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
+        exclude: /(node_modules|examples|dist)/,
+        loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap'],
       },
     ],
   },

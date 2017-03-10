@@ -10,15 +10,15 @@ import popupTemplate from '../../templates/map/feature-popup.hbs';
  */
 class MapManager extends EventEmitter {
   /**
-   * @param {Object} config - Configuration object
-   * @param {Number[]} config.center - The initial center for the map
-   * @param {Number} config.zoom - The initial zoom level
+   * @param {Object} [config] - Configuration object
+   * @param {Number[]} [config.center] - The initial center for the map
+   * @param {Number} [config.zoom] - The initial zoom level
    */
-  constructor(config) {
+  constructor(config = {}) {
     super();
 
-    this.center = config.center || [0, 0];
-    this.zoom = config.zoom || 10;
+    this.defaultCenter = config.center || [0, 0];
+    this.defaultZoom = config.zoom || 1;
     this.baseLayers = [];
     this.overlayLayers = [];
 
@@ -51,8 +51,8 @@ class MapManager extends EventEmitter {
    */
   createMap() {
     this.view = new ol.View({
-      center: ol.proj.fromLonLat(this.center),
-      zoom: this.zoom,
+      center: ol.proj.fromLonLat(this.defaultCenter),
+      zoom: this.defaultZoom,
     });
 
     this.map = new ol.Map({
@@ -121,7 +121,64 @@ class MapManager extends EventEmitter {
     layer.manager = this;
     this.overlayLayers.push(layer);
     this.map.addLayer(layer.layer);
+    layer.on('loaded', () => this.emit('loaded'));
     layer.refresh();
+  }
+
+  /**
+   * Refreshes all OverLayer layers
+   */
+  refresh() {
+    this.overlayLayers.forEach(layer => layer.refresh());
+  }
+
+  /**
+   * Centers map to definied coordinates and zoom level
+   * @param {Number[]} center - Center coordinates
+   * @param {Number} [zoom] - Zoom level
+   */
+  center(center) {
+    this.map.beforeRender(ol.animation.pan({
+      source: this.view.getCenter(),
+    }));
+    this.view.setCenter(ol.proj.fromLonLat(center));
+  }
+
+  /**
+   * Fits map to definied extent
+   * @param {Number[]} extent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
+   */
+  fit(extent) {
+    if (extent && extent[0] && Number.isFinite(extent[0])) {
+      this.map.beforeRender(ol.animation.zoom({
+        resolution: this.view.getResolution(),
+      }));
+      this.map.beforeRender(ol.animation.pan({
+        source: this.view.getCenter(),
+      }));
+      this.view.fit(extent, this.map.getSize());
+    }
+  }
+
+  /**
+   * Fits map to defined layer
+   * @param {Layer} layer - Layer to fit in map
+   */
+  fitToLayer(layer) {
+    if (layer) {
+      this.fit(layer.source.getExtent());
+    }
+  }
+
+  /**
+   * Zooms map to the defined level
+   * @param {Number} zoom - Zoom level
+   */
+  zoom(zoom = 1) {
+    this.map.beforeRender(ol.animation.zoom({
+      resolution: this.view.getResolution(),
+    }));
+    this.view.setZoom(zoom);
   }
 
   /**

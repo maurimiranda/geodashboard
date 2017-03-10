@@ -51,6 +51,8 @@ class WFSLayer extends OverlayLayer {
     });
 
     this.layer.popup = config.popup;
+
+    this.loading = 0;
   }
 
   /**
@@ -66,6 +68,7 @@ class WFSLayer extends OverlayLayer {
    * @private
    */
   loadFeatures(extent) {
+    this.loading += 1;
     const params = new URLSearchParams();
     params.append('service', 'WFS');
     params.append('version', '1.0.0');
@@ -77,9 +80,17 @@ class WFSLayer extends OverlayLayer {
     params.append('cql_filter', this.buildCQLFilter(extent));
     fetch(`${this.server}?${params.toString()}`, {
       mode: 'cors',
-    }).then(response => response.json()).then((data) => {
-      this.source.addFeatures(this.format.readFeatures(data));
-    });
+    }).then(response => response.json())
+      .catch(() => null)
+      .then((data) => {
+        if (data) {
+          this.source.addFeatures(this.format.readFeatures(data));
+        }
+        this.loading -= 1;
+        if (this.loading === 0) {
+          this.emit('loaded');
+        }
+      });
   }
 
   /**

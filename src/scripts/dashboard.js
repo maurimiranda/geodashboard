@@ -39,7 +39,7 @@ class Dashboard {
 
     this.mapManager.on('mapchange', (event) => {
       this.extent = event.extent;
-      this.refresh();
+      this.widgetManager.refresh(this.extent);
     });
 
     /**
@@ -79,6 +79,7 @@ class Dashboard {
    */
   refresh() {
     this.widgetManager.refresh(this.extent);
+    this.mapManager.refresh();
   }
 
   /**
@@ -106,10 +107,52 @@ class Dashboard {
   }
 
   /**
+   * Adds filter
+   * @param {Filter} filter - The filter to be added
+   */
+  addFilter(filter) {
+    this.filters.push(filter);
+    this.refresh();
+  }
+
+  /**
+   * Resets filters
+   * @param {Filter[]} [filters] - New set of filters
+   */
+  resetFilters(filters = []) {
+    this.filters = filters;
+    this.refresh();
+  }
+
+  /**
+   * Centers map to definied coordinates
+   * @param {Number[]} center - Center coordinates
+   */
+  centerMap(center) {
+    this.mapManager.center(center);
+  }
+
+  /**
+   * Fits map to defined layer
+   * @param {Layer} layer - Layer to fit in map
+   */
+  fitMapToLayer(layer) {
+    this.mapManager.fitToLayer(layer);
+  }
+
+  /**
+   * Zooms out map to the defined level
+   * @param {Number} zoom - Zoom level
+   */
+  zoomMap(zoom) {
+    this.mapManager.zoom(zoom);
+  }
+
+  /**
    * Generate random string to use as unique element ID
    */
   static uid() {
-    return Math.random().toString(36).substring(7);
+    return `gd${Math.random().toString(36).substring(7)}`;
   }
 }
 
