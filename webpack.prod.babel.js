@@ -32,7 +32,7 @@ module.exports = {
       {
         test: /\.hbs$/,
         loader: 'handlebars-loader',
-        exclude: /(node_modules|examples|dist)/,
+        exclude: /(node_modules|dist)/,
       },
       {
         test: /\.scss$/,
