@@ -76,9 +76,25 @@ class MapManager extends EventEmitter {
    * @private
    */
   createOverlay() {
-    this.overlay = new ol.Overlay({});
+    this.overlay = new ol.Overlay({
+      autoPan: true,
+      autoPanAnimation: {
+        duration: 250,
+      },
+    });
     this.map.addOverlay(this.overlay);
-    this.map.on('singleclick', this.featurePopup.bind(this));
+    this.map.on('singleclick', (event) => {
+      const pixel = this.map.getEventPixel(event.originalEvent);
+      const result = this.map.forEachFeatureAtPixel(pixel, (feature, layer) => ({
+        feature,
+        layer,
+      }));
+      if (result) {
+        this.showFeaturePopup(result.layer, result.feature);
+      } else {
+        this.overlay.setElement(null);
+      }
+    });
   }
 
   /**
@@ -133,15 +149,45 @@ class MapManager extends EventEmitter {
   }
 
   /**
-   * Centers map to definied coordinates and zoom level
-   * @param {Number[]} center - Center coordinates
-   * @param {Number} [zoom] - Zoom level
+   * Map center coordinates
+   * @member {Number[]} center
    */
-  center(center) {
+  get center() {
+    return this.view.getCenter();
+  }
+
+  set center(value) {
+    this.overlay.setElement(null);
     this.map.beforeRender(ol.animation.pan({
-      source: this.view.getCenter(),
+      source: this.center,
+      duration: 2000,
     }));
-    this.view.setCenter(ol.proj.fromLonLat(center));
+    this.view.setCenter(value);
+  }
+
+  /**
+   * Map zoom level
+   * @member {Number} zoom
+   */
+  get zoom() {
+    return this.view.getZoom();
+  }
+
+  set zoom(value) {
+    this.overlay.setElement(null);
+    this.map.beforeRender(ol.animation.zoom({
+      resolution: this.view.getResolution(),
+      duration: 2000,
+    }));
+    this.view.setZoom(value);
+  }
+
+  /**
+   * Centers map to definied feature
+   * @param {Object} feature - Feature to center
+   */
+  centerToFeature(feature) {
+    this.center = ol.extent.getCenter(feature.getGeometry().getExtent());
   }
 
   /**
@@ -154,7 +200,7 @@ class MapManager extends EventEmitter {
         resolution: this.view.getResolution(),
       }));
       this.map.beforeRender(ol.animation.pan({
-        source: this.view.getCenter(),
+        source: this.center,
       }));
       this.view.fit(extent, this.map.getSize());
     }
@@ -171,48 +217,27 @@ class MapManager extends EventEmitter {
   }
 
   /**
-   * Zooms map to the defined level
-   * @param {Number} zoom - Zoom level
+   * Displays feature popup with information
+   * @param {Object} layer - Layer to show
+   * @param {Object} feature - Feature to show
    */
-  zoom(zoom = 1) {
-    this.map.beforeRender(ol.animation.zoom({
-      resolution: this.view.getResolution(),
+  showFeaturePopup(layer, feature) {
+    const properties = layer.popup.map(property => ({
+      title: property.title,
+      value: property.format ? property.format(feature.get(property.property)) :
+      feature.get(property.property),
     }));
-    this.view.setZoom(zoom);
-  }
-
-  /**
-   * Popup handler.
-   * @param {Event} event - The event object triggered by user interaction
-   */
-  featurePopup(event) {
-    const pixel = this.map.getEventPixel(event.originalEvent);
-    const result = this.map.forEachFeatureAtPixel(pixel, (feature, layer) => ({
-      feature,
-      layer,
+    const element = document.createElement('div');
+    element.innerHTML = popupTemplate({
+      properties,
+    });
+    this.map.beforeRender(ol.animation.pan({
+      duration: 1000,
+      source: this.view.getCenter(),
     }));
-    if (result && result.feature) {
-      const properties = result.layer.popup.map(property => ({
-        title: property.title,
-        value: property.format ? property.format(result.feature.get(property.property)) :
-        result.feature.get(property.property),
-      }));
-      const element = document.createElement('div');
-      element.innerHTML = popupTemplate({
-        properties,
-      });
-      this.map.beforeRender(ol.animation.pan({
-        duration: 1000,
-        source: this.view.getCenter(),
-      }));
-      pixel[0] += element.offsetWidth + 100;
-      pixel[1] -= element.offsetHeight - 150;
-      this.view.setCenter(this.map.getCoordinateFromPixel(pixel));
-      this.overlay.setElement(element);
-      this.overlay.setPosition(event.coordinate);
-    } else {
-      this.overlay.setElement(null);
-    }
+    const position = ol.extent.getCenter(feature.getGeometry().getExtent());
+    this.overlay.setElement(element);
+    this.overlay.setPosition(position);
   }
 
   /**
