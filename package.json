@@ -1,10 +1,10 @@
 {
-  "name": "geo-dashboard",
-  "version": "0.13.0",
+  "name": "geodashboard",
+  "version": "0.13.1",
   "description": "Web library to display data as maps and widgets using WMS, WFS and WPS services.",
   "main": "dist/geo-dashboard.js",
   "repository": {
-    "url": "https://github.com/maurimiranda/geo-dashboard.git",
+    "url": "https://github.com/maurimiranda/geodashboard.git",
     "type": "git"
   },
   "author": "Mauricio Miranda <maurimiranda@gmail.com>",
