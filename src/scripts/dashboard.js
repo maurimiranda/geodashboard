@@ -125,11 +125,35 @@ class Dashboard {
   }
 
   /**
-   * Centers map to definied coordinates
-   * @param {Number[]} center - Center coordinates
+   * Map center coordinates
+   * @member {Number[]}
    */
-  centerMap(center) {
-    this.mapManager.center(center);
+  get mapCenter() {
+    return this.mapManager.center;
+  }
+
+  set mapCenter(value) {
+    this.mapManager.center = value;
+  }
+
+  /**
+   * Map zoom level
+   * @member {Number}
+   */
+  get mapZoom() {
+    return this.mapManager.zoom;
+  }
+
+  set mapZoom(value) {
+    this.mapManager.zoom = value;
+  }
+
+  /**
+   * Centers map to definied feature
+   * @param {Object} feature - Feature to center
+   */
+  centerMapToFeature(feature) {
+    this.mapManager.centerToFeature(feature);
   }
 
   /**
@@ -141,11 +165,12 @@ class Dashboard {
   }
 
   /**
-   * Zooms out map to the defined level
-   * @param {Number} zoom - Zoom level
+   * Displays feature popup with information
+   * @param {Object} layer - Layer to show
+   * @param {Object} feature - Feature to show
    */
-  zoomMap(zoom) {
-    this.mapManager.zoom(zoom);
+  showFeaturePopup(layer, feature) {
+    this.mapManager.showFeaturePopup(layer, feature);
   }
 
   /**
