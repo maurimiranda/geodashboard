@@ -1,6 +1,6 @@
 @import '../_variables.scss';
 
-$widget-width: 18em;
+$widget-width: 250px !default;
 
 .widget-panel {
   overflow-y: scroll;
@@ -42,7 +42,7 @@ $widget-width: 18em;
   ul {
     list-style: none;
     padding: 0;
-    margin: 0.3em 0 0 0;
+    margin: $default-spacing 0 0 0;
 
     li {
       font-size: 0.8em;
@@ -83,14 +83,14 @@ $widget-width: 18em;
 
 .chart-widget {
   canvas {
-    margin-top: 1em;
+    margin-top: $default-spacing * 3;
   }
 }
 
 .doughnut-widget {
   canvas {
-    margin-top: -3.5em;
-    margin-bottom: -4em;
+    margin-top: -$default-spacing * 10;
+    margin-bottom: -$default-spacing * 12;
   }
 }
 

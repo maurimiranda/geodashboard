@@ -14,10 +14,10 @@ $info-alpha:          rgba($info-color, 0.1) !default;
 $box-shadow:          rgba(black, 0.5) 3px 4px 4px -3px !default;
 
 $font-family-base:    'Open Sans', sans-serif !default;
-$font-size-base:      1em !default;
+$font-size-base:      14px !default;
 
 $border-radius:       2px !default;
-$default-spacing:     0.5em !default;
+$default-spacing:     5px !default;
 $border-base:         1px solid $info-alpha !default;
 
 $mobile-width: 640px;
