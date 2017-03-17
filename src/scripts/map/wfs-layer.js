@@ -32,6 +32,7 @@ class WFSLayer extends OverlayLayer {
     this.format = new ol.format.GeoJSON();
     this.styleCache = {};
     this.style = config.style;
+    this.popup = config.popup;
 
     this.layer = new ol.layer.Vector({
       title: this.title,
