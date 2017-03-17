@@ -2,7 +2,7 @@
 
 * Clone repo
 ```
-git clone https://github.com/maurimiranda/geo-dashboard.git
+git clone https://github.com/maurimiranda/geodashboard.git
 ```
 * Install dependencies
 ```

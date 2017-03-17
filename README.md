@@ -28,20 +28,20 @@ There are basically two options to use GeoDashboard:
 
 * Install the package  
 ```shell
-npm install --save geo-dashboard
+npm install --save geodashboard
 ```
 or
 ```shell
-yarn add geo-dashboard
+yarn add geodashboard
 ```
 
 * Require or import the module
 ```javascript
-const GeoDashboard = require('geo-dashboard');
+const GeoDashboard = require('geodashboard');
 ```
 or
 ```javascript
-import * as GeoDashboard from 'geo-dashboard';
+import * as GeoDashboard from 'geodashboard';
 ```
 
 ### Next steps
