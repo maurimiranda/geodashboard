@@ -63,7 +63,7 @@ class CategoryWidget extends AggregateWidget {
       return {
         category,
         value: categoryValue,
-        percentage: Math.round((categoryValue / this.value.total) * 100),
+        percentage: Math.round((categoryValue / this.value.total) * 100) || 0,
         color: this.colors[index],
       };
     });

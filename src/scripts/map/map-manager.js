@@ -177,7 +177,7 @@ class MapManager extends EventEmitter {
     this.overlay.setElement(null);
     this.map.beforeRender(ol.animation.zoom({
       resolution: this.view.getResolution(),
-      duration: 2000,
+      duration: 1000,
     }));
     this.view.setZoom(value);
   }
