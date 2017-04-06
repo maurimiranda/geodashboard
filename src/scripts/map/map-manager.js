@@ -68,7 +68,6 @@ class MapManager extends EventEmitter {
     this.map.on('moveend', (event) => {
       event.extent = this.map.getView().calculateExtent(this.map.getSize());
       this.emit('mapchange', event);
-      console.log(this.view.getResolution());
     });
   }
 
