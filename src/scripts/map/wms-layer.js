@@ -28,6 +28,7 @@ class WMSLayer extends OverlayLayer {
       visible: this.visible,
       exclusive: this.exclusive,
       zIndex: 1,
+      opacity: this.opacity,
     });
 
     this.source = new ol.source.ImageWMS({

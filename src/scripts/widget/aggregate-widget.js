@@ -32,7 +32,7 @@ class AggregateWidget extends WPSWidget {
    * @protected
    */
   parseResponse(value) {
-    this.value = value.AggregationResults[0];
+    this.value = value.AggregationResults[0][0];
   }
 }
 

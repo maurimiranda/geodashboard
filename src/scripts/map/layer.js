@@ -19,6 +19,7 @@ class Layer extends EventEmitter {
     this.title = config.title;
     this.visible = config.visible;
     this.id = Dashboard.uid();
+    this.opacity = config.opacity;
   }
 
   /**
