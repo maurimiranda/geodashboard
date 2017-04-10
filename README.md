@@ -1,4 +1,4 @@
-# GeoDashboard [![Build Status](https://travis-ci.org/maurimiranda/geo-dashboard.svg?branch=master)](https://travis-ci.org/maurimiranda/geo-dashboard)
+# GeoDashboard [![Build Status](https://travis-ci.org/maurimiranda/geodashboard.svg?branch=master)](https://travis-ci.org/maurimiranda/geodashboard)
 Web library to display data as maps and widgets using **WMS**, **WFS** and **WPS** services.
 
 **GeoDashboard** is a pure client application. That means it doesn't include a backend side. All it needs to work is a map server with WMS, WFS and WPS enabled. At the moment, **GeoDashboard** has been tested only with [GeoServer](http://geoserver.org/).
@@ -130,3 +130,12 @@ dashboard.render();
 ### Docs
 
 For further details on objects, see [the documentation](https://maurimiranda.github.io/geo-dashboard/).
+
+### Testing
+
+<a href="https://www.browserstack.com/"><img src="https://cdn.rawgit.com/maurimiranda/geodashboard/master/src/images/browserstack-logo.svg" width="200"></a>
+
+GeoDashboard uses [BrowserStack](https://www.browserstack.com/) for testing automation. BrowserStack is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
+
+Thanks BrowserStack for supporting OpenSource projects!
+
