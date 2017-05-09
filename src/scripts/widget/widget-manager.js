@@ -39,9 +39,7 @@ class WidgetManager {
    */
   refresh(extent) {
     this.extent = extent;
-    this.widgets.forEach((widget) => {
-      widget.refresh();
-    });
+    this.widgets.forEach(widget => widget.refresh());
   }
 
   /**

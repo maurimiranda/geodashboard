@@ -1,4 +1,6 @@
 /* eslint no-bitwise: ["error", { "allow": [">>", "^"] }] */
+import Promise from 'promise-polyfill';
+import 'jspolyfill-array.prototype.find';
 
 import MapManager from './map/map-manager';
 import WidgetManager from './widget/widget-manager';
@@ -29,6 +31,10 @@ class Dashboard {
     this.header = config.header;
     this.footer = config.footer;
     this.filters = config.filters || [];
+
+    if (!window.Promise) {
+      window.Promise = Promise;
+    }
 
     /**
      * Dashboard MapManager

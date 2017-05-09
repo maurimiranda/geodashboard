@@ -18,9 +18,9 @@ $border-radius:       2px !default;
 $default-spacing:     5px !default;
 $border-base:         1px solid $info-alpha !default;
 
-$mobile-width: 640px;
-$tablet-width: 1024px;
-$desktop-width: 1200px;
+$mobile-width:        640px;
+$tablet-width:        1024px;
+$desktop-width:       1200px;
 $large-desktop-width: 1600px;
 
 @mixin mobile {
