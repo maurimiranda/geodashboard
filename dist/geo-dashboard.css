@@ -359,7 +359,8 @@
   display: flex;
   flex-flow: row wrap;
   width: 500px;
-  align-self: flex-start; }
+  align-self: flex-start;
+  max-height: 100%; }
 
 .widget {
   border: 2px solid rgba(102, 102, 102, 0.1);
