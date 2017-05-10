@@ -1,6 +1,6 @@
 {
   "name": "geodashboard",
-  "version": "0.15.1",
+  "version": "0.16.0",
   "description": "Web library to display data as maps and widgets using WMS, WFS and WPS services.",
   "main": "dist/geo-dashboard.js",
   "repository": {
