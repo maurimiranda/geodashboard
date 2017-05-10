@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+import 'url-search-params-polyfill';
 import ol from 'openlayers';
 
 import OverlayLayer from './overlay-layer';

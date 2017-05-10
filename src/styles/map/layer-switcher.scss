@@ -1,4 +1,4 @@
-@import '../_variables.scss';
+@import '../_variables';
 
 .layer-switcher.ol-control {
   position: absolute;
@@ -33,8 +33,8 @@
     &.group {
       box-shadow: $box-shadow;
       background-color: $background-color;
-      margin-bottom: $default-spacing;
       padding: $default-spacing;
+      border-bottom: $border-base;
 
       &:last-child {
         border-bottom: none;

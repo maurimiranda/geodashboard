@@ -117,6 +117,14 @@ dashboard.addWidget(new GeoDashboard.CategoryWidget({
   categories: categories,
 }));
 
+dashboard.addWidget(new GeoDashboard.CategoryWidget({
+  title: 'Systems by Type',
+  server: server,
+  layer: 'siasar:systems',
+  property: 'id',
+  categories: types,
+}));
+
 dashboard.addWidget(new GeoDashboard.ChartWidget({
   title: 'Communities by Category (%)',
   server: server,
@@ -126,14 +134,6 @@ dashboard.addWidget(new GeoDashboard.ChartWidget({
   chart: {
     type: 'doughnut',
   },
-}));
-
-dashboard.addWidget(new GeoDashboard.CategoryWidget({
-  title: 'Systems by Type',
-  server: server,
-  layer: 'siasar:systems',
-  property: 'id',
-  categories: types,
 }));
 
 dashboard.addWidget(new GeoDashboard.ChartWidget({

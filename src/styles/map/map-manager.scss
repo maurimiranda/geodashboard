@@ -1,11 +1,9 @@
-@import '../_variables.scss';
+@import '../_variables';
 @import '~openlayers/dist/ol';
-@import 'layer-switcher.scss';
+@import 'layer-switcher';
 
 .map {
   flex: 1;
-  min-height: 0;
-  padding: $default-spacing;
 
   > div {
     border-radius: $border-radius;
