@@ -8,6 +8,7 @@ $widget-width: 250px !default;
   flex-flow: row wrap;
   width: $widget-width * 2;
   align-self: flex-start;
+  max-height: 100%;
 }
 
 .widget {
