@@ -58,7 +58,6 @@ class MapManager extends EventEmitter {
     this.map = new ol.Map({
       view: this.view,
       loadTilesWhileInteracting: true,
-      interactions: ol.interaction.defaults({ mouseWheelZoom: false }),
       layers: this.layers,
     });
 

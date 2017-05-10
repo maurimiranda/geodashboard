@@ -1,22 +1,22 @@
 $primary-color:       #3E5869 !default;
-$background-color:    #FFFFFF !default;
+$background-color:    #FCFCFC !default;
 $info-color:          #666666 !default;
 $success-color:       #7A9D67 !default;
 $warning-color:       #FDBA12 !default;
 $danger-color:        #D9534f !default;
-$light-color:         lighten($primary-color, 60%);
+$light-color:         lighten($primary-color, 55%);
 
-$primary-alpha:       rgba($primary-color, 0.5) !default;
+$primary-alpha:       rgba($primary-color, 0.2) !default;
 $background-alpha:    rgba($background-color, 0.9) !default;
 $info-alpha:          rgba($info-color, 0.1) !default;
-$box-shadow:          rgba(black, 0.5) 3px 4px 4px -3px !default;
+$box-shadow:          none !default;
 
 $font-family-base:    'Open Sans', sans-serif !default;
 $font-size-base:      14px !default;
 
-$border-radius:       2px !default;
-$default-spacing:     5px !default;
-$border-base:         1px solid $info-alpha !default;
+$border-radius:       0px !default;
+$default-spacing:     10px !default;
+$border-base:         2px solid $info-alpha !default;
 
 $mobile-width:        640px;
 $tablet-width:        1024px;

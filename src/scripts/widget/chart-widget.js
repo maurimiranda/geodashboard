@@ -84,6 +84,7 @@ class ChartWidget extends CategoryWidget {
         datasets: [{
           data: [],
           backgroundColor: this.colors,
+          borderColor: 'rgba(255,255,255,0.1)',
         }],
       },
       options: this.chartOptions,
