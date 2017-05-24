@@ -11,6 +11,9 @@ class CategoryWidget extends AggregateWidget {
    * @param {Object} config - Configuration object
    * @param {String} config.title - Widget title
    * @param {String} config.server - URL of map server
+   * @param {Object} config.namespace - Namespace object
+   * @param {String} config.namespace.name - Namespace to use
+   * @param {String} config.namespace.url - Namespace URL
    * @param {String} config.layerName - Name of the layer to query
    * @param {String} config.property - Field to use in aggregate function
    * @param {String} [config.totalLabel='Total'] - Label to be shown within total count

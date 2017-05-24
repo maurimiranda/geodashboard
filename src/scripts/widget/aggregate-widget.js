@@ -11,6 +11,9 @@ class AggregateWidget extends WPSWidget {
    * @param {Object} config - Configuration object
    * @param {String} config.title - Widget title
    * @param {String} config.server - URL of map server
+   * @param {Object} config.namespace - Namespace object
+   * @param {String} config.namespace.name - Namespace to use
+   * @param {String} config.namespace.url - Namespace URL
    * @param {String} config.layerName - Name of the layer to query
    * @param {String} config.function - Aggregate function to execute.
    *   Options: 'Count', 'Average', 'Max', 'Median', 'Min', 'StdDev', or 'Sum'

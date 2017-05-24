@@ -2,7 +2,7 @@
   <ows:Identifier>features</ows:Identifier>
   <wps:Reference mimeType="text/xml" xlink:href="http://geoserver/wfs" method="POST">
     <wps:Body>
-      <wfs:GetFeature service="WFS" version="1.0.0" outputFormat="GML2" xmlns:siasar="http://siasar.org">
+      <wfs:GetFeature service="WFS" version="1.0.0" outputFormat="GML2" xmlns:{{namespace.name}}="{{namespace.url}}">
         <wfs:Query typeName="{{layer}}">
           <ogc:Filter>
             <ogc:And>

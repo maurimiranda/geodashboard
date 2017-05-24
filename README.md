@@ -17,11 +17,11 @@ There are basically two options to use GeoDashboard:
 
 * Include GeoDashboard CSS file
 ```
-<link rel="stylesheet" href="https://unpkg.com/geo-dashboard/dist/geo-dashboard.css" />
+<link rel="stylesheet" href="https://unpkg.com/geodashboard/dist/geo-dashboard.css" />
 ```
 * Include GeoDashboard JS file
 ```
-<script src="https://unpkg.com/geo-dashboard/dist/geo-dashboard.js"></script>
+<script src="https://unpkg.com/geodashboard/dist/geo-dashboard.js"></script>
 ```
 
 ### Using node package
@@ -54,7 +54,7 @@ import * as GeoDashboard from 'geodashboard';
 * Create the dashboard
 ```javascript
 const dashboard = new GeoDashboard.Dashboard({
-     container: document.getElementsById('dashboard'),
+     container: document.getElementById('dashboard'),
      header: {
        title: 'GeoDashboard Demo',
      },
@@ -138,4 +138,3 @@ For further details on objects, see [the documentation](https://maurimiranda.git
 GeoDashboard uses [BrowserStack](https://www.browserstack.com/) for testing automation. BrowserStack is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
 
 Thanks BrowserStack for supporting OpenSource projects!
-

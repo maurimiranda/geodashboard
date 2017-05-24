@@ -11,6 +11,9 @@ class WPSWidget extends Widget {
    * @param {Object} config - Configuration object
    * @param {String} config.title - Widget title
    * @param {String} config.server - URL of map server
+   * @param {Object} config.namespace - Namespace object
+   * @param {String} config.namespace.name - Namespace to use
+   * @param {String} config.namespace.url - Namespace URL
    * @param {String} config.layerName - Name of the layer to query
    * @param {Function} [config.format] - Function to parse and transform data fetched from server.
    *   This function should return a human friendly value as it will be shown as
@@ -21,6 +24,7 @@ class WPSWidget extends Widget {
 
     this.layerName = config.layer;
     this.server = `${config.server}/wps/`;
+    this.namespace = config.namespace;
     this.template = template;
     this.className = 'wps-widget';
   }
@@ -63,6 +67,7 @@ class WPSWidget extends Widget {
         category: this.categories ? this.categories.property : null,
         extent: this.manager.extent,
         filters: this.manager.filters,
+        namespace: this.namespace,
       }),
       headers: new Headers({
         'Content-Type': 'text/xml',
