@@ -1,4 +1,8 @@
 server = 'https://geoserver.siasar.org/geoserver';
+namespace = {
+  name: 'siasar',
+  url: 'http://siasar.org'
+};
 
 const categories = {
   property: 'score',
@@ -11,7 +15,7 @@ const categories = {
 };
 
 const types = {
-  property: 'supply_type',
+  property: 'type_of_supply',
   values: {
     'Acueducto por Bombeo':   { color: '#789074' },
     'Acueducto por Gravedad': { color: '#c7c6aa' },
@@ -26,12 +30,12 @@ const dashboard = new GeoDashboard.Dashboard({
     logo: './geo-dashboard-white.png',
   },
   map: {
-    center: [-75.01, -9.53],
+    center: [-84.891, 12.817],
     zoom: 7,
   },
   filters: [new GeoDashboard.Filter({
     property: 'adm_0',
-    value: 'Perú'
+    value: 'Nicaragua'
   })],
 });
 
@@ -45,7 +49,7 @@ dashboard.addBaseLayer(new GeoDashboard.BingLayer({
 dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
   title: 'Communities',
   server: server,
-  layer: 'siasar:communities',
+  layer: 'siasar:community',
   exclusive: true,
   visible: true,
   popup: [{
@@ -65,7 +69,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
 dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
   title: 'Heatmap',
   server: server,
-  layer: 'siasar:communities',
+  layer: 'siasar:community',
   style: 'siasar:heatmap',
   exclusive: true,
 }));
@@ -73,7 +77,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
 dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
   title: 'Systems',
   server: server,
-  layer: 'siasar:systems',
+  layer: 'siasar:system',
   exclusive: true,
   visible: false,
   popup: [{
@@ -86,14 +90,15 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
     title: 'Supply Type',
     property: 'supply_type',
   }],
-  style: types,
+  style: categories,
   attribution: '© <a href="http://siasar.org">SIASAR</a>',
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Total Population',
   server: server,
-  layer: 'siasar:communities',
+  namespace: namespace,
+  layer: 'siasar:community',
   property: 'population',
   function: 'Sum',
 }));
@@ -101,7 +106,8 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Average Population',
   server: server,
-  layer: 'siasar:communities',
+  namespace: namespace,
+  layer: 'siasar:community',
   property: 'population',
   function: 'Average',
   format: function(value) {
@@ -112,24 +118,27 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 dashboard.addWidget(new GeoDashboard.CategoryWidget({
   title: 'Communities by Category',
   server: server,
-  layer: 'siasar:communities',
-  property: 'id',
+  namespace: namespace,
+  layer: 'siasar:community',
+  property: 'siasar_id',
   categories: categories,
 }));
 
 dashboard.addWidget(new GeoDashboard.CategoryWidget({
-  title: 'Systems by Type',
+  title: 'Systems by Category',
   server: server,
-  layer: 'siasar:systems',
-  property: 'id',
-  categories: types,
+  namespace: namespace,
+  layer: 'siasar:system',
+  property: 'siasar_id',
+  categories: categories,
 }));
 
 dashboard.addWidget(new GeoDashboard.ChartWidget({
   title: 'Communities by Category (%)',
   server: server,
-  layer: 'siasar:communities',
-  property: 'id',
+  namespace: namespace,
+  layer: 'siasar:community',
+  property: 'siasar_id',
   categories: categories,
   chart: {
     type: 'doughnut',
@@ -137,11 +146,12 @@ dashboard.addWidget(new GeoDashboard.ChartWidget({
 }));
 
 dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Systems by Type',
+  title: 'Systems by Category',
   server: server,
-  layer: 'siasar:systems',
-  property: 'id',
-  categories: types,
+  namespace: namespace,
+  layer: 'siasar:system',
+  property: 'siasar_id',
+  categories: categories,
   chart: {
     type: 'bar',
   },
