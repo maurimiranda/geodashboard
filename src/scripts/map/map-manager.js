@@ -194,7 +194,7 @@ class MapManager extends EventEmitter {
    * @param {Number[]} extent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
    */
   fit(extent) {
-    if (extent && extent[0] && Number.isFinite(extent[0])) {
+    if (extent && extent[0] && isFinite(extent[0])) {
       this.map.beforeRender(ol.animation.zoom({
         resolution: this.view.getResolution(),
       }));
