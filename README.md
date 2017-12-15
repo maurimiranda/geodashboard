@@ -26,7 +26,7 @@ There are basically two options to use GeoDashboard:
 
 ### Using node package
 
-* Install the package  
+* Install the package
 ```shell
 npm install --save geodashboard
 ```
@@ -129,7 +129,7 @@ dashboard.render();
 
 ### Docs
 
-For further details on objects, see [the documentation](https://maurimiranda.github.io/geo-dashboard/).
+For further details on objects, see [the documentation](https://maurimiranda.github.io/geodashboard/).
 
 ### Testing
 

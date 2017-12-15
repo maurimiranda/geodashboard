@@ -351,7 +351,7 @@
     margin-left: 0;
     margin-bottom: 10px;
     font-weight: bold; }
-    .info-box dl dd.value:last-child {
+    .info-box dl dd:last-child {
       margin-bottom: 0; }
 
 .widget-panel {
@@ -436,12 +436,6 @@
       color: #3E5869; }
       .filter-widget ul li.active .filter-widget-color {
         border: 2px solid rgba(102, 102, 102, 0.1); }
-
-@media (min-width: 1600px) {
-  .widget-panel {
-    width: 750px; }
-  .widget {
-    width: 33.33%; } }
 
 @media (max-width: 1024px) {
   .widget-panel {

@@ -1,25 +1,16 @@
-server = 'https://geoserver.siasar.org/geoserver';
+server = 'http://threefunkymonkeys.com:8080/geoserver';
 namespace = {
-  name: 'siasar',
-  url: 'http://siasar.org'
+  name: 'geodashboard',
+  url: 'http://geodashboard.org'
 };
 
-const categories = {
-  property: 'score',
+const property_type = {
+  property: 'property_type',
   values: {
-    'A': { color: '#54BA46' },
-    'B': { color: '#FFFF39' },
-    'C': { color: '#FF9326' },
-    'D': { color: '#C92429' },
-  },
-};
-
-const types = {
-  property: 'type_of_supply',
-  values: {
-    'Acueducto por Bombeo':   { color: '#789074' },
-    'Acueducto por Gravedad': { color: '#c7c6aa' },
-    'Pozo con Bomba Manual':  { color: '#e3c1ff' },
+    'apartment': { color: '#1f78b4' },
+    'house': { color: '#b2df8a' },
+    'PH': { color: '#a6cee3' },
+    'store': { color: '#33a02c' },
   },
 }
 
@@ -30,13 +21,13 @@ const dashboard = new GeoDashboard.Dashboard({
     logo: './geo-dashboard-white.png',
   },
   map: {
-    center: [-84.891, 12.817],
-    zoom: 7,
+    center: [-58.40, -34.60],
+    zoom: 14,
   },
-  filters: [new GeoDashboard.Filter({
-    property: 'adm_0',
-    value: 'Nicaragua'
-  })],
+  // filters: [new GeoDashboard.Filter({
+  //   property: 'state_name',
+  //   value: 'Mendoza'
+  // })],
 });
 
 dashboard.addBaseLayer(new GeoDashboard.OSMLayer({
@@ -47,114 +38,104 @@ dashboard.addBaseLayer(new GeoDashboard.BingLayer({
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
-  title: 'Communities',
+  title: 'Properties',
   server: server,
-  layer: 'siasar:community',
+  layer: 'geodashboard:properati',
   exclusive: true,
   visible: true,
   popup: [{
-    title: 'Name',
-    property: 'name',
+    property: 'image_thumbnail',
+    format: (value) => {
+      if (!value) return null;
+      return `<a target="_blank" href="${value}"><img src="${value}"/></a>`;
+    },
   },{
-    title: 'Location',
-    property: 'adm_3',
+    title: 'State',
+    property: 'state_name',
   },{
-    title: 'Population',
-    property: 'population',
+    title: 'Place Name',
+    property: 'place_name',
+  },{
+    title: 'Rooms',
+    property: 'rooms',
+  }, {
+    title: 'Price',
+    property: 'price',
+  },{
+    property: 'properati_url',
+    format: (value) => {
+      if (!value) return null;
+      return `<a style="width:100%;display:block;text-align:right;font-size:1.3em;text-decoration:none;" target="_blank" href="${value}">ℹ️</a>`;
+    },
   }],
-  style: categories,
-  attribution: '© <a href="http://siasar.org">SIASAR</a>',
+  style: property_type,
+  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
   title: 'Heatmap',
   server: server,
-  layer: 'siasar:community',
-  style: 'siasar:heatmap',
+  layer: 'geodashboard:properati',
+  style: 'geodashboard:heatmap',
   exclusive: true,
-}));
-
-dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
-  title: 'Systems',
-  server: server,
-  layer: 'siasar:system',
-  exclusive: true,
-  visible: false,
-  popup: [{
-    title: 'Name',
-    property: 'name',
-  },{
-    title: 'Location',
-    property: 'adm_3',
-  },{
-    title: 'Supply Type',
-    property: 'supply_type',
-  }],
-  style: categories,
-  attribution: '© <a href="http://siasar.org">SIASAR</a>',
+  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Total Population',
+  title: 'Average Price',
   server: server,
   namespace: namespace,
-  layer: 'siasar:community',
-  property: 'population',
-  function: 'Sum',
-}));
-
-dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Average Population',
-  server: server,
-  namespace: namespace,
-  layer: 'siasar:community',
-  property: 'population',
+  layer: 'geodashboard:properati',
+  property: 'price_aprox_usd',
   function: 'Average',
   format: function(value) {
-    return parseFloat(value).toFixed(2);
+    return `$${parseInt(value)}`;
   },
 }));
 
-dashboard.addWidget(new GeoDashboard.CategoryWidget({
-  title: 'Communities by Category',
+dashboard.addWidget(new GeoDashboard.AggregateWidget({
+  title: 'Average Surface',
   server: server,
   namespace: namespace,
-  layer: 'siasar:community',
-  property: 'siasar_id',
-  categories: categories,
-}));
-
-dashboard.addWidget(new GeoDashboard.CategoryWidget({
-  title: 'Systems by Category',
-  server: server,
-  namespace: namespace,
-  layer: 'siasar:system',
-  property: 'siasar_id',
-  categories: categories,
+  layer: 'geodashboard:properati',
+  property: 'surface_total_in_m2',
+  function: 'Average',
+  format: function (value) {
+    return `${parseInt(value)} m2`;
+  },
 }));
 
 dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Communities by Category (%)',
+  title: 'Properties by Type',
   server: server,
   namespace: namespace,
-  layer: 'siasar:community',
-  property: 'siasar_id',
-  categories: categories,
+  layer: 'geodashboard:properati',
+  property: 'property_type',
+  categories: property_type,
+  chart: {
+    type: 'bar',
+  },
+}));
+
+dashboard.addWidget(new GeoDashboard.ChartWidget({
+  title: 'Properties by Type (%)',
+  server: server,
+  namespace: namespace,
+  layer: 'geodashboard:properati',
+  property: 'property_type',
+  categories: property_type,
   chart: {
     type: 'doughnut',
   },
 }));
 
-dashboard.addWidget(new GeoDashboard.ChartWidget({
-  title: 'Systems by Category',
+dashboard.addWidget(new GeoDashboard.CategoryWidget({
+  title: 'Properties by Type',
   server: server,
   namespace: namespace,
-  layer: 'siasar:system',
-  property: 'siasar_id',
-  categories: categories,
-  chart: {
-    type: 'bar',
-  },
+  layer: 'geodashboard:properati',
+  property: 'property_type',
+  categories: property_type,
 }));
 
 dashboard.render();
