@@ -111,7 +111,7 @@ class WFSLayer extends OverlayLayer {
       this.styleCache[value] = {};
     }
     if (!this.styleCache[value][resolution]) {
-      const radius = Math.min(Math.max(3, Math.ceil(40 / Math.log(Math.ceil(resolution)))), 20);
+      const radius = Math.min(Math.max(3, Math.ceil(10 / Math.log(Math.ceil(resolution)))), 10);
       this.styleCache[value][resolution] = new ol.style.Style({
         image: new ol.style.Circle({
           fill: new ol.style.Fill({
