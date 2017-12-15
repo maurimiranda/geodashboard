@@ -115,7 +115,7 @@
       margin-bottom: $default-spacing;
       font-weight: bold;
 
-      &.value:last-child {
+      &:last-child {
         margin-bottom: 0;
       }
     }

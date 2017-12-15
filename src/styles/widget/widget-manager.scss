@@ -130,16 +130,6 @@ $widget-width: 250px !default;
   }
 }
 
-@include large-desktop {
-  .widget-panel {
-    width: $widget-width * 3;
-  }
-
-  .widget {
-    width: 33.33%;
-  }
-}
-
 @include tablet {
   .widget-panel {
     width: $widget-width;
