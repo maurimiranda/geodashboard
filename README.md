@@ -121,11 +121,14 @@ dashboard.render();
 ### Demo
 
 * Using files:
-[Source](https://github.com/maurimiranda/geo-dashboard-demo/),
-[Live](https://maurimiranda.github.io/geo-dashboard-demo/)
+[Source](https://github.com/maurimiranda/geodashboard-demo/),
+[Live](https://maurimiranda.github.io/geodashboard-demo/)
 * Using node package and [webpack](https://webpack.github.io/):
 [Source](https://gitlab.com/Admin_Siasar/SIASAR-Dashboard/tree/master),
 [Live](http://dashboard.siasar.org/)
+
+Thanks [ThreeFunkyMonkeys](https://threefunkymonkeys.com/) for hosting GeoServer and with demo data!
+<a href="https://threefunkymonkeys.com/"><img src="https://threefunkymonkeys.com/img/logo.png" width="200"></a>
 
 ### Docs
 
