@@ -1,4 +1,4 @@
-server = 'http://threefunkymonkeys.com:8080/geoserver';
+server = 'https://geoserver.threefunkymonkeys.com';
 namespace = {
   name: 'geodashboard',
   url: 'http://geodashboard.org'
