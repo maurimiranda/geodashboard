@@ -128,7 +128,8 @@ dashboard.render();
 [Live](http://dashboard.siasar.org/)
 
 Thanks [ThreeFunkyMonkeys](https://threefunkymonkeys.com/) for hosting GeoServer and with demo data!
-<a href="https://threefunkymonkeys.com/"><img src="https://threefunkymonkeys.com/img/logo.png" width="200"></a>
+
+<a href="https://threefunkymonkeys.com/"><img src="https://threefunkymonkeys.com/img/logo.png" width="150"></a>
 
 ### Docs
 
