@@ -97,7 +97,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
-  title: 'Heatmap (Slow)',
+  title: 'Heatmap (Very Slow)',
   server: server,
   layer: 'geodashboard:properati',
   style: 'geodashboard:heatmap',
