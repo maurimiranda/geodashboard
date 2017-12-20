@@ -1,4 +1,4 @@
-import ol from 'openlayers';
+import Tile from 'ol/layer/tile';
 
 import Layer from './layer';
 
@@ -18,7 +18,7 @@ class BaseLayer extends Layer {
 
     this.base = true;
 
-    this.layer = new ol.layer.Tile({
+    this.layer = new Tile({
       title: this.title,
       preload: Infinity,
       visible: this.visible,

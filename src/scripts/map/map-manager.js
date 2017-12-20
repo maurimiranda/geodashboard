@@ -1,5 +1,10 @@
 import EventEmitter from 'events';
-import ol from 'openlayers';
+
+import Map from 'ol/map';
+import View from 'ol/view';
+import Overlay from 'ol/overlay';
+import proj from 'ol/proj';
+import extent from 'ol/extent';
 
 import LayerSwitcher from './layer-switcher';
 
@@ -50,12 +55,12 @@ class MapManager extends EventEmitter {
    * @private
    */
   createMap() {
-    this.view = new ol.View({
-      center: ol.proj.fromLonLat(this.defaultCenter),
+    this.view = new View({
+      center: proj.fromLonLat(this.defaultCenter),
       zoom: this.defaultZoom,
     });
 
-    this.map = new ol.Map({
+    this.map = new Map({
       view: this.view,
       loadTilesWhileInteracting: true,
       layers: this.layers,
@@ -75,7 +80,7 @@ class MapManager extends EventEmitter {
    * @private
    */
   createOverlay() {
-    this.overlay = new ol.Overlay({
+    this.overlay = new Overlay({
       autoPan: true,
       autoPanAnimation: {
         duration: 250,
@@ -157,11 +162,10 @@ class MapManager extends EventEmitter {
 
   set center(value) {
     this.overlay.setElement(null);
-    this.map.beforeRender(ol.animation.pan({
-      source: this.center,
+    this.view.animate({
+      center: value,
       duration: 2000,
-    }));
-    this.view.setCenter(value);
+    });
   }
 
   /**
@@ -174,11 +178,10 @@ class MapManager extends EventEmitter {
 
   set zoom(value) {
     this.overlay.setElement(null);
-    this.map.beforeRender(ol.animation.zoom({
-      resolution: this.view.getResolution(),
+    this.view.animate({
+      zoom: value,
       duration: 1000,
-    }));
-    this.view.setZoom(value);
+    });
   }
 
   /**
@@ -186,22 +189,18 @@ class MapManager extends EventEmitter {
    * @param {Object} feature - Feature to center
    */
   centerToFeature(feature) {
-    this.center = ol.extent.getCenter(feature.getGeometry().getExtent());
+    this.center = extent.getCenter(feature.getGeometry().getExtent());
   }
 
   /**
    * Fits map to definied extent
-   * @param {Number[]} extent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
+   * @param {Number[]} toExtent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
    */
-  fit(extent) {
-    if (extent && extent[0] && isFinite(extent[0])) {
-      this.map.beforeRender(ol.animation.zoom({
-        resolution: this.view.getResolution(),
-      }));
-      this.map.beforeRender(ol.animation.pan({
-        source: this.center,
-      }));
-      this.view.fit(extent, this.map.getSize());
+  fit(toExtent) {
+    if (toExtent && toExtent[0] && isFinite(extent[0])) {
+      this.view.fit(extent, {
+        size: this.map.getSize(),
+      });
     }
   }
 
@@ -230,12 +229,12 @@ class MapManager extends EventEmitter {
     element.innerHTML = popupTemplate({
       properties,
     });
-    this.map.beforeRender(ol.animation.pan({
-      duration: 1000,
-      source: this.view.getCenter(),
-    }));
-    const position = ol.extent.getCenter(feature.getGeometry().getExtent());
+    const position = extent.getCenter(feature.getGeometry().getExtent());
     this.overlay.setElement(element);
+    this.view.animate({
+      center: position,
+      duration: 1000,
+    });
     this.overlay.setPosition(position);
   }
 

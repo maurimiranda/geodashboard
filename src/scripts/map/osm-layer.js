@@ -1,4 +1,4 @@
-import ol from 'openlayers';
+import OSM from 'ol/source/osm';
 
 import BaseLayer from './base-layer';
 
@@ -16,7 +16,7 @@ class OSMLayer extends BaseLayer {
     config.title = config.title || 'OpenStreetMap';
     super(config);
 
-    this.source = new ol.source.OSM();
+    this.source = new OSM();
   }
 }
 

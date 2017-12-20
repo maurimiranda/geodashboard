@@ -1,11 +1,11 @@
-import ol from 'openlayers';
+import Control from 'ol/control/control';
 
 import template from '../../templates/map/layer-switcher.hbs';
 
 /**
  * Custom implementation of LayerSwitcher based on [Matt Walker's OL3 control](https://github.com/walkermatt/ol3-layerswitcher).
  */
-class LayerSwitcher extends ol.control.Control {
+class LayerSwitcher extends Control {
   constructor() {
     const element = document.createElement('div');
     element.className = 'layer-switcher ol-control';
