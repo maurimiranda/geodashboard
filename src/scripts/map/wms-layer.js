@@ -17,21 +17,22 @@ class WMSLayer extends OverlayLayer {
    * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
    *   all other overlay layers are hidden
    * @param {String} config.style - The style or styles to be used with the layer
+   * @param {Boolean} [config.tiled=false] - Use tiles or single image WMS
    */
   constructor(config = {}) {
     super(config);
     this.server = `${config.server}/wms/`;
     this.style = config.style;
 
-    this.layer = new ol.layer.Image({
+    const layerConfig = {
       title: this.title,
       visible: this.visible,
       exclusive: this.exclusive,
       zIndex: 1,
       opacity: this.opacity,
-    });
+    };
 
-    this.source = new ol.source.ImageWMS({
+    const sourceConfig = {
       url: this.server,
       params: {
         LAYERS: this.layerName,
@@ -40,7 +41,15 @@ class WMSLayer extends OverlayLayer {
       attributions: [new ol.Attribution({
         html: this.attribution,
       })],
-    });
+    };
+
+    if (config.tiled) {
+      this.layer = new ol.layer.Tile(layerConfig);
+      this.source = new ol.source.TileWMS(sourceConfig);
+    } else {
+      this.layer = new ol.layer.Image(layerConfig);
+      this.source = new ol.source.ImageWMS(sourceConfig);
+    }
   }
 
   /**
