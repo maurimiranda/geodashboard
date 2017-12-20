@@ -34,11 +34,11 @@ const dashboard = new GeoDashboard.Dashboard({
     center: [-58.40, -34.61],
     zoom: 14,
   },
-  // filters: [new GeoDashboard.Filter({
-  //   property: 'surface_total_in_m2',
-  //   operator: '>=',
-  //   value: '100'
-  // })],
+  filters: [new GeoDashboard.Filter({
+    property: 'surface_total_in_m2',
+    operator: '>',
+    value: '0'
+  })],
 });
 
 dashboard.addBaseLayer(new GeoDashboard.OSMLayer({
@@ -116,7 +116,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Average Price (USD)',
+  title: 'Average Price',
   server: server,
   namespace: namespace,
   layer: 'geodashboard:properati',
@@ -136,7 +136,7 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Max Price (USD)',
+  title: 'Max Price',
   server: server,
   namespace: namespace,
   layer: 'geodashboard:properati',
@@ -156,7 +156,7 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Min Price (USD)',
+  title: 'Min Price',
   server: server,
   namespace: namespace,
   layer: 'geodashboard:properati',
