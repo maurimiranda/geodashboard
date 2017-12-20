@@ -1,12 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);@charset "UTF-8";
-.ol-control, .ol-scale-line {
-  position: absolute;
-  padding: 2px; }
-
 .ol-box {
   box-sizing: border-box;
   border-radius: 2px;
-  border: 2px solid #00f; }
+  border: 2px solid blue; }
 
 .ol-mouse-position {
   top: 8px;
@@ -17,7 +13,9 @@
   background: rgba(0, 60, 136, 0.3);
   border-radius: 4px;
   bottom: 8px;
-  left: 8px; }
+  left: 8px;
+  padding: 2px;
+  position: absolute; }
 
 .ol-scale-line-inner {
   border: 1px solid #eee;
@@ -26,7 +24,7 @@
   font-size: 10px;
   text-align: center;
   margin: 1px;
-  will-change: contents,width; }
+  will-change: contents, width; }
 
 .ol-overlay-container {
   will-change: left,right,top,bottom; }
@@ -34,18 +32,37 @@
 .ol-unsupported {
   display: none; }
 
-.ol-viewport .ol-unselectable {
+.ol-viewport, .ol-unselectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent; }
 
+.ol-selectable {
+  -webkit-touch-callout: default;
+  -webkit-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  user-select: auto; }
+
+.ol-grabbing {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: grabbing; }
+
+.ol-grab {
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab; }
+
 .ol-control {
+  position: absolute;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 4px; }
+  border-radius: 4px;
+  padding: 2px; }
 
 .ol-control:hover {
   background-color: rgba(255, 255, 255, 0.6); }
@@ -57,12 +74,12 @@
 .ol-rotate {
   top: .5em;
   right: .5em;
-  transition: opacity .25s linear,visibility 0s linear; }
+  transition: opacity .25s linear, visibility 0s linear; }
 
 .ol-rotate.ol-hidden {
   opacity: 0;
   visibility: hidden;
-  transition: opacity .25s linear,visibility 0s linear .25s; }
+  transition: opacity .25s linear, visibility 0s linear .25s; }
 
 .ol-zoom-extent {
   top: 4.643em;
@@ -80,9 +97,9 @@
   display: block;
   margin: 1px;
   padding: 0;
-  color: #fff;
+  color: white;
   font-size: 1.14em;
-  font-weight: 700;
+  font-weight: bold;
   text-decoration: none;
   text-align: center;
   height: 1.375em;
@@ -101,7 +118,7 @@
 
 .ol-compass {
   display: block;
-  font-weight: 400;
+  font-weight: normal;
   font-size: 1.2em;
   will-change: transform; }
 
@@ -111,7 +128,8 @@
 .ol-touch .ol-zoom-extent {
   top: 5.5em; }
 
-.ol-control button:focus, .ol-control button:hover {
+.ol-control button:hover,
+.ol-control button:focus {
   text-decoration: none;
   background-color: rgba(0, 60, 136, 0.7); }
 
@@ -148,7 +166,7 @@
   max-width: inherit;
   vertical-align: middle; }
 
-.ol-attribution button, .ol-attribution ul {
+.ol-attribution ul, .ol-attribution button {
   display: inline-block; }
 
 .ol-attribution.ol-collapsed ul {
@@ -168,7 +186,7 @@
   line-height: 1em; }
 
 .ol-attribution.ol-logo-only {
-  background: 0 0;
+  background: transparent;
   bottom: .4em;
   height: 1.1em;
   line-height: 1em; }
@@ -177,7 +195,8 @@
   margin-top: -.2em;
   max-height: 1.6em; }
 
-.ol-attribution.ol-logo-only button, .ol-attribution.ol-uncollapsible button {
+.ol-attribution.ol-logo-only button,
+.ol-attribution.ol-uncollapsible button {
   display: none; }
 
 .ol-zoomslider {
@@ -193,15 +212,16 @@
   top: 5.5em; }
 
 .ol-overviewmap {
-  left: .5em;
-  bottom: .5em; }
+  left: 0.5em;
+  bottom: 0.5em; }
 
 .ol-overviewmap.ol-uncollapsible {
   bottom: 0;
   left: 0;
   border-radius: 0 4px 0 0; }
 
-.ol-overviewmap .ol-overviewmap-map, .ol-overviewmap button {
+.ol-overviewmap .ol-overviewmap-map,
+.ol-overviewmap button {
   display: inline-block; }
 
 .ol-overviewmap .ol-overviewmap-map {
@@ -215,7 +235,8 @@
   left: 2px;
   position: absolute; }
 
-.ol-overviewmap.ol-collapsed .ol-overviewmap-map, .ol-overviewmap.ol-uncollapsible button {
+.ol-overviewmap.ol-collapsed .ol-overviewmap-map,
+.ol-overviewmap.ol-uncollapsible button {
   display: none; }
 
 .ol-overviewmap:not(.ol-collapsed) {
@@ -223,6 +244,9 @@
 
 .ol-overviewmap-box {
   border: 2px dotted rgba(0, 60, 136, 0.7); }
+
+.ol-overviewmap .ol-overviewmap-box:hover {
+  cursor: move; }
 
 .layer-switcher.ol-control {
   position: absolute;
