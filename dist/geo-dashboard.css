@@ -268,7 +268,7 @@
       line-height: 2em;
       font-size: 0.8em;
       border-radius: 0px;
-      color: rgba(62, 88, 105, 0.2);
+      color: rgba(62, 88, 105, 0.5);
       min-width: 10em;
       text-transform: uppercase;
       text-align: center; }
@@ -297,7 +297,7 @@
     font-size: 1em;
     line-height: 1; }
     .ol-control button:hover {
-      background-color: rgba(62, 88, 105, 0.2); }
+      background-color: rgba(62, 88, 105, 0.5); }
 
 .ol-zoom {
   bottom: 10px;
@@ -422,7 +422,7 @@
     height: 16px;
     line-height: 25px;
     vertical-align: middle;
-    color: rgba(62, 88, 105, 0.2); }
+    color: rgba(62, 88, 105, 0.5); }
     .filter-widget ul li .filter-widget-color {
       float: left;
       margin: 5px 5px 0 0;
