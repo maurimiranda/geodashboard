@@ -60,7 +60,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
-  title: 'Properties by Type (WFS)',
+  title: 'Properties by Category (WFS)',
   server: server,
   layer: 'geodashboard:properati',
   exclusive: true,
@@ -71,37 +71,27 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
       if (!value) return null;
       return `<a target="_blank" href="${value}"><img src="${value}"/></a>`;
     },
-  },{
+  }, {
     title: 'Place Name',
     property: 'place_name',
-  },{
+  }, {
     title: 'Rooms',
     property: 'rooms',
-  },{
+  }, {
     title: 'Total Surface',
     property: 'surface_total_in_m2',
     format: (value) => `${value}m2`,
-  },{
+  }, {
     title: 'Price',
     property: 'price',
     format: (value) => `$${value}`,
-  },{
+  }, {
     property: 'properati_url',
     format: (value) => {
       if (!value) return null;
       return `<a style="width:100%;display:block;text-align:right;font-size:1.3em;text-decoration:none;" target="_blank" href="${value}">ℹ️</a>`;
     },
   }],
-  style: property_type,
-  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
-}));
-
-dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
-  title: 'Properties by Category (WFS)',
-  server: server,
-  layer: 'geodashboard:properati',
-  exclusive: true,
-  visible: false,
   style: category,
   attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
 }));
