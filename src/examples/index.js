@@ -34,11 +34,11 @@ const dashboard = new GeoDashboard.Dashboard({
     center: [-58.40, -34.61],
     zoom: 14,
   },
-  filters: [new GeoDashboard.Filter({
-    property: 'surface_total_in_m2',
-    operator: '>=',
-    value: '100'
-  })],
+  // filters: [new GeoDashboard.Filter({
+  //   property: 'surface_total_in_m2',
+  //   operator: '>=',
+  //   value: '100'
+  // })],
 });
 
 dashboard.addBaseLayer(new GeoDashboard.OSMLayer({
@@ -71,9 +71,6 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
       if (!value) return null;
       return `<a target="_blank" href="${value}"><img src="${value}"/></a>`;
     },
-  },{
-    title: 'State',
-    property: 'state_name',
   },{
     title: 'Place Name',
     property: 'place_name',
@@ -129,16 +126,6 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
-  title: 'Max Price (USD)',
-  server: server,
-  namespace: namespace,
-  layer: 'geodashboard:properati',
-  property: 'price_aprox_usd',
-  function: 'Max',
-  format: (value) => `$${parseInt(value)}`,
-}));
-
-dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Average Total Surface',
   server: server,
   namespace: namespace,
@@ -149,12 +136,42 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
+  title: 'Max Price (USD)',
+  server: server,
+  namespace: namespace,
+  layer: 'geodashboard:properati',
+  property: 'price_aprox_usd',
+  function: 'Max',
+  format: (value) => `$${parseInt(value)}`,
+}));
+
+dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Max Total Surface',
   server: server,
   namespace: namespace,
   layer: 'geodashboard:properati',
   property: 'surface_total_in_m2',
   function: 'Max',
+  format: (value) => `${parseInt(value)}m2`,
+}));
+
+dashboard.addWidget(new GeoDashboard.AggregateWidget({
+  title: 'Min Price (USD)',
+  server: server,
+  namespace: namespace,
+  layer: 'geodashboard:properati',
+  property: 'price_aprox_usd',
+  function: 'Min',
+  format: (value) => `$${parseInt(value)}`,
+}));
+
+dashboard.addWidget(new GeoDashboard.AggregateWidget({
+  title: 'Min Total Surface',
+  server: server,
+  namespace: namespace,
+  layer: 'geodashboard:properati',
+  property: 'surface_total_in_m2',
+  function: 'Min',
   format: (value) => `${parseInt(value)}m2`,
 }));
 

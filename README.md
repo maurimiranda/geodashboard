@@ -137,8 +137,8 @@ For further details on objects, see [the documentation](https://maurimiranda.git
 
 ### Testing
 
-<a href="https://www.browserstack.com/"><img src="https://cdn.rawgit.com/maurimiranda/geodashboard/master/src/images/browserstack-logo.svg" width="200"></a>
-
 GeoDashboard uses [BrowserStack](https://www.browserstack.com/) for testing automation. BrowserStack is a cloud-based cross-browser testing tool that enables developers to test their websites across various browsers on different operating systems and mobile devices, without requiring users to install virtual machines, devices or emulators.
 
 Thanks BrowserStack for supporting OpenSource projects!
+
+<a href="https://www.browserstack.com/"><img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" width="200"></a>
