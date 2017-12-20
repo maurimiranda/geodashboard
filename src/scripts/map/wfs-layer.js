@@ -200,7 +200,7 @@ class WFSLayer extends OverlayLayer {
         stroke: this.getDefaultStroke(),
         image: new Circle({
           fill: this.getDefaultFill(),
-          radius: 10,
+          radius: 5,
           stroke: this.getDefaultStroke(),
         }),
       });
