@@ -76,7 +76,7 @@ class Dashboard {
 
     this.mapManager.render(this.container.getElementsByClassName('map')[0]);
 
-    this.widgetManager.container = this.container.getElementsByClassName('widget-panel')[0];
+    [this.widgetManager.container] = this.container.getElementsByClassName('widget-panel');
     this.widgetManager.render();
   }
 

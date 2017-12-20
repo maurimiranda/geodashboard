@@ -197,7 +197,7 @@ class MapManager extends EventEmitter {
    * @param {Number[]} toExtent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
    */
   fit(toExtent) {
-    if (toExtent && toExtent[0] && isFinite(extent[0])) {
+    if (toExtent && toExtent[0] && Number.isFinite(extent[0])) {
       this.view.fit(extent, {
         size: this.map.getSize(),
       });
@@ -223,7 +223,7 @@ class MapManager extends EventEmitter {
     const properties = layer.popup.map(property => ({
       title: property.title,
       value: property.format ? property.format(feature.get(property.property)) :
-      feature.get(property.property),
+        feature.get(property.property),
     }));
     const element = document.createElement('div');
     element.innerHTML = popupTemplate({
