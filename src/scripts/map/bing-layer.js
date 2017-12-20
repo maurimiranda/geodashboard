@@ -1,4 +1,4 @@
-import ol from 'openlayers';
+import BingMaps from 'ol/source/bingmaps';
 
 import BaseLayer from './base-layer';
 
@@ -16,7 +16,7 @@ class BingLayer extends BaseLayer {
     config.title = config.title || 'Bing Aerial';
     super(config);
 
-    this.source = new ol.source.BingMaps({
+    this.source = new BingMaps({
       key: config.key,
       imagerySet: 'Aerial',
     });

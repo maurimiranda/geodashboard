@@ -353,6 +353,9 @@
     font-weight: bold; }
     .info-box dl dd:last-child {
       margin-bottom: 0; }
+    .info-box dl dd img {
+      max-width: 100%;
+      max-height: 200px; }
 
 .widget-panel {
   overflow-y: scroll;

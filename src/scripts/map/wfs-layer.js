@@ -1,6 +1,18 @@
 import 'whatwg-fetch';
 import 'url-search-params-polyfill';
-import ol from 'openlayers';
+
+import GeoJSON from 'ol/format/geojson';
+import Vector from 'ol/layer/vector';
+import VectorSource from 'ol/source/vector';
+import loadingstrategy from 'ol/loadingstrategy';
+import tilegrid from 'ol/tilegrid';
+import Attribution from 'ol/attribution';
+import color from 'ol/color';
+import Style from 'ol/style/style';
+import Circle from 'ol/style/circle';
+import Fill from 'ol/style/fill';
+import Stroke from 'ol/style/stroke';
+import Text from 'ol/style/text';
 
 import OverlayLayer from './overlay-layer';
 
@@ -31,24 +43,24 @@ class WFSLayer extends OverlayLayer {
     super(config);
 
     this.server = `${config.server}/wfs/`;
-    this.format = new ol.format.GeoJSON();
+    this.format = new GeoJSON();
     this.styleCache = {};
     this.style = config.style;
     this.popup = config.popup;
 
-    this.layer = new ol.layer.Vector({
+    this.layer = new Vector({
       title: this.title,
       visible: this.visible,
       exclusive: this.exclusive,
     });
     this.layer.setStyle(this.setStyle.bind(this));
 
-    this.source = new ol.source.Vector({
+    this.source = new VectorSource({
       loader: this.loadFeatures.bind(this),
-      strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+      strategy: loadingstrategy.tile(tilegrid.createXYZ({
         maxZoom: 19,
       })),
-      attributions: [new ol.Attribution({
+      attributions: [new Attribution({
         html: this.attribution,
       })],
     });
@@ -112,10 +124,10 @@ class WFSLayer extends OverlayLayer {
     }
     if (!this.styleCache[value][resolution]) {
       const radius = Math.min(Math.max(3, Math.ceil(10 / Math.log(Math.ceil(resolution)))), 10);
-      this.styleCache[value][resolution] = new ol.style.Style({
-        image: new ol.style.Circle({
-          fill: new ol.style.Fill({
-            color: ol.color.asArray(this.style.values[value].color),
+      this.styleCache[value][resolution] = new Style({
+        image: new Circle({
+          fill: new Fill({
+            color: color.asArray(this.style.values[value].color),
           }),
           radius,
           stroke: this.getDefaultStroke(),
@@ -132,7 +144,7 @@ class WFSLayer extends OverlayLayer {
    */
   getDefaultStroke() {
     if (!this.defaultStroke) {
-      this.defaultStroke = new ol.style.Stroke({
+      this.defaultStroke = new Stroke({
         color: [0, 0, 0, 0.5],
         width: 1,
       });
@@ -147,7 +159,7 @@ class WFSLayer extends OverlayLayer {
    */
   getDefaultFill() {
     if (!this.defaultFill) {
-      this.defaultFill = new ol.style.Fill({
+      this.defaultFill = new Fill({
         color: [255, 255, 255, 0.5],
       });
     }
@@ -162,12 +174,12 @@ class WFSLayer extends OverlayLayer {
    */
   getDefaultText(radius) {
     if (!this.defaultText) {
-      this.defaultText = new ol.style.Text({
+      this.defaultText = new Text({
         offsetY: radius * 1.5,
-        fill: new ol.style.Fill({
+        fill: new Fill({
           color: '#666',
         }),
-        stroke: new ol.style.Stroke({
+        stroke: new Stroke({
           color: '#FFFFFF',
           width: 2,
         }),
@@ -183,12 +195,12 @@ class WFSLayer extends OverlayLayer {
    */
   getDefaultStyle() {
     if (!this.defaultStyle) {
-      this.defaultStyle = new ol.style.Style({
+      this.defaultStyle = new Style({
         fill: this.getDefaultFill(),
         stroke: this.getDefaultStroke(),
-        image: new ol.style.Circle({
+        image: new Circle({
           fill: this.getDefaultFill(),
-          radius: 10,
+          radius: 5,
           stroke: this.getDefaultStroke(),
         }),
       });

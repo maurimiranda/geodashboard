@@ -1,4 +1,8 @@
-import ol from 'openlayers';
+import Attribution from 'ol/attribution';
+import Tile from 'ol/layer/tile';
+import Image from 'ol/layer/image';
+import TileWMS from 'ol/source/tilewms';
+import ImageWMS from 'ol/source/imagewms';
 
 import OverlayLayer from './overlay-layer';
 
@@ -38,17 +42,17 @@ class WMSLayer extends OverlayLayer {
         LAYERS: this.layerName,
         STYLES: this.style,
       },
-      attributions: [new ol.Attribution({
+      attributions: [new Attribution({
         html: this.attribution,
       })],
     };
 
     if (config.tiled) {
-      this.layer = new ol.layer.Tile(layerConfig);
-      this.source = new ol.source.TileWMS(sourceConfig);
+      this.layer = new Tile(layerConfig);
+      this.source = new TileWMS(sourceConfig);
     } else {
-      this.layer = new ol.layer.Image(layerConfig);
-      this.source = new ol.source.ImageWMS(sourceConfig);
+      this.layer = new Image(layerConfig);
+      this.source = new ImageWMS(sourceConfig);
     }
   }
 
