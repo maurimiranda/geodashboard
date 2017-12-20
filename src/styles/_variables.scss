@@ -6,7 +6,7 @@ $warning-color:       #FDBA12 !default;
 $danger-color:        #D9534f !default;
 $light-color:         lighten($primary-color, 55%);
 
-$primary-alpha:       rgba($primary-color, 0.2) !default;
+$primary-alpha:       rgba($primary-color, 0.5) !default;
 $background-alpha:    rgba($background-color, 0.9) !default;
 $info-alpha:          rgba($info-color, 0.1) !default;
 $box-shadow:          none !default;
