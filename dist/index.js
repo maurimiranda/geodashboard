@@ -53,8 +53,8 @@ dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
   server: server,
   layer: 'geodashboard:properati',
   style: 'geodashboard:property_type',
-  exclusive: true,
   visible: true,
+  exclusive: true,
   tiled: true,
   attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
 }));
@@ -97,12 +97,22 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
-  title: 'Heatmap (Very Slow)',
+  title: 'Heatmap WMS (Very Slow)',
   server: server,
   layer: 'geodashboard:properati',
   style: 'geodashboard:heatmap',
   exclusive: true,
   attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
+}));
+
+dashboard.addOverlayLayer(new GeoDashboard.HeatmapLayer({
+  title: 'Heatmap WFS',
+  server: server,
+  layer: 'geodashboard:properati',
+  exclusive: true,
+  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
+  radius: 6,
+  blur: 20,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({

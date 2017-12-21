@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>map/wms-layer.js - Documentation</title>
+    <title>map/heatmap-layer.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,7 +27,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">map/wms-layer.js</h1>
+    <h1 class="page-title">map/heatmap-layer.js</h1>
     
 
     
@@ -37,19 +37,20 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import Attribution from 'ol/attribution';
-import Tile from 'ol/layer/tile';
-import Image from 'ol/layer/image';
-import TileWMS from 'ol/source/tilewms';
-import ImageWMS from 'ol/source/imagewms';
+            <pre class="prettyprint source linenums"><code>import GeoJSON from 'ol/format/geojson';
+import Heatmap from 'ol/layer/heatmap';
+import VectorSource from 'ol/source/vector';
+import Attribution from 'ol/attribution';
+import loadingstrategy from 'ol/loadingstrategy';
+import tilegrid from 'ol/tilegrid';
 
 import OverlayLayer from './overlay-layer';
 
 /**
- * Web Map Service Layer
+ * Vector Heatmap Layer
  * @extends OverlayLayer
  */
-class WMSLayer extends OverlayLayer {
+class HeatmapLayer extends OverlayLayer {
   /**
    * @param {Object} config - Configuration object
    * @param {String} [config.title='OverlayLayer'] - Layer title
@@ -59,55 +60,87 @@ class WMSLayer extends OverlayLayer {
    * @param {String} [config.attribution=''] - Layer data attribution
    * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
    *   all other overlay layers are hidden
-   * @param {String} config.style - The style or styles to be used with the layer
-   * @param {Boolean} [config.tiled=false] - Use tiles or single image WMS
+   * @param {Object} [config.blur=15] - Blur size in pixels
+   * @param {Object} [config.radius=8] - Radius size in pixels
    */
   constructor(config = {}) {
     super(config);
-    this.server = `${config.server}/wms/`;
-    this.style = config.style;
 
-    const layerConfig = {
+    this.blur = config.blur || 15;
+    this.radius = config.radius || 8;
+
+    this.server = `${config.server}/wfs/`;
+    this.format = new GeoJSON();
+
+    this.layer = new Heatmap({
       title: this.title,
       visible: this.visible,
       exclusive: this.exclusive,
-      zIndex: 1,
-      opacity: this.opacity,
-    };
+      blur: this.blur,
+      radius: this.radius,
+      gradient: ['#00f', '#0ff', '#0f0', '#ff0', '#fa0', '#f00'],
+      opacity: 0.6,
+    });
 
-    const sourceConfig = {
-      url: this.server,
-      params: {
-        LAYERS: this.layerName,
-        STYLES: this.style,
-      },
+    this.source = new VectorSource({
+      loader: this.loadFeatures.bind(this),
+      strategy: loadingstrategy.tile(tilegrid.createXYZ({
+        maxZoom: 19,
+      })),
       attributions: [new Attribution({
         html: this.attribution,
       })],
-    };
-
-    if (config.tiled) {
-      this.layer = new Tile(layerConfig);
-      this.source = new TileWMS(sourceConfig);
-    } else {
-      this.layer = new Image(layerConfig);
-      this.source = new ImageWMS(sourceConfig);
-    }
+    });
   }
 
   /**
    * Reloads layer data using current filters
    */
   refresh() {
-    if (this.manager.filters.length) {
-      const params = this.layer.getSource().getParams();
-      params.CQL_FILTER = this.manager.filterString;
-      this.source.updateParams(params);
+    this.source.clear();
+  }
+
+  /**
+   * Loads features from server via WFS service
+   * @param {Number[]} extent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
+   * @private
+   */
+  loadFeatures(extent) {
+    this.loading += 1;
+    const params = new URLSearchParams();
+    params.append('service', 'WFS');
+    params.append('version', '1.0.0');
+    params.append('request', 'GetFeature');
+    params.append('outputFormat', 'application/json');
+    params.append('format_options', 'CHARSET:UTF-8');
+    params.append('typename', this.layerName);
+    params.append('srsname', this.manager.viewProjection.getCode());
+    params.append('cql_filter', this.buildCQLFilter(extent));
+    fetch(`${this.server}?${params.toString()}`, {
+      mode: 'cors',
+    }).then(response => response.json())
+      .catch(() => null)
+      .then((data) => {
+        if (data) {
+          this.source.addFeatures(this.format.readFeatures(data));
+        }
+        this.loading -= 1;
+        if (this.loading === 0) {
+          this.emit('loaded');
+        }
+      });
+  }
+
+  buildCQLFilter(extent) {
+    let cqlFilter = `bbox(geom, ${extent.join(',')}, '${this.manager.viewProjection.getCode()}')`;
+    if (this.manager.filterString) {
+      cqlFilter = `${cqlFilter} AND ${this.manager.filterString}`;
     }
+    return cqlFilter;
   }
 }
 
-export default WMSLayer;
+export default HeatmapLayer;
 </code></pre>
         </article>
     </section>
