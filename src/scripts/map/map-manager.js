@@ -197,9 +197,10 @@ class MapManager extends EventEmitter {
    * @param {Number[]} toExtent - Array of numbers representing an extent: [minx, miny, maxx, maxy]
    */
   fit(toExtent) {
-    if (toExtent && toExtent[0] && Number.isFinite(extent[0])) {
-      this.view.fit(extent, {
+    if (toExtent && toExtent[0] && Number.isFinite(toExtent[0])) {
+      this.view.fit(toExtent, {
         size: this.map.getSize(),
+        duration: 1000,
       });
     }
   }
