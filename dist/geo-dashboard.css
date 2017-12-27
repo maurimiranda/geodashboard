@@ -436,9 +436,6 @@
 .chart-widget canvas {
   margin-top: 30px; }
 
-.doughnut-widget canvas {
-  margin-bottom: -50px; }
-
 .filter-widget ul {
   list-style: none; }
   .filter-widget ul li {
