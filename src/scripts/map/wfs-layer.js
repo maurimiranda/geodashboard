@@ -36,7 +36,8 @@ class WFSLayer extends OverlayLayer {
    *   and their corresponding style
    * @param {Object[]} [config.popup] - Data to show when user clicks
    *   on a feature in the map
-   * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names to show
+   * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names
+   *   to show
    * @param {String} [config.popup[].title] - Text to show as title
    * @param {Function} [config.popup[].format] - Function to process field or fields value
    */
