@@ -64,7 +64,6 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
   server: server,
   layer: 'geodashboard:properati',
   exclusive: true,
-  visible: false,
   popup: [{
     property: 'image_thumbnail',
     format: (value) => {
@@ -78,12 +77,12 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
     title: 'Rooms',
     property: 'rooms',
   }, {
-    title: 'Total Surface',
-    property: 'surface_total_in_m2',
-    format: (value) => `${value}m2`,
+    title: 'Surface (Total / Covered)',
+    property: ['surface_total_in_m2', 'surface_covered_in_m2'],
+    format: (total, covered) => `${total}m<sup>2</sup> / ${covered}m<sup>2</sup>`,
   }, {
     title: 'Price',
-    property: 'price',
+    property: 'price_aprox_usd',
     format: (value) => `$${value}`,
   }, {
     property: 'properati_url',
@@ -132,7 +131,7 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   layer: 'geodashboard:properati',
   property: 'surface_total_in_m2',
   function: 'Average',
-  format: (value) => `${parseInt(value)}m2`,
+  format: (value) => `${parseInt(value)}m<sup>2</sup>`,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
@@ -152,7 +151,7 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   layer: 'geodashboard:properati',
   property: 'surface_total_in_m2',
   function: 'Max',
-  format: (value) => `${parseInt(value)}m2`,
+  format: (value) => `${parseInt(value)}m<sup>2</sup>`,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
@@ -172,7 +171,7 @@ dashboard.addWidget(new GeoDashboard.AggregateWidget({
   layer: 'geodashboard:properati',
   property: 'surface_total_in_m2',
   function: 'Min',
-  format: (value) => `${parseInt(value)}m2`,
+  format: (value) => `${parseInt(value)}m<sup>2</sup>`,
 }));
 
 dashboard.addWidget(new GeoDashboard.CategoryWidget({
