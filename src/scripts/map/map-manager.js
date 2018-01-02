@@ -221,14 +221,26 @@ class MapManager extends EventEmitter {
    * @param {Object} feature - Feature to show
    */
   showFeaturePopup(layer, feature) {
-    const properties = layer.popup.map(property => ({
-      title: property.title,
-      value: property.format ? property.format(feature.get(property.property)) :
-        feature.get(property.property),
-    }));
+    const items = [];
+    layer.popup.forEach((item) => {
+      const properties = Array.isArray(item.property) ? item.property : [item.property];
+      const values = properties.map(property => feature.get(property));
+      let value;
+      if (item.format) {
+        value = item.format(...values);
+      } else if (values.length > 1) {
+        value = values.join(' ');
+      } else {
+        [value] = values;
+      }
+      items.push({
+        title: item.title,
+        value,
+      });
+    });
     const element = document.createElement('div');
     element.innerHTML = popupTemplate({
-      properties,
+      properties: items,
     });
     const position = extent.getCenter(feature.getGeometry().getExtent());
     this.overlay.setElement(element);
