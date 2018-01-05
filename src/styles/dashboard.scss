@@ -46,7 +46,7 @@
   width: $default-spacing * 3;
   height: $default-spacing * 3;
   margin: ($default-spacing * 2) auto;
-  background-color: #333;
+  background-color: $primary-color;
 
   border-radius: 100%;
   -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
