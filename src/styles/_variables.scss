@@ -46,3 +46,13 @@ $large-desktop-width: 1600px;
     @content;
   }
 }
+
+:export {
+  primaryColor: $primary-color;
+  backgroundColor: $background-color;
+  infoColor: $info-color;
+  successColor: $success-color;
+  warningColor: $warning-color;
+  dangerColor: $danger-color;
+  lightColor: $light-color;
+}

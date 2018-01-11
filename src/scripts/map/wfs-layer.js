@@ -12,9 +12,10 @@ import Style from 'ol/style/style';
 import Circle from 'ol/style/circle';
 import Fill from 'ol/style/fill';
 import Stroke from 'ol/style/stroke';
-import Text from 'ol/style/text';
 
 import OverlayLayer from './overlay-layer';
+
+import styleVariables from '../../styles/_variables.scss';
 
 /**
  * Web Feature Service Layer
@@ -147,7 +148,7 @@ class WFSLayer extends OverlayLayer {
   getDefaultStroke() {
     if (!this.defaultStroke) {
       this.defaultStroke = new Stroke({
-        color: [0, 0, 0, 0.5],
+        color: styleVariables.primaryColor,
         width: 1,
       });
     }
@@ -162,32 +163,10 @@ class WFSLayer extends OverlayLayer {
   getDefaultFill() {
     if (!this.defaultFill) {
       this.defaultFill = new Fill({
-        color: [255, 255, 255, 0.5],
+        color: styleVariables.primaryColor,
       });
     }
     return this.defaultFill;
-  }
-
-  /**
-   * Builds default text style
-   * @param {Number} radius
-   * @returns {Object} Openlayers' [Text](https://openlayers.org/en/latest/apidoc/ol.style.Text.html) object
-   * @private
-   */
-  getDefaultText(radius) {
-    if (!this.defaultText) {
-      this.defaultText = new Text({
-        offsetY: radius * 1.5,
-        fill: new Fill({
-          color: '#666',
-        }),
-        stroke: new Stroke({
-          color: '#FFFFFF',
-          width: 2,
-        }),
-      });
-    }
-    return this.defaultText;
   }
 
   /**
