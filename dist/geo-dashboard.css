@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);@charset "UTF-8";
+
 .ol-box {
   box-sizing: border-box;
   border-radius: 2px;
@@ -526,5 +527,6 @@
 @media (max-width: 640px) {
   .geo-dashboard {
     font-size: 0.75em; } }
+
 
 /*# sourceMappingURL=geo-dashboard.css.map*/
