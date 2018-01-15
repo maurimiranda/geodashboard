@@ -3,6 +3,7 @@ import 'url-search-params-polyfill';
 
 import GeoJSON from 'ol/format/geojson';
 import Vector from 'ol/layer/vector';
+import Heatmap from 'ol/layer/heatmap';
 import VectorSource from 'ol/source/vector';
 import loadingstrategy from 'ol/loadingstrategy';
 import tilegrid from 'ol/tilegrid';
@@ -41,6 +42,12 @@ class WFSLayer extends OverlayLayer {
    *   to show
    * @param {String} [config.popup[].title] - Text to show as title
    * @param {Function} [config.popup[].format] - Function to process field or fields value
+   * @param {Float} [config.opacity=1] - Layer opacity
+   * @param {Object} [config.heatmap] - Show layer as heatmap
+   * @param {Integer} [config.heatmap.blur=15] - Blur size in pixels
+   * @param {Integer} [config.heatmap.radius=8] - Radius size in pixels
+   * @param {String[]} [config.heatmap.gradient=['#00f', '#0ff', '#0f0', '#ff0', '#fa0',
+   *   '#f00']] - Gradient to use
    */
   constructor(config = {}) {
     super(config);
@@ -51,12 +58,28 @@ class WFSLayer extends OverlayLayer {
     this.style = config.style;
     this.popup = config.popup;
 
-    this.layer = new Vector({
-      title: this.title,
-      visible: this.visible,
-      exclusive: this.exclusive,
-    });
-    this.layer.setStyle(this.setStyle.bind(this));
+    if (config.heatmap) {
+      config.blur = config.blur || 15;
+      config.radius = config.radius || 8;
+      config.gradient = ['#00f', '#0ff', '#0f0', '#ff0', '#fa0', '#f00'];
+
+      this.layer = new Heatmap({
+        title: this.title,
+        visible: this.visible,
+        exclusive: this.exclusive,
+        blur: config.blur,
+        radius: config.radius,
+        gradient: config.gradient,
+        opacity: config.opacity,
+      });
+    } else {
+      this.layer = new Vector({
+        title: this.title,
+        visible: this.visible,
+        exclusive: this.exclusive,
+      });
+      this.layer.setStyle(this.setStyle.bind(this));
+    }
 
     this.source = new VectorSource({
       loader: this.loadFeatures.bind(this),
@@ -120,7 +143,7 @@ class WFSLayer extends OverlayLayer {
   setStyle(feature, resolution) {
     const value = feature.get(this.style.property);
     if (!value || !this.style.values[value]) {
-      return this.getDefaultStyle();
+      return this.buildDefaultStyle();
     }
     if (!this.styleCache[value]) {
       this.styleCache[value] = {};
@@ -133,7 +156,7 @@ class WFSLayer extends OverlayLayer {
             color: color.asArray(this.style.values[value].color),
           }),
           radius,
-          stroke: this.getDefaultStroke(),
+          stroke: this.buildDefaultStroke(),
         }),
       });
     }
@@ -145,7 +168,7 @@ class WFSLayer extends OverlayLayer {
    * @returns {Object} Openlayers' [Stroke](https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html) object
    * @private
    */
-  getDefaultStroke() {
+  buildDefaultStroke() {
     if (!this.defaultStroke) {
       this.defaultStroke = new Stroke({
         color: styleVariables.primaryColor,
@@ -160,7 +183,7 @@ class WFSLayer extends OverlayLayer {
    * @returns {Object} Openlayers' [Fill](https://openlayers.org/en/latest/apidoc/ol.style.Fill.html) object
    * @private
    */
-  getDefaultFill() {
+  buildDefaultFill() {
     if (!this.defaultFill) {
       this.defaultFill = new Fill({
         color: styleVariables.primaryColor,
@@ -174,15 +197,15 @@ class WFSLayer extends OverlayLayer {
    * @returns {Object} Openlayers' [Style](https://openlayers.org/en/latest/apidoc/ol.style.Style.html) object
    * @private
    */
-  getDefaultStyle() {
+  buildDefaultStyle() {
     if (!this.defaultStyle) {
       this.defaultStyle = new Style({
-        fill: this.getDefaultFill(),
-        stroke: this.getDefaultStroke(),
+        fill: this.buildDefaultFill(),
+        stroke: this.buildDefaultStroke(),
         image: new Circle({
-          fill: this.getDefaultFill(),
+          fill: this.buildDefaultFill(),
           radius: 5,
-          stroke: this.getDefaultStroke(),
+          stroke: this.buildDefaultStroke(),
         }),
       });
     }
