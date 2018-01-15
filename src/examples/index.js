@@ -1,8 +1,11 @@
-server = 'https://geoserver.threefunkymonkeys.com';
-namespace = {
-  name: 'geodashboard',
+const server = 'https://geoserver.threefunkymonkeys.com';
+
+const namespace = {
+  name: 'gd',
   url: 'http://geodashboard.org'
 };
+
+const attribution = 'Data provided by <a href="https://www.properati.com.ar">Properati</a>';
 
 const property_type = {
   property: 'property_type',
@@ -22,6 +25,14 @@ const category = {
     'C': { color: '#fd8d3c' },
     'D': { color: '#fdbe85' },
   },
+}
+
+function formatMoney(value) {
+  return `$${parseInt(value).toLocaleString()}`;
+}
+
+function formatSurface(value) {
+  return `${parseInt(value).toLocaleString()}m<sup>2</sup>`;
 }
 
 const dashboard = new GeoDashboard.Dashboard({
@@ -48,21 +59,11 @@ dashboard.addBaseLayer(new GeoDashboard.BingLayer({
   key: 'AlMSfR3F4khtlIefjuE_NYpX403LdlGiod36WLn8HlawywtSud-NSgEklCemD5pR',
 }));
 
-dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
-  title: 'Properties by Type (WMS)',
+dashboard.addOverlayLayer(new GeoDashboard.MVTLayer({
+  title: 'Properties by Category (MVT)',
   server: server,
-  layer: 'geodashboard:properati',
-  style: 'geodashboard:property_type',
+  layer: `${namespace.name}:properati`,
   visible: true,
-  exclusive: true,
-  tiled: true,
-  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
-}));
-
-dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
-  title: 'Properties by Category (WFS)',
-  server: server,
-  layer: 'geodashboard:properati',
   exclusive: true,
   popup: [{
     property: 'image_thumbnail',
@@ -79,11 +80,11 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
   }, {
     title: 'Surface (Total / Covered)',
     property: ['surface_total_in_m2', 'surface_covered_in_m2'],
-    format: (total, covered) => `${total}m<sup>2</sup> / ${covered}m<sup>2</sup>`,
+    format: (total, covered) => `${formatSurface(total)} / ${formatSurface(covered)}`,
   }, {
     title: 'Price',
     property: 'price_aprox_usd',
-    format: (value) => `$${value}`,
+    format: formatMoney,
   }, {
     property: 'properati_url',
     format: (value) => {
@@ -92,93 +93,95 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
     },
   }],
   style: category,
-  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
+  attribution: attribution,
 }));
 
 dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
-  title: 'Heatmap WMS (Very Slow)',
+  title: 'Properties by Type (WMS)',
   server: server,
-  layer: 'geodashboard:properati',
-  style: 'geodashboard:heatmap',
+  layer: `${namespace.name}:properati`,
+  style: `${namespace.name}:properati_property_type`,
   exclusive: true,
-  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
+  useCache: true,
+  tiled: true,
+  attribution: attribution,
 }));
 
-dashboard.addOverlayLayer(new GeoDashboard.HeatmapLayer({
-  title: 'Heatmap WFS',
+dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
+  title: 'Heatmap (WFS)',
   server: server,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   exclusive: true,
-  attribution: 'Datos provistos por <a href="https://www.properati.com.ar">Properati</a>',
-  radius: 6,
-  blur: 20,
+  heatmap: true,
+  attribution: attribution,
+  opacity: 0.6,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Average Price',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'price_aprox_usd',
   function: 'Average',
-  format: (value) => `$${parseInt(value)}`,
+  format: formatMoney,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Average Total Surface',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'surface_total_in_m2',
   function: 'Average',
-  format: (value) => `${parseInt(value)}m<sup>2</sup>`,
+  format: formatSurface,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Max Price',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'price_aprox_usd',
   function: 'Max',
-  format: (value) => `$${parseInt(value)}`,
+  format: formatMoney,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Max Total Surface',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'surface_total_in_m2',
   function: 'Max',
-  format: (value) => `${parseInt(value)}m<sup>2</sup>`,
+  format: formatSurface,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Min Price',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'price_aprox_usd',
   function: 'Min',
-  format: (value) => `$${parseInt(value)}`,
+  format: formatMoney,
 }));
 
 dashboard.addWidget(new GeoDashboard.AggregateWidget({
   title: 'Min Total Surface',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'surface_total_in_m2',
   function: 'Min',
-  format: (value) => `${parseInt(value)}m<sup>2</sup>`,
+  format: formatSurface,
 }));
 
 dashboard.addWidget(new GeoDashboard.CategoryWidget({
   title: 'Properties by Type',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'property_type',
   categories: property_type,
 }));
@@ -187,7 +190,7 @@ dashboard.addWidget(new GeoDashboard.CategoryWidget({
   title: 'Properties by Category',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'category',
   categories: category,
 }));
@@ -196,7 +199,7 @@ dashboard.addWidget(new GeoDashboard.ChartWidget({
   title: 'Properties by Type',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'property_type',
   categories: property_type,
   chart: {
@@ -208,7 +211,7 @@ dashboard.addWidget(new GeoDashboard.ChartWidget({
   title: 'Properties by Category (%)',
   server: server,
   namespace: namespace,
-  layer: 'geodashboard:properati',
+  layer: `${namespace.name}:properati`,
   property: 'category',
   categories: category,
   chart: {
