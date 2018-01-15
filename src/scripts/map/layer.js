@@ -42,11 +42,17 @@ class Layer extends EventEmitter {
    * @member {Object}
    */
   get source() {
-    return this.layer.getSource();
+    if (!this.layerSource && this.layer) {
+      this.layerSource = this.layer.getSource();
+    }
+    return this.layerSource;
   }
 
   set source(value) {
-    this.layer.setSource(value);
+    this.layerSource = value;
+    if (this.layer) {
+      this.layer.setSource(value);
+    }
   }
 }
 
