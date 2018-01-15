@@ -3,43 +3,15 @@
 @import 'map/map-manager';
 @import 'widget/widget-manager';
 
-.geo-dashboard {
+.geodashboard {
   font-family: $font-family-base;
   background: $background-color;
   color: $primary-color;
   height: 100%;
+  flex: 1;
   display: flex;
-  flex-direction: column;
+  min-height: 0;
   font-size: $font-size-base;
-
-  .header {
-    height: 2.5em;
-    padding-left: $default-spacing;
-    background-color: $primary-color;
-    display: flex;
-    align-items: center;
-    color: $background-color;
-    font-size: 1.2em;
-
-    img {
-      height: 65%;
-    }
-
-    span {
-      padding-left: $default-spacing;
-    }
-  }
-
-  .content {
-    flex: 1;
-    display: flex;
-    min-height: 0;
-  }
-
-  .footer {
-    height: 1.5em;
-    padding-left: $default-spacing;
-  }
 }
 
 .spinner {

@@ -19,17 +19,10 @@ class Dashboard {
    * @param {Object} config.map - Map configuration
    * @param {Number[]} config.map.center - The initial center for the map
    * @param {Number} config.map.zoom - The initial zoom level
-   * @param {Object} [config.header] - Header configuration
-   * @param {String} config.header.title - Text to show in header
-   * @param {String} config.header.logo - URL of image to show in header
-   * @param {Object} [config.footer] - Footer configuration
-   * @param {String} config.footer.text - Text to show in footer
    * @param {Filter[]} [config.filters] - Set of filters to apply to layers and widgets
    */
   constructor(config) {
     this.container = config.container;
-    this.header = config.header;
-    this.footer = config.footer;
     this.filters = config.filters || [];
 
     if (!window.Promise) {
@@ -69,10 +62,7 @@ class Dashboard {
    * Creates the dashboard content and render map and widgets.
    */
   render() {
-    this.container.insertAdjacentHTML('beforeend', template({
-      header: this.header,
-      footer: this.footer,
-    }));
+    this.container.insertAdjacentHTML('beforeend', template());
 
     this.mapManager.render(this.container.getElementsByClassName('map')[0]);
 
