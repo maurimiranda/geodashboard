@@ -22,10 +22,17 @@ class WMSLayer extends OverlayLayer {
    *   all other overlay layers are hidden
    * @param {String} config.style - The style or styles to be used with the layer
    * @param {Boolean} [config.tiled=false] - Use tiles or single image WMS
+   * @param {Boolean} [config.useCache=false] - Use GeoWebCache URL instead of direct WMS
    */
   constructor(config = {}) {
     super(config);
-    this.server = `${config.server}/wms/`;
+
+    if (config.useCache) {
+      this.server = `${config.server}/gwc/service/wms/`;
+    } else {
+      this.server = `${config.server}/wms/`;
+    }
+
     this.style = config.style;
 
     const layerConfig = {
@@ -60,8 +67,13 @@ class WMSLayer extends OverlayLayer {
    * Reloads layer data using current filters
    */
   refresh() {
+    const params = this.layer.getSource().getParams();
+
+    if (!params.srs) {
+      params.srs = this.manager.view.getProjection().getCode();
+    }
+
     if (this.manager.filters.length) {
-      const params = this.layer.getSource().getParams();
       params.CQL_FILTER = this.manager.filterString;
       this.source.updateParams(params);
     }
