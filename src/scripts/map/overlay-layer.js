@@ -14,10 +14,12 @@ class OverlayLayer extends Layer {
   * @param {String} [config.attribution=''] - Layer data attribution
   * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
   *   all other overlay layers are hidden
+  * @param {Float} [config.opacity=1] - Layer opacity
   */
   constructor(config = {}) {
     config.title = config.title || 'OverlayLayer';
     config.visible = config.visible || false;
+    config.opacity = config.opacity || 1;
     super(config);
 
     this.server = config.server;
