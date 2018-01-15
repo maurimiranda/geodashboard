@@ -30,24 +30,19 @@ class WFSLayer extends OverlayLayer {
    * @param {String} config.server - URL of map server
    * @param {String} config.layerName - Name of layer to display
    * @param {String} [config.attribution=''] - Layer data attribution
-   * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
-   *   all other overlay layers are hidden
+   * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown, all other overlay layers are hidden
    * @param {Object} config.style - Style configuration
    * @param {String} config.style.property - Property that defines the style to use
-   * @param {Object} config.style.values - Object with possible values
-   *   and their corresponding style
-   * @param {Object[]} [config.popup] - Data to show when user clicks
-   *   on a feature in the map
-   * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names
-   *   to show
+   * @param {Object} config.style.values - Object with possible values and their corresponding style
+   * @param {Object[]} [config.popup] - Data to show when user clicks on a feature in the map
+   * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names *   to show
    * @param {String} [config.popup[].title] - Text to show as title
    * @param {Function} [config.popup[].format] - Function to process field or fields value
    * @param {Float} [config.opacity=1] - Layer opacity
    * @param {Object} [config.heatmap] - Show layer as heatmap
    * @param {Integer} [config.heatmap.blur=15] - Blur size in pixels
    * @param {Integer} [config.heatmap.radius=8] - Radius size in pixels
-   * @param {String[]} [config.heatmap.gradient=['#00f', '#0ff', '#0f0', '#ff0', '#fa0',
-   *   '#f00']] - Gradient to use
+   * @param {String[]} [config.heatmap.gradient=['#00f', '#0ff', '#0f0', '#ff0', '#fa0', '#f00']] - Gradient to use
    */
   constructor(config = {}) {
     super(config);

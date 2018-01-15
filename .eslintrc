@@ -10,20 +10,24 @@
     "describe": true,
     "before": true,
     "it": true,
-    "expect": true,
-    "ol": true
+    "expect": true
   },
   "rules": {
     "no-underscore-dangle": 0,
     "no-param-reassign": [
-      "error",
-      {
+      "error", {
         "props": false
       }
     ],
     "import/no-extraneous-dependencies": [
       "error", {
         "devDependencies": ["**/webpack.*.js", "**/*.spec.js"]
+      }
+    ],
+    "max-len": [
+      "error", {
+        "code": 100,
+        "ignoreComments": true
       }
     ]
   }

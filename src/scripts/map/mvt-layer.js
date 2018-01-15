@@ -166,6 +166,7 @@ class MVTLayer extends OverlayLayer {
    * Executes filters over feature to define its visibilty
    * @param {Object} feature - Openlayers' [feature](https://openlayers.org/en/latest/apidoc/ol.Feature.html) object
    * @returns {Boolean} - If true, feature must be shown
+   * @private
    */
   filter(feature) {
     let filterFeature = true;
