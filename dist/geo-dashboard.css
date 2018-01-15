@@ -471,33 +471,15 @@
   .widget-panel {
     display: none; } }
 
-.geo-dashboard {
+.geodashboard {
   font-family: "Open Sans", sans-serif;
   background: #FCFCFC;
   color: #3E5869;
   height: 100%;
+  flex: 1;
   display: flex;
-  flex-direction: column;
+  min-height: 0;
   font-size: 14px; }
-  .geo-dashboard .header {
-    height: 2.5em;
-    padding-left: 10px;
-    background-color: #3E5869;
-    display: flex;
-    align-items: center;
-    color: #FCFCFC;
-    font-size: 1.2em; }
-    .geo-dashboard .header img {
-      height: 65%; }
-    .geo-dashboard .header span {
-      padding-left: 10px; }
-  .geo-dashboard .content {
-    flex: 1;
-    display: flex;
-    min-height: 0; }
-  .geo-dashboard .footer {
-    height: 1.5em;
-    padding-left: 10px; }
 
 .spinner {
   width: 30px;

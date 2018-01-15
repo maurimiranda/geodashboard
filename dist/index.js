@@ -36,11 +36,7 @@ function formatSurface(value) {
 }
 
 const dashboard = new GeoDashboard.Dashboard({
-  container: document.getElementsByClassName('dashboard')[0],
-  header: {
-    title: 'GeoDashboard Demo',
-    logo: './geo-dashboard-white.png',
-  },
+  container: document.getElementsByClassName('container')[0],
   map: {
     center: [-58.40, -34.61],
     zoom: 14,
@@ -59,11 +55,22 @@ dashboard.addBaseLayer(new GeoDashboard.BingLayer({
   key: 'AlMSfR3F4khtlIefjuE_NYpX403LdlGiod36WLn8HlawywtSud-NSgEklCemD5pR',
 }));
 
+dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
+  title: 'Properties by Type (WMS)',
+  server: server,
+  layer: `${namespace.name}:properati`,
+  style: `${namespace.name}:properati_property_type`,
+  visible: true,
+  exclusive: true,
+  useCache: true,
+  tiled: true,
+  attribution: attribution,
+}));
+
 dashboard.addOverlayLayer(new GeoDashboard.MVTLayer({
   title: 'Properties by Category (MVT)',
   server: server,
   layer: `${namespace.name}:properati`,
-  visible: true,
   exclusive: true,
   popup: [{
     property: 'image_thumbnail',
@@ -93,17 +100,6 @@ dashboard.addOverlayLayer(new GeoDashboard.MVTLayer({
     },
   }],
   style: category,
-  attribution: attribution,
-}));
-
-dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
-  title: 'Properties by Type (WMS)',
-  server: server,
-  layer: `${namespace.name}:properati`,
-  style: `${namespace.name}:properati_property_type`,
-  exclusive: true,
-  useCache: true,
-  tiled: true,
   attribution: attribution,
 }));
 

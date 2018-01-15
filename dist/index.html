@@ -5,16 +5,39 @@
   <title>GeoDashboard Demo</title>
   <link rel="shortcut icon" href="favicon.png">
   <style>
-    html, body, .dashboard {
+    html, body {
       height: 100%;
       margin: 0;
       padding: 0;
       font-size: 14px;
+      font-family: "Open Sans", sans-serif;
+    }
+    .header {
+      height: 2.5em;
+      padding-left: 10px;
+      background-color: #3E5869;
+      display: flex;
+      align-items: center;
+      color: #FCFCFC;
+      font-size: 1.2em;
+    }
+    .header span {
+      padding-left: 10px;
+    }
+    .header img {
+      height: 65%;
+    }
+    .container {
+      height: calc(100% - 2.5em);
     }
   </style>
 <link href="geo-dashboard.css" rel="stylesheet"><script type="text/javascript" src="geo-dashboard.js"></script></head>
 <body>
-  <div class="dashboard"></div>
+  <div class="header">
+    <img src="./geodashboard-white.png" alt="GeoDashboard Demo" title="GeoDashboard Demo">
+    <span>GeoDashboard Demo</span>
+  </div>
+  <div class="container"></div>
   <script src="index.js" charset="utf-8"></script>
 </body>
 </html>
