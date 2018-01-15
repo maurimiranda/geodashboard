@@ -45,6 +45,30 @@ class Filter {
   toString() {
     return `${this.property}${(this.operator)}'${this.value}'`;
   }
+
+  /**
+   * Execute the filter against a given value
+   * @param {*} value - Value to process
+   * @returns {Boolean} - Returns true if value matches the filter
+   */
+  execute(value) {
+    switch (this.operator) {
+      case '<>':
+        return value != this.value; // eslint-disable-line eqeqeq
+      case '<':
+        return value < this.value;
+      case '<=':
+        return value <= this.value;
+      case '>':
+        return value > this.value;
+      case '>=':
+        return value >= this.value;
+      case 'like':
+        return value.match(`/^${this.value.replace('%', '.*')}$/`);
+      default:
+        return value == this.value; // eslint-disable-line eqeqeq
+    }
+  }
 }
 
 export default Filter;
