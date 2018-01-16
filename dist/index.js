@@ -36,7 +36,7 @@ function formatSurface(value) {
 }
 
 const dashboard = new GeoDashboard.Dashboard({
-  container: document.getElementsByClassName('container')[0],
+  container: document.getElementsByClassName('content')[0],
   map: {
     center: [-58.40, -34.61],
     zoom: 14,

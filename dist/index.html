@@ -12,6 +12,12 @@
       font-size: 14px;
       font-family: "Open Sans", sans-serif;
     }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
     .header {
       height: 2.5em;
       padding-left: 10px;
@@ -21,14 +27,18 @@
       color: #FCFCFC;
       font-size: 1.2em;
     }
+
     .header span {
       padding-left: 10px;
     }
+
     .header img {
       height: 65%;
     }
-    .container {
-      height: calc(100% - 2.5em);
+
+    .content {
+      flex: 1;
+      min-height: 0;
     }
   </style>
 <link href="geo-dashboard.css" rel="stylesheet"><script type="text/javascript" src="geo-dashboard.js"></script></head>
@@ -37,7 +47,7 @@
     <img src="./geodashboard-white.png" alt="GeoDashboard Demo" title="GeoDashboard Demo">
     <span>GeoDashboard Demo</span>
   </div>
-  <div class="container"></div>
+  <div class="content"></div>
   <script src="index.js" charset="utf-8"></script>
 </body>
 </html>
