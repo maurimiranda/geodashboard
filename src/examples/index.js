@@ -27,13 +27,8 @@ const category = {
   },
 }
 
-function formatMoney(value) {
-  return `$${parseInt(value).toLocaleString()}`;
-}
-
-function formatSurface(value) {
-  return `${parseInt(value).toLocaleString()}m<sup>2</sup>`;
-}
+const formatMoney = (value) => `$${parseInt(value).toLocaleString()}`;
+const formatSurface = (value) => `${parseInt(value).toLocaleString()}m<sup>2</sup>`;
 
 const dashboard = new GeoDashboard.Dashboard({
   container: document.getElementsByClassName('content')[0],
