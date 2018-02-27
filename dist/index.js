@@ -15,7 +15,7 @@ const property_type = {
     'PH': { color: '#02818a' },
     'store': { color: '#41ab5d' },
   },
-}
+};
 
 const category = {
   property: 'category',
@@ -25,15 +25,10 @@ const category = {
     'C': { color: '#fd8d3c' },
     'D': { color: '#fdbe85' },
   },
-}
+};
 
-function formatMoney(value) {
-  return `$${parseInt(value).toLocaleString()}`;
-}
-
-function formatSurface(value) {
-  return `${parseInt(value).toLocaleString()}m<sup>2</sup>`;
-}
+const formatMoney = (value) => `$${parseInt(value).toLocaleString()}`;
+const formatSurface = (value) => `${parseInt(value).toLocaleString()}m<sup>2</sup>`;
 
 const dashboard = new GeoDashboard.Dashboard({
   container: document.getElementsByClassName('content')[0],
