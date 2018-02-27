@@ -34,8 +34,10 @@ class WFSLayer extends OverlayLayer {
    * @param {Object} config.style - Style configuration
    * @param {String} config.style.property - Property that defines the style to use
    * @param {Object} config.style.values - Object with possible values and their corresponding style
+   * @param {Object} [config.style.minRadius=3] - Mininum radius to use for feature style
+   * @param {Object} [config.style.maxRadius=10] - Maximum radius to use for feature style
    * @param {Object[]} [config.popup] - Data to show when user clicks on a feature in the map
-   * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names *   to show
+   * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names to show
    * @param {String} [config.popup[].title] - Text to show as title
    * @param {Function} [config.popup[].format] - Function to process field or fields value
    * @param {Float} [config.opacity=1] - Layer opacity
@@ -46,6 +48,10 @@ class WFSLayer extends OverlayLayer {
    */
   constructor(config = {}) {
     super(config);
+
+    config.style = config.style || {};
+    config.style.minRadius = config.style.minRadius || 3;
+    config.style.maxRadius = config.style.maxRadius || 10;
 
     this.server = `${config.server}/wfs/`;
     this.format = new GeoJSON();
@@ -144,7 +150,13 @@ class WFSLayer extends OverlayLayer {
       this.styleCache[value] = {};
     }
     if (!this.styleCache[value][resolution]) {
-      const radius = Math.min(Math.max(3, Math.ceil(10 / Math.log(Math.ceil(resolution)))), 10);
+      const radius = Math.min(
+        Math.max(
+          this.style.minRadius,
+          Math.ceil(this.style.maxRadius / Math.log(Math.ceil(resolution))),
+        ),
+        this.style.maxRadius,
+      );
       this.styleCache[value][resolution] = new Style({
         image: new Circle({
           fill: new Fill({

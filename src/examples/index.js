@@ -15,7 +15,7 @@ const property_type = {
     'PH': { color: '#02818a' },
     'store': { color: '#41ab5d' },
   },
-}
+};
 
 const category = {
   property: 'category',
@@ -25,7 +25,7 @@ const category = {
     'C': { color: '#fd8d3c' },
     'D': { color: '#fdbe85' },
   },
-}
+};
 
 const formatMoney = (value) => `$${parseInt(value).toLocaleString()}`;
 const formatSurface = (value) => `${parseInt(value).toLocaleString()}m<sup>2</sup>`;
