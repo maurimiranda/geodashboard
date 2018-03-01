@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>LayerSwitcher - Documentation</title>
+    <title>map/vector-layer.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -27,462 +27,167 @@
 
 <div id="main">
     
-    <h1 class="page-title">LayerSwitcher</h1>
-    
-
-    
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        LayerSwitcher
-        </h2>
-        
-            <div class="class-description"><p>Custom implementation of LayerSwitcher based on <a href="https://github.com/walkermatt/ol3-layerswitcher">Matt Walker's OL3 control</a>.</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="LayerSwitcher"><span class="type-signature"></span>new LayerSwitcher<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="map_layer-switcher.js.html">map/layer-switcher.js</a>, <a href="map_layer-switcher.js.html#line8">line 8</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="renderPanel"><span class="type-signature"></span>renderPanel<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="map_layer-switcher.js.html">map/layer-switcher.js</a>, <a href="map_layer-switcher.js.html#line19">line 19</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Generates the panel with all available layers.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setMap"><span class="type-signature"></span>setMap<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="map_layer-switcher.js.html">map/layer-switcher.js</a>, <a href="map_layer-switcher.js.html#line36">line 36</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Defines the map where the control will be shown.</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="setVisible"><span class="type-signature"></span>setVisible<span class="signature">(layer, visible)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="map_layer-switcher.js.html">map/layer-switcher.js</a>, <a href="map_layer-switcher.js.html#line49">line 49</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    <p>Shows or hides the given layer</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>layer</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Layer.html">Layer</a></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The layer to show or hide</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>visible</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>If true, the given layer is shown. If false, it's hidden.</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">map/vector-layer.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import color from 'ol/color';
+import Style from 'ol/style/style';
+import Circle from 'ol/style/circle';
+import Fill from 'ol/style/fill';
+import Stroke from 'ol/style/stroke';
+
+import OverlayLayer from './overlay-layer';
+
+import styleVariables from '../../styles/_variables.scss';
+
+/**
+ * Vector Layer
+ * @extends OverlayLayer
+ */
+class VectorLayer extends OverlayLayer {
+  /**
+   * @param {Object} config - Configuration object
+   * @param {String} [config.title='OverlayLayer'] - Layer title
+   * @param {Boolean} [config.visible=false] - Layer initial status
+   * @param {String} config.server - URL of map server
+   * @param {String} config.layerName - Name of layer to display
+   * @param {String} [config.attribution=''] - Layer data attribution
+   * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown, all other overlay layers are hidden
+   * @param {Object} config.style - Style configuration
+   * @param {String} config.style.property - Property that defines the style to use
+   * @param {Object} config.style.values - Object with possible valuesand their corresponding style
+   * @param {Object} [config.style.minRadius=3] - Mininum radius to use for feature style
+   * @param {Object} [config.style.maxRadius=10] - Maximum radius to use for feature style
+   * @param {Object[]} [config.popup] - Data to show when user clicks on a feature in the map
+   * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names to show
+   * @param {String} [config.popup[].title] - Text to show as title
+   * @param {Function} [config.popup[].format] - Function to process field or fields value
+   */
+  constructor(Vector, config = {}) {
+    super(config);
+
+    config.style = config.style || {};
+    config.style.minRadius = config.style.minRadius || 3;
+    config.style.maxRadius = config.style.maxRadius || 10;
+
+    this.styleCache = {};
+    this.style = config.style;
+    this.popup = config.popup;
+
+    this.layer = new Vector({
+      title: this.title,
+      visible: this.visible,
+      exclusive: this.exclusive,
+    });
+    this.layer.setStyle(this.setStyle.bind(this));
+
+    this.layer.popup = config.popup;
+  }
+
+  /**
+   * Reloads layer data using current filters
+   */
+  refresh() {
+    this.source.clear();
+  }
+
+  /**
+   * Sets feature style
+   * @param {Object} feature - Openlayers' [feature](https://openlayers.org/en/latest/apidoc/ol.Feature.html) object
+   * @param {Number} resolution - Current map resolution
+   * @returns {Object} - Openlayers' [style](https://openlayers.org/en/latest/apidoc/ol.style.Style.html) object
+   * @private
+   */
+  setStyle(feature, resolution) {
+    const value = feature.get(this.style.property);
+    if (!value || !this.style.values[value]) {
+      return this.style.defaultStyle || this.buildDefaultStyle();
+    }
+    if (!this.styleCache[value]) {
+      this.styleCache[value] = {};
+    }
+    if (!this.styleCache[value][resolution]) {
+      const radius = Math.min(
+        Math.max(
+          this.style.minRadius,
+          Math.ceil(this.style.maxRadius / Math.log(Math.ceil(resolution))),
+        ),
+        this.style.maxRadius,
+      );
+      this.styleCache[value][resolution] = new Style({
+        image: new Circle({
+          fill: new Fill({
+            color: color.asArray(this.style.values[value].color),
+          }),
+          radius,
+          stroke: this.buildDefaultStroke(),
+        }),
+      });
+    }
+    return [this.styleCache[value][resolution]];
+  }
+
+  /**
+   * Builds default stroke style
+   * @returns {Object} Openlayers' [Stroke](https://openlayers.org/en/latest/apidoc/ol.style.Stroke.html) object
+   * @private
+   */
+  buildDefaultStroke() {
+    if (!this.defaultStroke) {
+      this.defaultStroke = new Stroke({
+        color: styleVariables.primaryColor,
+        width: 1,
+      });
+    }
+    return this.defaultStroke;
+  }
+
+  /**
+   * Builds default fill style
+   * @returns {Object} Openlayers' [Fill](https://openlayers.org/en/latest/apidoc/ol.style.Fill.html) object
+   * @private
+   */
+  buildDefaultFill() {
+    if (!this.defaultFill) {
+      this.defaultFill = new Fill({
+        color: styleVariables.primaryColor,
+      });
+    }
+    return this.defaultFill;
+  }
+
+  /**
+   * Builds default style
+   * @returns {Object} Openlayers' [Style](https://openlayers.org/en/latest/apidoc/ol.style.Style.html) object
+   * @private
+   */
+  buildDefaultStyle() {
+    if (!this.defaultStyle) {
+      this.defaultStyle = new Style({
+        fill: this.buildDefaultFill(),
+        stroke: this.buildDefaultStroke(),
+        image: new Circle({
+          fill: this.buildDefaultFill(),
+          radius: this.style.minRadius,
+          stroke: this.buildDefaultStroke(),
+        }),
+      });
+    }
+    return [this.defaultStyle];
+  }
+}
+
+export default VectorLayer;
+</code></pre>
+        </article>
+    </section>
 
 
 
