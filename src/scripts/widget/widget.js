@@ -38,7 +38,7 @@ class Widget {
       className: this.className,
     });
     this.container = element.firstChild;
-    [this.content] = this.container.getElementsByClassName('widget-content');
+    this.content = this.container.getElementsByClassName('widget-content')[0];
     this.manager.container.appendChild(this.container);
   }
 

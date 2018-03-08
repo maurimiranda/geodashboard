@@ -231,7 +231,7 @@ class MapManager extends EventEmitter {
       } else if (values.length > 1) {
         value = values.join(' ');
       } else {
-        [value] = values;
+        value = values[0];
       }
       items.push({
         title: item.title,

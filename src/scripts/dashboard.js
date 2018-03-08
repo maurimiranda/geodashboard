@@ -63,10 +63,8 @@ class Dashboard {
    */
   render() {
     this.container.insertAdjacentHTML('beforeend', template());
-
     this.mapManager.render(this.container.getElementsByClassName('map')[0]);
-
-    [this.widgetManager.container] = this.container.getElementsByClassName('widget-panel');
+    this.widgetManager.container = this.container.getElementsByClassName('widget-panel')[0];
     this.widgetManager.render();
   }
 

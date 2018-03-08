@@ -29,6 +29,7 @@
         "code": 100,
         "ignoreComments": true
       }
-    ]
+    ],
+    "prefer-destructuring": 0
   }
 }
