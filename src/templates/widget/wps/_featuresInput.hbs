@@ -14,10 +14,7 @@
                 </gml:Envelope>
               </ogc:BBOX>
               {{#each filters}}
-                <ogc:{{ogcOperator}} wildCard="%">
-                  <ogc:PropertyName>{{property}}</ogc:PropertyName>
-                  <ogc:Literal>{{value}}</ogc:Literal>
-                </ogc:{{ogcOperator}}>
+                {{> _filter }}
               {{/each}}
             </ogc:And>
           </ogc:Filter>

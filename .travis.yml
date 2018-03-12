@@ -8,3 +8,4 @@ script:
   - npm rebuild node-sass
   - npm run lint
   - npm run build
+  - npm run test

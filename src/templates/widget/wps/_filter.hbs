@@ -1,0 +1,24 @@
+{{log this}}
+{{#if simple}}
+  {{#if avoidLogicalOperator}}
+    <ogc:{{ogcOperator}} wildCard="%">
+      <ogc:PropertyName>{{property}}</ogc:PropertyName>
+      <ogc:Literal>{{value}}</ogc:Literal>
+    </ogc:{{ogcOperator}}>
+  {{else}}
+    <ogc:{{ogcLogicalOperator}}>
+      <ogc:{{ogcOperator}} wildCard="%">
+        <ogc:PropertyName>{{property}}</ogc:PropertyName>
+        <ogc:Literal>{{value}}</ogc:Literal>
+      </ogc:{{ogcOperator}}>
+    </ogc:{{ogcLogicalOperator}}>
+  {{/if}}
+{{else}}
+  <ogc:{{ogcLogicalOperator}}>
+    <ogc:{{property.[1].ogcLogicalOperator}}>
+      {{#each property}}
+        {{> _filter this avoidLogicalOperator=true }}
+      {{/each}}
+    </ogc:{{property.[1].ogcLogicalOperator}}>
+  </ogc:{{ogcLogicalOperator}}>
+{{/if}}

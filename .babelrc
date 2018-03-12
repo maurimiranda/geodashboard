@@ -4,5 +4,6 @@
     ["transform-strict-mode", {
       "strict": false
     }]
-  ]
+  ],
+  "compact": "false"
 }

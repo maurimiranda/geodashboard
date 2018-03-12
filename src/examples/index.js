@@ -40,6 +40,15 @@ const dashboard = new GeoDashboard.Dashboard({
     property: 'surface_total_in_m2',
     operator: '>',
     value: '0'
+  }), new GeoDashboard.Filter({
+    property: [new GeoDashboard.Filter({
+      property: 'property_type',
+      value: 'apartment',
+    }), new GeoDashboard.Filter({
+      property: 'property_type',
+      value: 'store',
+      logicalOperator: 'OR',
+    })]
   })],
 });
 
@@ -62,7 +71,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WMSLayer({
   attribution: attribution,
 }));
 
-dashboard.addOverlayLayer(new GeoDashboard.MVTLayer({
+dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
   title: 'Properties by Category (MVT)',
   server: server,
   layer: `${namespace.name}:properati`,

@@ -50,12 +50,16 @@ class Dashboard {
   }
 
   /**
-  * All filter strings joined by 'AND'
+  * All filter strings joined by logical operator
   * @member {String}
   * @readonly
   */
   get filterString() {
-    return this.filters.map(filter => filter.toString()).join(' AND ');
+    let filter = this.filters[0].toString();
+    for (let i = 1; i < this.filters.length; i++) {
+      filter += ` ${this.filters[i].logicalOperator} ${this.filters[i]}`;
+    }
+    return filter;
   }
 
   /**
