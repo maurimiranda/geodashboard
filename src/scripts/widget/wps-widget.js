@@ -15,6 +15,7 @@ class WPSWidget extends Widget {
    * @param {String} config.namespace.name - Namespace to use
    * @param {String} config.namespace.url - Namespace URL
    * @param {String} config.layerName - Name of the layer to query
+   * @param {String} [config.geometryName=geom] - Name of the geometry column
    * @param {Function} [config.format] - Function to parse and transform data fetched from server.
    *   This function should return a human friendly value as it will be shown as
    *   the widget current value.
@@ -23,6 +24,7 @@ class WPSWidget extends Widget {
     super(config);
 
     this.layerName = config.layer;
+    this.geometryName = config.geometryName || 'geom';
     this.server = `${config.server}/wps/`;
     this.namespace = config.namespace;
     this.template = template;
@@ -62,6 +64,7 @@ class WPSWidget extends Widget {
       method: 'POST',
       body: this.requestTemplate({
         layer: this.layerName,
+        geometryName: this.geometryName,
         property: this.property,
         function: this.function,
         category: this.categories ? this.categories.property : null,

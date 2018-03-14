@@ -38,6 +38,8 @@ class WFSLayer extends VectorLayer {
    * @param {Integer} [config.heatmap.blur=15] - Blur size in pixels
    * @param {Integer} [config.heatmap.radius=8] - Radius size in pixels
    * @param {String[]} [config.heatmap.gradient=['#00f', '#0ff', '#0f0', '#ff0', '#fa0', '#f00']] - Gradient to use
+   * @param {String|Array} [config.properties] - Define feature properties to retrive from server. If not defined,
+   *    it will retrieve only properties defined in popup.
    */
   constructor(config = {}) {
     super(Vector, config);
@@ -72,6 +74,11 @@ class WFSLayer extends VectorLayer {
     });
 
     this.loading = 0;
+
+    this.properties = config.properties || this.popup.map(item =>
+      (Array.isArray(item.property) ? item.property.join(',') : item.property));
+    this.properties.push(this.geometryName);
+    if (config.style.property) this.properties.push(config.style.property);
   }
 
   /**
@@ -90,6 +97,7 @@ class WFSLayer extends VectorLayer {
     params.append('typename', this.layerName);
     params.append('srsname', this.manager.viewProjection.getCode());
     params.append('cql_filter', this.buildCQLFilter(extent));
+    params.append('propertyName', this.properties.join(','));
     fetch(`${this.server}?${params.toString()}`, {
       mode: 'cors',
     }).then(response => response.json())
@@ -112,7 +120,8 @@ class WFSLayer extends VectorLayer {
    * @private
    */
   buildCQLFilter(extent) {
-    let cqlFilter = `bbox(geom, ${extent.join(',')}, '${this.manager.viewProjection.getCode()}')`;
+    let cqlFilter = `bbox(${this.geometryName}, ${extent.join(',')},
+      '${this.manager.viewProjection.getCode()}')`;
     if (this.manager.filterString) {
       cqlFilter = `${cqlFilter} AND ${this.manager.filterString}`;
     }

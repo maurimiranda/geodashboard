@@ -7,7 +7,7 @@
           <ogc:Filter>
             <ogc:And>
               <ogc:BBOX>
-                <ogc:PropertyName>geom</ogc:PropertyName>
+                <ogc:PropertyName>{{geometryColumn}}</ogc:PropertyName>
                 <gml:Envelope srsName="http://www.opengis.net/gml/srs/epsg.xml#3857">
                   <gml:upperCorner>{{extent.[0]}} {{extent.[1]}}</gml:upperCorner>
                   <gml:lowerCorner>{{extent.[2]}} {{extent.[3]}}</gml:lowerCorner>

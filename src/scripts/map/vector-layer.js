@@ -40,7 +40,7 @@ class VectorLayer extends OverlayLayer {
 
     this.styleCache = {};
     this.style = config.style;
-    this.popup = config.popup;
+    this.popup = config.popup || [];
 
     this.layer = new Vector({
       title: this.title,
