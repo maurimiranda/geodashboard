@@ -16,6 +16,7 @@ class OverlayLayer extends Layer {
   * @param {Boolean} [config.exclusive=false] - If true, when the layer is shown,
   *   all other overlay layers are hidden
   * @param {Float} [config.opacity=1] - Layer opacity
+  * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
   */
   constructor(config = {}) {
     config.title = config.title || 'OverlayLayer';
@@ -28,6 +29,21 @@ class OverlayLayer extends Layer {
     this.geometryName = config.geometryName || 'geom';
     this.attribution = config.attribution || '';
     this.exclusive = config.exclusive || false;
+    this.filters = config.filters;
+  }
+
+  /**
+  * All filter strings joined by logical operator
+  * @member {String}
+  * @readonly
+  */
+  get filterString() {
+    if (!this.filters || !this.filters.length) return null;
+    let filter = this.filters[0].toString();
+    for (let i = 1; i < this.filters.length; i++) {
+      filter += ` ${this.filters[i].logicalOperator} ${this.filters[i]}`;
+    }
+    return filter;
   }
 }
 

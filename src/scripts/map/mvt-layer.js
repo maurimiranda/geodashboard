@@ -68,9 +68,15 @@ class MVTLayer extends VectorLayer {
   filter(feature) {
     // TODO: implement complex filters
     let filterFeature = true;
-    this.manager.filters.forEach((filter) => {
-      filterFeature = filter.execute(feature.get(filter.property));
-    });
+    if (this.filters) {
+      this.filters.forEach((filter) => {
+        filterFeature = filter.execute(feature.get(filter.property));
+      });
+    } else if (this.manager.filters) {
+      this.manager.filters.forEach((filter) => {
+        filterFeature = filter.execute(feature.get(filter.property));
+      });
+    }
     return filterFeature;
   }
 }

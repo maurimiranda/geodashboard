@@ -121,7 +121,9 @@ class WFSLayer extends VectorLayer {
    */
   buildCQLFilter(extent) {
     let cqlFilter = `bbox(${this.geometryName}, ${extent.join(',')}, '${this.manager.viewProjection.getCode()}')`; // eslint-disable-line max-len
-    if (this.manager.filterString) {
+    if (this.filterString) {
+      cqlFilter = `${cqlFilter} AND ${this.filterString}`;
+    } else if (this.manager.filterString) {
       cqlFilter = `${cqlFilter} AND ${this.manager.filterString}`;
     }
     return cqlFilter;

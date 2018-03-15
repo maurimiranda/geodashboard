@@ -55,6 +55,7 @@ class Dashboard {
   * @readonly
   */
   get filterString() {
+    if (!this.filters || !this.filters.length) return null;
     let filter = this.filters[0].toString();
     for (let i = 1; i < this.filters.length; i++) {
       filter += ` ${this.filters[i].logicalOperator} ${this.filters[i]}`;
