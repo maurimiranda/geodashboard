@@ -73,10 +73,11 @@ class WMSLayer extends OverlayLayer {
     if (!params.srs) {
       params.srs = this.manager.view.getProjection().getCode();
     }
-
-    if (this.filters && this.filters.length) {
-      params.CQL_FILTER = this.filterString;
-      this.source.updateParams(params);
+    if (this.filters) {
+      if (this.filters.length) {
+        params.CQL_FILTER = this.filterString;
+        this.source.updateParams(params);
+      }
     } else if (this.manager.filters.length) {
       params.CQL_FILTER = this.manager.filterString;
       this.source.updateParams(params);
