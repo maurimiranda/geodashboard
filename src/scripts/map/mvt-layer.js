@@ -30,6 +30,7 @@ class MVTLayer extends VectorLayer {
    * @param {String|String[]} [config.popup[].property] - Name of field or array of fields names to show
    * @param {String} [config.popup[].title] - Text to show as title
    * @param {Function} [config.popup[].format] - Function to process field or fields value
+   * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
    */
   constructor(config = {}) {
     super(Vector, config);

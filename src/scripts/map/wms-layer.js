@@ -23,6 +23,7 @@ class WMSLayer extends OverlayLayer {
    * @param {String} config.style - The style or styles to be used with the layer
    * @param {Boolean} [config.tiled=false] - Use tiles or single image WMS
    * @param {Boolean} [config.useCache=false] - Use GeoWebCache URL instead of direct WMS
+   * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
    */
   constructor(config = {}) {
     super(config);

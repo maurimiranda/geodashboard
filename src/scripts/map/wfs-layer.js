@@ -40,6 +40,7 @@ class WFSLayer extends VectorLayer {
    * @param {String[]} [config.heatmap.gradient=['#00f', '#0ff', '#0f0', '#ff0', '#fa0', '#f00']] - Gradient to use
    * @param {String|Array} [config.properties] - Define feature properties to retrive from server. If not defined,
    *    it will retrieve only properties defined in popup.
+   * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
    */
   constructor(config = {}) {
     super(Vector, config);
