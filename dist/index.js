@@ -1,4 +1,4 @@
-const server = 'https://geoserver.threefunkymonkeys.com';
+const server = 'https://localhost:8080/geoserver';
 
 const namespace = {
   name: 'gd',
@@ -102,7 +102,7 @@ dashboard.addOverlayLayer(new GeoDashboard.WFSLayer({
   title: 'Heatmap (WFS)',
   server: server,
   layer: `${namespace.name}:properati`,
-  exclusive: true,
+  exclusive: false,
   heatmap: true,
   attribution: attribution,
   opacity: 0.6,
