@@ -42,7 +42,6 @@ class WMSLayer extends OverlayLayer {
       title: this.title,
       visible: this.visible,
       exclusive: this.exclusive,
-      zIndex: 1,
       opacity: this.opacity,
     }, this.layerParams);
 
