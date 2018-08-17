@@ -256,6 +256,11 @@
   border: none;
   box-shadow: none;
   background: none; }
+  .layer-switcher.ol-control .panel-switcher {
+    display: none;
+    font-size: 1.5em; }
+    .layer-switcher.ol-control .panel-switcher:before {
+      content: '\274F'; }
   .layer-switcher.ol-control .panel {
     padding: 0;
     margin: 0;
@@ -301,6 +306,12 @@
       display: none; }
       .layer-switcher.ol-control li.layer input:checked ~ label {
         color: #3E5869; }
+
+@media (max-width: 1024px) {
+  .layer-switcher.ol-control .panel-switcher {
+    display: block; }
+  .layer-switcher.ol-control .panel {
+    display: none; } }
 
 .map {
   flex: 1; }
