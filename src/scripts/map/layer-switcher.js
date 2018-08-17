@@ -58,7 +58,7 @@ class LayerSwitcher extends Control {
         });
       } else if (layer.exclusive) {
         this.manager.overlayLayers.forEach((l) => {
-          if (l !== layer) {
+          if (l !== layer && l.exclusive) {
             this.setVisible(l, false);
           }
         });
