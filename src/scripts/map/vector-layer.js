@@ -31,6 +31,8 @@ class VectorLayer extends OverlayLayer {
    * @param {String} [config.popup[].title] - Text to show as title
    * @param {Function} [config.popup[].format] - Function to process field or fields value
    * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
+   * @param {Object} [config.layerParams] - Extra params for OpenLayers Layer constructor
+   * @param {Object} [config.sourceParams] - Extra params for OpenLayers Source constructor
    */
   constructor(Vector, config = {}) {
     super(config);
@@ -43,11 +45,11 @@ class VectorLayer extends OverlayLayer {
     this.style = config.style;
     this.popup = config.popup || [];
 
-    this.layer = new Vector({
+    this.layer = new Vector(Object.assign({
       title: this.title,
       visible: this.visible,
       exclusive: this.exclusive,
-    });
+    }, this.layerParams));
     this.layer.setStyle(this.setStyle.bind(this));
 
     this.layer.popup = config.popup;

@@ -18,6 +18,8 @@ class MapManager extends EventEmitter {
    * @param {Object} [config] - Configuration object
    * @param {Number[]} [config.center] - The initial center for the map
    * @param {Number} [config.zoom] - The initial zoom level
+   * @param {Object} [config.mapParams] - Extra params for OpenLayers Map constructor
+   * @param {Object} [config.viewParams] - Extra params for OpenLayers View constructor
    */
   constructor(config = {}) {
     super();
@@ -26,6 +28,8 @@ class MapManager extends EventEmitter {
     this.defaultZoom = config.zoom || 1;
     this.baseLayers = [];
     this.overlayLayers = [];
+    this.mapParams = config.mapParams;
+    this.viewParams = config.viewParams;
 
     this.createMap();
     this.createOverlay();
@@ -55,16 +59,16 @@ class MapManager extends EventEmitter {
    * @private
    */
   createMap() {
-    this.view = new View({
+    this.view = new View(Object.assign({
       center: proj.fromLonLat(this.defaultCenter),
       zoom: this.defaultZoom,
-    });
+    }, this.viewParams));
 
-    this.map = new Map({
+    this.map = new Map(Object.assign({
       view: this.view,
       loadTilesWhileInteracting: true,
       layers: this.layers,
-    });
+    }, this.mapParams));
 
     this.viewProjection = this.view.getProjection();
     this.viewResolution = this.view.getResolution();

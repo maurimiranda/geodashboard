@@ -19,6 +19,8 @@ class Dashboard {
    * @param {Object} config.map - Map configuration
    * @param {Number[]} config.map.center - The initial center for the map
    * @param {Number} config.map.zoom - The initial zoom level
+   * @param {Object} [config.map.mapParams] - Extra params for OpenLayers Map constructor
+   * @param {Object} [config.map.viewParams] - Extra params for OpenLayers View constructor
    * @param {Filter[]} [config.filters] - Set of filters to apply to layers and widgets
    */
   constructor(config) {

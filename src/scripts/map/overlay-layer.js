@@ -17,6 +17,8 @@ class OverlayLayer extends Layer {
   *   all other overlay layers are hidden
   * @param {Float} [config.opacity=1] - Layer opacity
   * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
+  * @param {Object} [config.layerParams] - Extra params for OpenLayers Layer constructor
+  * @param {Object} [config.sourceParams] - Extra params for OpenLayers Source constructor
   */
   constructor(config = {}) {
     config.title = config.title || 'OverlayLayer';

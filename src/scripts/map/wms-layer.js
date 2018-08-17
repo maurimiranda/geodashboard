@@ -24,6 +24,8 @@ class WMSLayer extends OverlayLayer {
    * @param {Boolean} [config.tiled=false] - Use tiles or single image WMS
    * @param {Boolean} [config.useCache=false] - Use GeoWebCache URL instead of direct WMS
    * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
+   * @param {Object} [config.layerParams] - Extra params for OpenLayers Layer constructor
+   * @param {Object} [config.sourceParams] - Extra params for OpenLayers Source constructor
    */
   constructor(config = {}) {
     super(config);
@@ -36,15 +38,15 @@ class WMSLayer extends OverlayLayer {
 
     this.style = config.style;
 
-    const layerConfig = {
+    const layerConfig = Object.assign({
       title: this.title,
       visible: this.visible,
       exclusive: this.exclusive,
       zIndex: 1,
       opacity: this.opacity,
-    };
+    }, this.layerParams);
 
-    const sourceConfig = {
+    const sourceConfig = Object.assign({
       url: this.server,
       params: {
         LAYERS: this.layerName,
@@ -53,7 +55,7 @@ class WMSLayer extends OverlayLayer {
       attributions: [new Attribution({
         html: this.attribution,
       })],
-    };
+    }, this.sourceParams);
 
     if (config.tiled) {
       this.layer = new Tile(layerConfig);

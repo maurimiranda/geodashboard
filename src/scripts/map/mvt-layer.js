@@ -31,6 +31,8 @@ class MVTLayer extends VectorLayer {
    * @param {String} [config.popup[].title] - Text to show as title
    * @param {Function} [config.popup[].format] - Function to process field or fields value
    * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
+   * @param {Object} [config.layerParams] - Extra params for OpenLayers Layer constructor
+   * @param {Object} [config.sourceParams] - Extra params for OpenLayers Source constructor
    */
   constructor(config = {}) {
     super(Vector, config);
@@ -38,7 +40,7 @@ class MVTLayer extends VectorLayer {
     this.server = `${config.server}/gwc/service/tms/1.0.0/`;
     this.format = new MVT();
 
-    this.source = new VectorTile({
+    this.source = new VectorTile(Object.assign({
       url: `${this.server}${this.layerName}@EPSG:900913@pbf/{z}/{x}/{-y}.pbf`,
       format: this.format,
       strategy: loadingstrategy.tile(tilegrid.createXYZ({
@@ -47,7 +49,7 @@ class MVTLayer extends VectorLayer {
       attributions: [new Attribution({
         html: this.attribution,
       })],
-    });
+    }, this.sourceParams));
   }
 
   /**

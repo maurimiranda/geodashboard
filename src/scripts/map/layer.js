@@ -9,6 +9,8 @@ class Layer extends EventEmitter {
   * @param {Object} [config] - Configuration object
   * @param {String} [config.title='Layer'] - Layer title
   * @param {Boolean} [config.visible=false] - Layer initial status
+  * @param {Object} [config.layerParams] - Extra params for OpenLayers Layer constructor
+  * @param {Object} [config.sourceParams] - Extra params for OpenLayers Source constructor
   */
   constructor(config = {}) {
     super();
@@ -20,6 +22,9 @@ class Layer extends EventEmitter {
     this.visible = config.visible;
     this.id = Dashboard.uid();
     this.opacity = config.opacity;
+
+    this.layerParams = config.layerParams;
+    this.sourceParams = config.sourceParams;
   }
 
   /**

@@ -41,6 +41,8 @@ class WFSLayer extends VectorLayer {
    * @param {String|Array} [config.properties] - Define feature properties to retrive from server. If not defined,
    *    it will retrieve only properties defined in popup.
    * @param {Filter[]} [config.filters] - Set of filters to apply to the layer. Overrides global dashboard filters.
+   * @param {Object} [config.layerParams] - Extra params for OpenLayers Layer constructor
+   * @param {Object} [config.sourceParams] - Extra params for OpenLayers Source constructor
    */
   constructor(config = {}) {
     super(Vector, config);
@@ -53,7 +55,7 @@ class WFSLayer extends VectorLayer {
       config.radius = config.radius || 8;
       config.gradient = ['#00f', '#0ff', '#0f0', '#ff0', '#fa0', '#f00'];
 
-      this.layer = new Heatmap({
+      this.layer = new Heatmap(Object.assign({
         title: this.title,
         visible: this.visible,
         exclusive: this.exclusive,
@@ -61,10 +63,10 @@ class WFSLayer extends VectorLayer {
         radius: config.radius,
         gradient: config.gradient,
         opacity: config.opacity,
-      });
+      }, this.layerParams));
     }
 
-    this.source = new VectorSource({
+    this.source = new VectorSource(Object.assign({
       loader: this.loadFeatures.bind(this),
       strategy: loadingstrategy.tile(tilegrid.createXYZ({
         maxZoom: 19,
@@ -72,7 +74,7 @@ class WFSLayer extends VectorLayer {
       attributions: [new Attribution({
         html: this.attribution,
       })],
-    });
+    }, this.sourceParams));
 
     this.loading = 0;
 
