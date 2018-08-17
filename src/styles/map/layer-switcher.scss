@@ -9,6 +9,15 @@
   box-shadow: none;
   background: none;
 
+  .panel-switcher {
+    display: none;
+    font-size: 1.5em;
+
+    &:before {
+      content: '❏'
+    }
+  }
+
   .panel {
     padding: 0;
     margin: 0;
@@ -77,6 +86,18 @@
           color: $primary-color;
         }
       }
+    }
+  }
+}
+
+@include tablet {
+  .layer-switcher.ol-control {
+    .panel-switcher {
+      display: block;
+    }
+
+    .panel {
+      display: none;
     }
   }
 }

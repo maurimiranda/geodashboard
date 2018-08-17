@@ -21,6 +21,10 @@ class LayerSwitcher extends Control {
       baseLayers: this.manager.baseLayers,
       overlayLayers: this.manager.overlayLayers,
     });
+
+    this.button = this.element.getElementsByClassName('panel-switcher')[0];
+    this.panel = this.element.getElementsByClassName('panel')[0];
+
     const inputs = this.element.getElementsByTagName('input');
     for (let i = 0; i < inputs.length; i += 1) {
       inputs[i].addEventListener('change', (event) => {
@@ -28,6 +32,14 @@ class LayerSwitcher extends Control {
         this.setVisible(this.manager.getLayerById(event.target.id), event.target.checked);
       }, false);
     }
+
+    this.button.addEventListener('click', () => {
+      if (window.getComputedStyle(this.panel).display === 'none') {
+        this.panel.style.display = 'block';
+        return;
+      }
+      this.panel.style.display = 'none';
+    });
   }
 
   /**
